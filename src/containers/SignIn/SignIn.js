@@ -1,26 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
-import { compose } from 'recompose';
 import { object } from 'prop-types';
 import { Container, Typography, TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
-import { withFirebase } from '../../lib/Firebase';
+import { FirebaseContext } from '../../lib/Firebase';
 import * as ROUTES from '../../lib/routes';
 import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const SignInPage = () => (
-  <Container className={useStyles().container} maxWidth="sm">
-    <Typography variant="h3" align="center">
-      Sign In
-    </Typography>
-    <SignInForm />
-  </Container>
-);
+const SignInForm = ({ history }) => {
+  const firebase = useContext(FirebaseContext);
 
-const SignInFormBase = ({ firebase, history }) => {
   const classes = useStyles();
   const [error, setError] = useState(null);
   const [values, setValues] = React.useState({
@@ -46,45 +38,39 @@ const SignInFormBase = ({ firebase, history }) => {
   };
 
   return (
-    <form onSubmit={onSubmit} className={classes.form}>
-      <TextField
-        id="email"
-        label="Email"
-        value={values.email}
-        onChange={handleChange('email')}
-        margin="normal"
-      />
-      <TextField
-        id="password"
-        label="Password"
-        type="password"
-        onChange={handleChange('password')}
-        autoComplete="current-password"
-        margin="normal"
-      />
-      <Button
-        variant="contained"
-        disabled={values.password === '' || values.email === ''}
-        type="submit"
-      >
-        Sign In
-      </Button>
+    <Container className={classes.container} maxWidth="sm">
+      <form onSubmit={onSubmit} className={classes.form}>
+        <TextField
+          id="email"
+          label="Email"
+          value={values.email}
+          onChange={handleChange('email')}
+          margin="normal"
+        />
+        <TextField
+          id="password"
+          label="Password"
+          type="password"
+          onChange={handleChange('password')}
+          autoComplete="current-password"
+          margin="normal"
+        />
+        <Button
+          variant="contained"
+          disabled={values.password === '' || values.email === ''}
+          type="submit"
+        >
+          Sign In
+        </Button>
 
-      {error && <p>{error.message}</p>}
-    </form>
+        {error && <Typography variant="body1">{error.message}</Typography>}
+      </form>
+    </Container>
   );
 };
 
-SignInFormBase.propTypes = {
-  firebase: object.isRequired,
+SignInForm.propTypes = {
   history: object.isRequired
 };
 
-const SignInForm = compose(
-  withRouter,
-  withFirebase
-)(SignInFormBase);
-
-export default SignInPage;
-
-export { SignInForm };
+export default withRouter(SignInForm);

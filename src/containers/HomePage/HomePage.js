@@ -1,10 +1,16 @@
 import React from 'react';
-import { withAuthorization } from '../../lib/Sessions';
+import { withRouter } from 'react-router-dom';
+import { object } from 'prop-types';
 
-const HomePage = () => {
-  return <div>Home</div>;
+import { useAuthorization } from '../../lib/Sessions';
+
+const HomePage = ({ history }) => {
+  const isAuthed = useAuthorization(history);
+  return <React.Fragment>{isAuthed && <div>Home</div>}</React.Fragment>;
 };
 
-const condition = authUser => !!authUser;
+HomePage.propTypes = {
+  history: object.isRequired
+};
 
-export default withAuthorization(condition)(HomePage);
+export default withRouter(HomePage);

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { func, node, oneOfType } from 'prop-types';
 
 import * as ROUTES from '../../lib/routes';
-import { withAuthentication } from '../../lib/Sessions';
+import { useAuthentication, AuthUserContext } from '../../lib/Sessions';
 
 import Layout from '../Layout';
 import SignIn from '../SignIn';
@@ -26,11 +26,15 @@ AppLayoutRoute.propTypes = {
   component: oneOfType([func, node]).isRequired
 };
 
-const App = () => (
-  <Router>
-    <Route exact path={ROUTES.SIGN_IN} component={SignIn} />
-    <AppLayoutRoute path={ROUTES.HOME} component={HomePage} />
-  </Router>
-);
+const App = () => {
+  return (
+    <AuthUserContext.Provider value={useAuthentication()}>
+      <Router>
+        <Route exact path={ROUTES.SIGN_IN} component={SignIn} />
+        <AppLayoutRoute path={ROUTES.HOME} component={HomePage} />
+      </Router>
+    </AuthUserContext.Provider>
+  );
+};
 
-export default withAuthentication(App);
+export default App;

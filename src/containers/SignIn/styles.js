@@ -9,6 +9,11 @@ const styles = () => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center'
+  },
+
+  passwordButton: {
+    alignSelf: 'flex-end',
+    marginTop: '1rem'
   }
 });
 

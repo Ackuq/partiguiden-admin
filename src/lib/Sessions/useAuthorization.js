@@ -18,7 +18,9 @@ const useAuthorization = history => {
           history.push(ROUTES.SIGN_IN);
         }
       },
-      () => history.push(ROUTES.SIGN_IN)
+      () => {
+        history.push(ROUTES.SIGN_IN);
+      }
     );
     return () => {
       listener();

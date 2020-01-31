@@ -1,6 +1,6 @@
-import app from '@firebase/app';
-import '@firebase/auth';
-import '@firebase/database';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -8,22 +8,22 @@ const config = {
   databaseURL: process.env.REACT_APP_DATABASE_URL,
   projectId: process.env.REACT_APP_PROJECT_ID,
   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_MESSAGING_APP_ID
 };
 
 class Firebase {
   constructor() {
-    app.initializeApp(config);
-
+    firebase.initializeApp(config);
     /* Helper */
 
-    this.serverValue = app.database.ServerValue;
-    this.emailAuthProvider = app.auth.EmailAuthProvider;
+    this.serverValue = firebase.database.ServerValue;
+    this.emailAuthProvider = firebase.auth.EmailAuthProvider;
 
     /* Firebase APIs */
 
-    this.auth = app.auth();
-    this.db = app.database();
+    this.auth = firebase.auth();
+    this.db = firebase.database();
   }
 
   doSignInWithEmailAndPassword = (email, password) =>

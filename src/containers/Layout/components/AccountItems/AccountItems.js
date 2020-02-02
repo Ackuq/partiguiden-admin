@@ -21,7 +21,7 @@ const AccountItems = () => {
   const handleModal = () => setShowModal(prevState => !prevState);
 
   return (
-    <React.Fragment>
+    <>
       <ListItem button onClick={handleModal}>
         <ListItemIcon>
           <AccountBox />
@@ -43,7 +43,7 @@ const AccountItems = () => {
           <Button onClick={handleModal}>Stäng</Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 };
 

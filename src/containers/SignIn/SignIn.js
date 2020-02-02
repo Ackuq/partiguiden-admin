@@ -1,18 +1,17 @@
 import React, { useState, useContext } from 'react';
-import { withRouter } from 'react-router-dom';
 import { object } from 'prop-types';
-import {
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Container,
-  Typography,
-  TextField,
-  Button,
-  DialogContentText,
-  DialogTitle
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+import makeStyles from '@material-ui/styles/makeStyles';
 
 import NewPasswordForm from './components/NewPasswordForm';
 import { FirebaseContext } from '../../lib/Firebase';
@@ -27,7 +26,7 @@ const SignInForm = ({ history }) => {
   const classes = useStyles();
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     email: '',
     password: ''
   });
@@ -49,7 +48,7 @@ const SignInForm = ({ history }) => {
 
   return (
     <Container className={classes.container} maxWidth="sm">
-      <img style={{ maxWidth: '100%' }} src="./images/partiguiden_logo.svg" alt="logo" />
+      <img style={{ maxWidth: '100%' }} src="/static/images/partiguiden_logo.svg" alt="logo" />
 
       <form onSubmit={onSubmit} className={classes.form}>
         <TextField
@@ -103,4 +102,4 @@ SignInForm.propTypes = {
   history: object.isRequired
 };
 
-export default withRouter(SignInForm);
+export default SignInForm;

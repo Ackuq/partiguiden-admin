@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { TextField, Typography, Button } from '@material-ui/core';
+
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
 import { object } from 'prop-types';
 
 const ChangePasswordForm = ({ firebase }) => {

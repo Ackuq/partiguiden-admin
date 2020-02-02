@@ -1,12 +1,16 @@
 import React from 'react';
-import { ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
-import { Home as HomeIcon } from '@material-ui/icons';
-import { withRouter } from 'react-router-dom';
-import { object } from 'prop-types';
+import { useHistory } from 'react-router-dom';
+
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import HomeIcon from '@material-ui/icons/Home';
 
 import * as ROUTES from '../../../../lib/routes';
 
-const NavItems = ({ history }) => {
+const NavItems = () => {
+  const history = useHistory();
+
   return (
     <React.Fragment>
       <ListItem button onClick={() => history.push(ROUTES.HOME)}>
@@ -22,8 +26,4 @@ const NavItems = ({ history }) => {
   );
 };
 
-NavItems.propTypes = {
-  history: object.isRequired
-};
-
-export default withRouter(NavItems);
+export default NavItems;

@@ -1,5 +1,5 @@
 import { useEffect, useContext } from 'react';
-import { object } from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 import AuthUserContext from './context';
 import { FirebaseContext } from '../Firebase';
@@ -7,7 +7,9 @@ import * as ROUTES from '../routes';
 
 const condition = authUser => !!authUser;
 
-const useAuthorization = history => {
+const useAuthorization = () => {
+  const history = useHistory();
+
   const authUser = useContext(AuthUserContext);
   const firebase = useContext(FirebaseContext);
 
@@ -28,10 +30,6 @@ const useAuthorization = history => {
   });
 
   return condition(authUser);
-};
-
-useAuthorization.propTypes = {
-  history: object.isRequired
 };
 
 export default useAuthorization;

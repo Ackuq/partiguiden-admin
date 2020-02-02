@@ -1,4 +1,4 @@
-const styles = () => ({
+const styles = {
   form: {
     display: 'flex',
     flexDirection: 'column'
@@ -15,6 +15,6 @@ const styles = () => ({
     alignSelf: 'flex-end',
     marginTop: '1rem'
   }
-});
+};
 
 export default styles;

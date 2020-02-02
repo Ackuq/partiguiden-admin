@@ -1,14 +1,15 @@
 import React, { useContext, useState } from 'react';
-import {
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Button
-} from '@material-ui/core';
-import { ArrowBack, AccountBox } from '@material-ui/icons';
+
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
+
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import AccountBox from '@material-ui/icons/AccountBox';
 
 import ChangePasswordForm from '../../../../components/ChangePasswordForm';
 import { FirebaseContext } from '../../../../lib/Firebase';

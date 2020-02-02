@@ -12,7 +12,7 @@ const NavItems = () => {
   const history = useHistory();
 
   return (
-    <React.Fragment>
+    <>
       <ListItem button onClick={() => history.push(ROUTES.HOME)}>
         <ListItemIcon>
           <HomeIcon />
@@ -22,7 +22,7 @@ const NavItems = () => {
       <ListItem button onClick={() => history.push(ROUTES.SUBJECTS)}>
         <ListItemText>Granska sakfrågor</ListItemText>
       </ListItem>
-    </React.Fragment>
+    </>
   );
 };
 

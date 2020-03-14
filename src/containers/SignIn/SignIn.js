@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { object } from 'prop-types';
 
 import Dialog from '@material-ui/core/Dialog';
@@ -13,33 +13,30 @@ import Button from '@material-ui/core/Button';
 
 import makeStyles from '@material-ui/styles/makeStyles';
 
-import NewPasswordForm from './components/NewPasswordForm';
-import { FirebaseContext } from '../../lib/Firebase';
 import * as ROUTES from '../../lib/routes';
+import ApiStore from '../../lib/ApiStore';
 import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
 const SignInForm = ({ history }) => {
-  const firebase = useContext(FirebaseContext);
-
   const classes = useStyles();
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
   const [values, setValues] = useState({
-    email: '',
+    username: '',
     password: '',
   });
 
   const onSubmit = event => {
-    firebase
-      .doSignInWithEmailAndPassword(values.email, values.password)
+    ApiStore.login(values.username, values.password)
       .then(() => history.push(ROUTES.HOME))
-      .catch(err => setError(err));
+      .catch(err => {
+        setError(Object.values(err)[0]);
+      });
 
     event.preventDefault();
   };
-
   const handleModal = () => setShowModal(prevState => !prevState);
 
   const handleChange = name => event => {
@@ -52,10 +49,10 @@ const SignInForm = ({ history }) => {
 
       <form onSubmit={onSubmit} className={classes.form}>
         <TextField
-          id="email"
-          label="Email"
-          value={values.email}
-          onChange={handleChange('email')}
+          id="username"
+          label="Username"
+          value={values.username}
+          onChange={handleChange('username')}
           margin="normal"
         />
         <TextField
@@ -69,7 +66,7 @@ const SignInForm = ({ history }) => {
         />
         <Button
           variant="contained"
-          disabled={values.password === '' || values.email === ''}
+          disabled={values.password === '' || values.username === ''}
           type="submit"
         >
           Logga in
@@ -77,7 +74,7 @@ const SignInForm = ({ history }) => {
 
         {error && (
           <Typography variant="body1" color="error">
-            {error.message}
+            {error}
           </Typography>
         )}
       </form>
@@ -88,7 +85,6 @@ const SignInForm = ({ history }) => {
         <DialogTitle>Glömt lösenord</DialogTitle>
         <DialogContent>
           <DialogContentText>Fyll i mailaddressen till ditt konto nedan</DialogContentText>
-          <NewPasswordForm firebase={firebase} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleModal}>Stäng</Button>

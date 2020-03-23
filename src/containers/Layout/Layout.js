@@ -67,10 +67,10 @@ const Layout = ({ children }) => {
               open={mobileOpen}
               onClose={handleDrawerToggle}
               ModalProps={{
-                keepMounted: true // Better open performance on mobile.
+                keepMounted: true, // Better open performance on mobile.
               }}
               classes={{
-                paper: classes.drawerPaper
+                paper: classes.drawerPaper,
               }}
             >
               <DrawerItems />
@@ -81,7 +81,7 @@ const Layout = ({ children }) => {
               variant="permanent"
               open
               classes={{
-                paper: classes.drawerPaper
+                paper: classes.drawerPaper,
               }}
             >
               <DrawerItems />
@@ -98,7 +98,7 @@ const Layout = ({ children }) => {
 };
 
 Layout.propTypes = {
-  children: oneOfType([func, node]).isRequired
+  children: oneOfType([func, node]).isRequired,
 };
 
 export default Layout;

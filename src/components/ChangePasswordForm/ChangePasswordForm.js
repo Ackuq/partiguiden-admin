@@ -67,7 +67,7 @@ const ChangePasswordForm = ({ firebase }) => {
 };
 
 ChangePasswordForm.propTypes = {
-  firebase: object.isRequired
+  firebase: object.isRequired,
 };
 
 export default ChangePasswordForm;

@@ -6,16 +6,16 @@ const theme = createMuiTheme({
       main: '#00796b',
       dark: '#004c40',
       light: '#009688',
-      contrastText: '#f8f9fa'
+      contrastText: '#f8f9fa',
     },
     secondary: {
       main: '#80cbc4',
       dark: '#006978',
       light: '#56c8d8',
-      contrastText: '#a3cfca'
+      contrastText: '#a3cfca',
     },
-    type: 'dark'
-  }
+    type: 'dark',
+  },
 });
 
 export default responsiveFontSizes(theme);

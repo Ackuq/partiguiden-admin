@@ -28,7 +28,7 @@ const SignInForm = ({ history }) => {
   const [error, setError] = useState(null);
   const [values, setValues] = useState({
     email: '',
-    password: ''
+    password: '',
   });
 
   const onSubmit = event => {
@@ -99,7 +99,7 @@ const SignInForm = ({ history }) => {
 };
 
 SignInForm.propTypes = {
-  history: object.isRequired
+  history: object.isRequired,
 };
 
 export default SignInForm;

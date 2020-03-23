@@ -51,7 +51,7 @@ const NewPasswordModal = ({ firebase }) => {
 };
 
 NewPasswordModal.propTypes = {
-  firebase: object.isRequired
+  firebase: object.isRequired,
 };
 
 export default NewPasswordModal;

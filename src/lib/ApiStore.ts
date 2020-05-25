@@ -3,8 +3,6 @@ import { SIGN_IN } from './routes';
 
 const isProd = process.env.VERCEL_GITHUB_COMMIT_REF === 'master';
 
-console.log(process.env.VERCEL_GITHUB_COMMIT_REF);
-
 const baseApiUrl = isProd
   ? (process.env.REACT_APP_PROD_API_URL as string)
   : (process.env.REACT_APP_API_URL as string);

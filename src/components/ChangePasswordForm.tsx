@@ -4,25 +4,13 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import { object } from 'prop-types';
-
-const ChangePasswordForm = ({ firebase }) => {
+const ChangePasswordForm: React.FC = () => {
   const [newPassword, setNewPassword] = useState('');
   const [verification, setVerification] = useState('');
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
-  const onSubmit = event => {
-    firebase
-      .doPasswordUpdate(newPassword)
-      .then(() => {
-        setSuccess(true);
-        setError(null);
-      })
-      .catch(err => setError(err));
-
-    event.preventDefault();
-  };
+  const onSubmit = () => {};
 
   return (
     <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
@@ -31,7 +19,7 @@ const ChangePasswordForm = ({ firebase }) => {
         label="Nytt lösenord"
         type="password"
         value={newPassword}
-        onChange={event => setNewPassword(event.target.value)}
+        onChange={(event) => setNewPassword(event.target.value)}
         margin="normal"
       />
 
@@ -41,7 +29,7 @@ const ChangePasswordForm = ({ firebase }) => {
         label="Skriv lösenordet igen"
         type="password"
         value={verification}
-        onChange={event => setVerification(event.target.value)}
+        onChange={(event) => setVerification(event.target.value)}
         margin="normal"
       />
 
@@ -59,15 +47,11 @@ const ChangePasswordForm = ({ firebase }) => {
       )}
       {error && (
         <Typography variant="body1" color="error">
-          {error.message}
+          {error}
         </Typography>
       )}
     </form>
   );
-};
-
-ChangePasswordForm.propTypes = {
-  firebase: object.isRequired,
 };
 
 export default ChangePasswordForm;

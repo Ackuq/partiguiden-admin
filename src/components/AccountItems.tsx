@@ -1,24 +1,20 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import AccountBox from '@material-ui/icons/AccountBox';
 
-import ChangePasswordForm from '../../../../components/ChangePasswordForm';
-import { FirebaseContext } from '../../../../lib/Firebase';
+import { logout } from '../lib/ApiStore';
 
-const AccountItems = () => {
-  const firebase = useContext(FirebaseContext);
+const AccountItems: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
-
-  const handleModal = () => setShowModal(prevState => !prevState);
+  const handleModal = () => setShowModal((prevState) => !prevState);
 
   return (
     <>
@@ -26,21 +22,18 @@ const AccountItems = () => {
         <ListItemIcon>
           <AccountBox />
         </ListItemIcon>
-        <ListItemText>Ändra lösenord</ListItemText>
+        <ListItemText>Change password</ListItemText>
       </ListItem>
-      <ListItem button onClick={firebase.doSignOut}>
+      <ListItem button onClick={logout}>
         <ListItemIcon>
           <ArrowBack />
         </ListItemIcon>
-        <ListItemText>Logga ut</ListItemText>
+        <ListItemText>Log out</ListItemText>
       </ListItem>
 
       <Dialog open={showModal} fullWidth onBackdropClick={handleModal}>
-        <DialogContent>
-          <ChangePasswordForm firebase={firebase} />
-        </DialogContent>
         <DialogActions>
-          <Button onClick={handleModal}>Stäng</Button>
+          <Button onClick={handleModal}>Close</Button>
         </DialogActions>
       </Dialog>
     </>

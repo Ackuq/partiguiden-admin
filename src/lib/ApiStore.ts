@@ -1,7 +1,13 @@
 import jwt from 'jsonwebtoken';
 import { SIGN_IN } from './routes';
 
-const baseApiUrl = process.env.REACT_APP_API_URL || 'localhost:3001';
+const isProd = process.env.VERCEL_GITHUB_COMMIT_REF === 'master';
+
+console.log(process.env.VERCEL_GITHUB_COMMIT_REF);
+
+const baseApiUrl = isProd
+  ? (process.env.REACT_APP_PROD_API_URL as string)
+  : (process.env.REACT_APP_API_URL as string);
 
 let token = localStorage.getItem('token') || '';
 let refresh = localStorage.getItem('refresh') || '';

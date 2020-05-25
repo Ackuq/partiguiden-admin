@@ -27,8 +27,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "now-dev": "react-scripts start",
-    "now-build": "react-scripts build",
+    "vercel-dev": "vercel dev",
+    "vercel-build": "react-scripts build",
     "lint": "yarn tsc --noemit && eslint src/ --ext js,ts,tsx"
   },
   "browserslist": {

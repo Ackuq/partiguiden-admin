@@ -4,24 +4,12 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import { object } from 'prop-types';
-
-const NewPasswordModal = ({ firebase }) => {
+const NewPasswordModal: React.FC = () => {
   const [email, setEmail] = useState('');
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
-  const onSubmit = event => {
-    firebase
-      .doPasswordReset(email)
-      .then(() => {
-        setSuccess(true);
-        setError(null);
-      })
-      .catch(err => setError(err));
-
-    event.preventDefault();
-  };
+  const onSubmit = () => {};
 
   return (
     <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
@@ -29,7 +17,7 @@ const NewPasswordModal = ({ firebase }) => {
         id="email"
         label="Email"
         value={email}
-        onChange={event => setEmail(event.target.value)}
+        onChange={(event) => setEmail(event.target.value)}
         margin="normal"
         style={{ marginBottom: '2rem' }}
       />
@@ -43,15 +31,11 @@ const NewPasswordModal = ({ firebase }) => {
       )}
       {error && (
         <Typography variant="body1" color="error">
-          {error.message}
+          {error}
         </Typography>
       )}
     </form>
   );
-};
-
-NewPasswordModal.propTypes = {
-  firebase: object.isRequired,
 };
 
 export default NewPasswordModal;

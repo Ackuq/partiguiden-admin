@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { func, node, oneOfType } from 'prop-types';
 import makeStyles from '@material-ui/styles/makeStyles';
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -13,14 +12,39 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 
-import { useHistory } from 'react-router-dom';
-import ApiStore from '../../lib/ApiStore';
-import { SIGN_IN } from '../../lib/routes';
-import styles from './styles';
-import AccountItems from './components/AccountItems';
-import NavItems from './components/NavItems';
+import AccountItems from '../components/AccountItems';
+import NavItems from '../components/NavItems';
+import { Theme } from '@material-ui/core';
+import { isAuthenticated, refreshToken } from '../lib/ApiStore';
 
-const useStyles = makeStyles(styles);
+const drawerWidth = 240;
+
+const useStyles = makeStyles((theme: Theme) => ({
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+
+  drawerPaper: {
+    justifyContent: 'space-between',
+    width: drawerWidth,
+  },
+
+  appBar: {
+    marginLeft: drawerWidth,
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+    },
+  },
+
+  toolbar: { [theme.breakpoints.down('xs')]: theme.mixins.toolbar },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+}));
 
 const DrawerItems = () => (
   <>
@@ -34,20 +58,19 @@ const DrawerItems = () => (
   </>
 );
 
-const Layout = ({ children }) => {
+const Layout: React.FC = ({ children }) => {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const history = useHistory();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   useEffect(() => {
-    if (!ApiStore.token) {
-      history.replace(SIGN_IN);
+    if (!isAuthenticated) {
+      refreshToken();
     }
-  });
+  }, []);
 
   return (
     <div style={{ display: 'flex' }}>
@@ -59,7 +82,6 @@ const Layout = ({ children }) => {
               aria-label="Open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              className={classes.menuButton}
             >
               <MenuIcon />
             </IconButton>
@@ -101,10 +123,6 @@ const Layout = ({ children }) => {
       </Container>
     </div>
   );
-};
-
-Layout.propTypes = {
-  children: oneOfType([func, node]).isRequired,
 };
 
 export default Layout;

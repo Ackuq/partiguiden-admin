@@ -10,9 +10,9 @@ import Button from '@material-ui/core/Button';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import AccountBox from '@material-ui/icons/AccountBox';
 
-import ApiStore from '../../../../lib/ApiStore';
+import ApiStore from '../lib/ApiStore';
 
-const AccountItems = () => {
+const AccountItems: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const handleModal = () => setShowModal(prevState => !prevState);
 

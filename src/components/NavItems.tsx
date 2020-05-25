@@ -6,9 +6,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import HomeIcon from '@material-ui/icons/Home';
 
-import * as ROUTES from '../../../../lib/routes';
+import * as ROUTES from '../lib/routes';
 
-const NavItems = () => {
+const NavItems: React.FC = () => {
   const history = useHistory();
 
   return (

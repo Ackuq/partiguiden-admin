@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { object } from 'prop-types';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -10,36 +9,55 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
 import makeStyles from '@material-ui/styles/makeStyles';
 
-import * as ROUTES from '../../lib/routes';
-import ApiStore from '../../lib/ApiStore';
-import styles from './styles';
+import { RouteComponentProps } from 'react-router-dom';
 
-const useStyles = makeStyles(styles);
+import * as ROUTES from '../lib/routes';
+import { login } from '../lib/ApiStore';
 
-const SignInForm = ({ history }) => {
+const useStyles = makeStyles({
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+
+  container: {
+    minHeight: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+
+  passwordButton: {
+    alignSelf: 'flex-end',
+    marginTop: '1rem',
+  },
+});
+
+const SignInForm: React.FC<RouteComponentProps> = ({ history }) => {
   const classes = useStyles();
   const [showModal, setShowModal] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
   const [values, setValues] = useState({
     username: '',
     password: '',
   });
 
-  const onSubmit = event => {
-    ApiStore.login(values.username, values.password)
-      .then(() => history.push(ROUTES.HOME))
-      .catch(err => {
-        setError(Object.values(err)[0]);
-      });
-
+  const onSubmit = (event: any) => {
     event.preventDefault();
+    login(values.username, values.password)
+      .then(() => {
+        history.push(ROUTES.HOME);
+      })
+      .catch((err: any) => {
+        console.log('ERROR');
+        setError(Object.values(err)[0] as string);
+      });
   };
-  const handleModal = () => setShowModal(prevState => !prevState);
+  const handleModal = () => setShowModal((prevState) => !prevState);
 
-  const handleChange = name => event => {
+  const handleChange = (name: string) => (event: any) => {
     setValues({ ...values, [name]: event.target.value });
   };
 
@@ -92,10 +110,6 @@ const SignInForm = ({ history }) => {
       </Dialog>
     </Container>
   );
-};
-
-SignInForm.propTypes = {
-  history: object.isRequired,
 };
 
 export default SignInForm;

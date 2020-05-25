@@ -34,7 +34,6 @@ const AddPartyDialog: React.FC<Props> = ({ open, onClose, appendParty }) => {
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown; id: string }>) => {
     event.persist();
-    console.log(event.target.id);
     setForm((prevState) => ({
       ...prevState,
       [event.target.id]: event.target.value as string,

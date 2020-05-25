@@ -19,7 +19,7 @@ const ChangePasswordForm: React.FC = () => {
         label="Nytt lösenord"
         type="password"
         value={newPassword}
-        onChange={event => setNewPassword(event.target.value)}
+        onChange={(event) => setNewPassword(event.target.value)}
         margin="normal"
       />
 
@@ -29,7 +29,7 @@ const ChangePasswordForm: React.FC = () => {
         label="Skriv lösenordet igen"
         type="password"
         value={verification}
-        onChange={event => setVerification(event.target.value)}
+        onChange={(event) => setVerification(event.target.value)}
         margin="normal"
       />
 

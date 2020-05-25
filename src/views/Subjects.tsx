@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles, List, ListItem, ListItemText, Divider, Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
-import ApiStore from '../lib/ApiStore';
+import { getSubjects } from '../lib/ApiStore';
 import LoadingIndicator from '../components/LoadingIndicator';
 
 const useStyles = makeStyles((theme) => ({
@@ -11,14 +11,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface Subject {
+  id: number;
+  name: string;
+}
+
 const Subjects: React.FC = () => {
   const [loading, setLoading] = useState(true);
-  const [subjects, setSubjects] = useState([]);
+  const [subjects, setSubjects] = useState<Array<Subject>>([]);
 
   const classes = useStyles();
 
   useEffect(() => {
-    ApiStore.getSubjects().then((data) => {
+    getSubjects().then((data) => {
       setSubjects(data);
       setLoading(false);
     });

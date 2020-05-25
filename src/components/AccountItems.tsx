@@ -10,11 +10,11 @@ import Button from '@material-ui/core/Button';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import AccountBox from '@material-ui/icons/AccountBox';
 
-import ApiStore from '../lib/ApiStore';
+import { logout } from '../lib/ApiStore';
 
 const AccountItems: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
-  const handleModal = () => setShowModal(prevState => !prevState);
+  const handleModal = () => setShowModal((prevState) => !prevState);
 
   return (
     <>
@@ -24,7 +24,7 @@ const AccountItems: React.FC = () => {
         </ListItemIcon>
         <ListItemText>Ändra lösenord</ListItemText>
       </ListItem>
-      <ListItem button onClick={ApiStore.logout}>
+      <ListItem button onClick={logout}>
         <ListItemIcon>
           <ArrowBack />
         </ListItemIcon>

@@ -29,7 +29,7 @@
     "eject": "react-scripts eject",
     "now-dev": "react-scripts start",
     "now-build": "react-scripts build",
-    "lint": "eslint src/"
+    "lint": "yarn tsc --noemit && eslint src/"
   },
   "eslintConfig": {
     "extends": "react-app"

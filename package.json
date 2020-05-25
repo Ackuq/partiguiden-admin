@@ -29,10 +29,7 @@
     "eject": "react-scripts eject",
     "now-dev": "react-scripts start",
     "now-build": "react-scripts build",
-    "lint": "yarn tsc --noemit && eslint src/"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "lint": "yarn tsc --noemit && eslint src/ --ext js,ts,tsx"
   },
   "browserslist": {
     "production": [
@@ -49,7 +46,6 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.0.0",
     "@typescript-eslint/parser": "^3.0.0",
-    "eslint": "^7.1.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-react": "^7.20.0",

@@ -10,6 +10,7 @@ import Layout from './Layout';
 import SignIn from './SignIn';
 import Subjects from './Subjects';
 import HomePage from './HomePage';
+import Parties from './Parties';
 
 const App: React.FC = () => {
   return (
@@ -21,6 +22,7 @@ const App: React.FC = () => {
           <Layout>
             <Route exact path={ROUTES.HOME} component={HomePage} />
             <Route exact path={ROUTES.SUBJECTS} component={Subjects} />
+            <Route exact path={ROUTES.PARTIES} component={Parties} />
           </Layout>
         </Switch>
       </Router>

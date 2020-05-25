@@ -22,18 +22,18 @@ const AccountItems: React.FC = () => {
         <ListItemIcon>
           <AccountBox />
         </ListItemIcon>
-        <ListItemText>Ändra lösenord</ListItemText>
+        <ListItemText>Change password</ListItemText>
       </ListItem>
       <ListItem button onClick={logout}>
         <ListItemIcon>
           <ArrowBack />
         </ListItemIcon>
-        <ListItemText>Logga ut</ListItemText>
+        <ListItemText>Log out</ListItemText>
       </ListItem>
 
       <Dialog open={showModal} fullWidth onBackdropClick={handleModal}>
         <DialogActions>
-          <Button onClick={handleModal}>Stäng</Button>
+          <Button onClick={handleModal}>Close</Button>
         </DialogActions>
       </Dialog>
     </>

@@ -56,7 +56,11 @@ const apiRequest = async (endpoint: string, options?: RequestInit, useToken = tr
       Authorization: useToken ? `Bearer ${token}` : '',
     },
   }).then(async (response) => {
-    const data = await response.json();
+    const contentType = response.headers.get('content-type');
+
+    const data = (await (contentType && contentType.indexOf('application/json') !== -1))
+      ? response.json()
+      : response.text();
     if (!response.ok) {
       throw data;
     } else {
@@ -90,4 +94,13 @@ export const logout = () => {
 
 export const getParties = () => apiRequest('parties/');
 
+export const deleteParty = (id: number) => apiRequest(`parties/${id}`, { method: 'DELETE' });
+export const createParty = (data: { name: string; abbreviation: string }) =>
+  apiRequest(`parties/`, { method: 'POST', body: JSON.stringify(data) });
+
 export const getSubjects = () => apiRequest('subjects/');
+
+export const createSubject = (data: { name: string; related_subject: Array<number> }) =>
+  apiRequest(`subjects/`, { method: 'POST', body: JSON.stringify(data) });
+
+export const deleteSubject = (id: number) => apiRequest(`subjects/${id}`, { method: 'DELETE' });

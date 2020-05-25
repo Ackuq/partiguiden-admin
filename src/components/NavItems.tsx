@@ -4,7 +4,10 @@ import { useHistory } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+
+import SubjectIcon from '@material-ui/icons/Subject';
 import HomeIcon from '@material-ui/icons/Home';
+import PartiesIcon from '@material-ui/icons/People';
 
 import * as ROUTES from '../lib/routes';
 
@@ -17,10 +20,19 @@ const NavItems: React.FC = () => {
         <ListItemIcon>
           <HomeIcon />
         </ListItemIcon>
-        <ListItemText>Hem</ListItemText>
+        <ListItemText>Home</ListItemText>
       </ListItem>
       <ListItem button onClick={() => history.push(ROUTES.SUBJECTS)}>
-        <ListItemText>Granska sakfrågor</ListItemText>
+        <ListItemIcon>
+          <SubjectIcon />
+        </ListItemIcon>
+        <ListItemText>Subjects</ListItemText>
+      </ListItem>
+      <ListItem button onClick={() => history.push(ROUTES.PARTIES)}>
+        <ListItemIcon>
+          <PartiesIcon />
+        </ListItemIcon>
+        <ListItemText>Parties</ListItemText>
       </ListItem>
     </>
   );

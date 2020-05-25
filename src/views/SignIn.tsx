@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
 
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -37,7 +32,6 @@ const useStyles = makeStyles({
 
 const SignInForm: React.FC<RouteComponentProps> = ({ history }) => {
   const classes = useStyles();
-  const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState('');
   const [values, setValues] = useState({
     username: '',
@@ -55,7 +49,6 @@ const SignInForm: React.FC<RouteComponentProps> = ({ history }) => {
         setError(Object.values(err)[0] as string);
       });
   };
-  const handleModal = () => setShowModal((prevState) => !prevState);
 
   const handleChange = (name: string) => (event: any) => {
     setValues({ ...values, [name]: event.target.value });
@@ -67,6 +60,7 @@ const SignInForm: React.FC<RouteComponentProps> = ({ history }) => {
 
       <form onSubmit={onSubmit} className={classes.form}>
         <TextField
+          variant="filled"
           id="username"
           label="Username"
           value={values.username}
@@ -74,6 +68,7 @@ const SignInForm: React.FC<RouteComponentProps> = ({ history }) => {
           margin="normal"
         />
         <TextField
+          variant="filled"
           id="password"
           label="Lösenord"
           type="password"
@@ -96,18 +91,6 @@ const SignInForm: React.FC<RouteComponentProps> = ({ history }) => {
           </Typography>
         )}
       </form>
-      <Button classes={{ root: classes.passwordButton }} onClick={handleModal}>
-        Glömt lösenord
-      </Button>
-      <Dialog open={showModal} onBackdropClick={handleModal} fullWidth>
-        <DialogTitle>Glömt lösenord</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Fyll i mailaddressen till ditt konto nedan</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleModal}>Stäng</Button>
-        </DialogActions>
-      </Dialog>
     </Container>
   );
 };

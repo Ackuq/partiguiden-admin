@@ -3,22 +3,22 @@ import React, { useState } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import Button from '@material-ui/core/Button';
 
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import AccountBox from '@material-ui/icons/AccountBox';
 
 import { logout } from '../lib/ApiStore';
+import ChangePasswordModal from './ChangePasswordModal';
 
 const AccountItems: React.FC = () => {
-  const [showModal, setShowModal] = useState(false);
-  const handleModal = () => setShowModal((prevState) => !prevState);
+  const [changePasswordModal, setChangePasswordModal] = useState(false);
+  const toggleChangePasswordModal = () => {
+    setChangePasswordModal((prevState) => !prevState);
+  };
 
   return (
     <>
-      <ListItem button onClick={handleModal}>
+      <ListItem button onClick={toggleChangePasswordModal}>
         <ListItemIcon>
           <AccountBox />
         </ListItemIcon>
@@ -31,11 +31,7 @@ const AccountItems: React.FC = () => {
         <ListItemText>Log out</ListItemText>
       </ListItem>
 
-      <Dialog open={showModal} fullWidth onBackdropClick={handleModal}>
-        <DialogActions>
-          <Button onClick={handleModal}>Close</Button>
-        </DialogActions>
-      </Dialog>
+      <ChangePasswordModal open={changePasswordModal} onClose={toggleChangePasswordModal} />
     </>
   );
 };

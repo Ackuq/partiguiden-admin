@@ -48,7 +48,7 @@ const AddPartyDialog: React.FC<Props> = ({ open, onClose, appendParty }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle>Add subject</DialogTitle>
       <DialogContent>
         <TextField

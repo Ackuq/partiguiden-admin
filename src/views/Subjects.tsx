@@ -75,15 +75,17 @@ const Subjects: React.FC = () => {
           <React.Fragment key={subject.id}>
             <ListItem>
               <ListItemText primary={subject.name} />
-              <ListItemSecondaryAction>
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => deleteCallback(subject.id)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </ListItemSecondaryAction>
+              {subject.id !== 1 && (
+                <ListItemSecondaryAction>
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() => deleteCallback(subject.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              )}
             </ListItem>
             {index !== subjects.length - 1 && <Divider />}
           </React.Fragment>

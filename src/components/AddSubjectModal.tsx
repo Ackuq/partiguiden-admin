@@ -60,7 +60,7 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, appendSubject, subje
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle>Add subject</DialogTitle>
       <DialogContent>
         <TextField
@@ -88,11 +88,16 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, appendSubject, subje
             id: 'select-multiple-native',
           }}
         >
-          {subjects.map((subject) => (
-            <option key={subject.id} value={subject.id}>
-              {subject.name}
-            </option>
-          ))}
+          {subjects.map((subject) => {
+            if (subject.id === 1) {
+              return <React.Fragment key={subject.id} />;
+            }
+            return (
+              <option key={subject.id} value={subject.id}>
+                {subject.name}
+              </option>
+            );
+          })}
         </Select>
         <Button onClick={() => setForm((prevState) => ({ ...prevState, related_subject: [] }))}>
           Deselect all

@@ -1,4 +1,7 @@
 import jwt from 'jsonwebtoken';
+import { Party } from '../types/parties';
+import { Standpoint } from '../types/standpoints';
+import { Subject } from '../types/subjects';
 import { SIGN_IN } from './routes';
 
 const baseApiUrl = process.env.REACT_APP_API_URL as string;
@@ -20,7 +23,7 @@ const tokenIsValid = (currToken = token) => {
   return true;
 };
 
-export const refreshToken = async () => {
+export const refreshToken = async (): Promise<boolean> => {
   if (!tokenIsValid(refresh)) {
     logout();
     return false;
@@ -58,9 +61,11 @@ const apiRequest = async (endpoint: string, options?: RequestInit, useToken = tr
   }).then(async (response) => {
     const contentType = response.headers.get('content-type');
 
-    const data = (await (contentType && contentType.indexOf('application/json') !== -1))
-      ? response.json()
-      : response.text();
+    const data =
+      contentType && contentType.indexOf('application/json') !== -1
+        ? await response.json()
+        : await response.text();
+
     if (!response.ok) {
       throw data;
     } else {
@@ -69,7 +74,7 @@ const apiRequest = async (endpoint: string, options?: RequestInit, useToken = tr
   });
 };
 
-export const login = (username: string, password: string) => {
+export const login = (username: string, password: string): Promise<string> => {
   return apiRequest(
     'token/',
     {
@@ -86,21 +91,48 @@ export const login = (username: string, password: string) => {
   });
 };
 
-export const logout = () => {
+export const logout = (): void => {
   token = '';
   localStorage.removeItem('token');
   window.location.replace(SIGN_IN);
 };
 
-export const getParties = () => apiRequest('parties/');
+/**** Api requests ****/
 
-export const deleteParty = (id: number) => apiRequest(`parties/${id}`, { method: 'DELETE' });
-export const createParty = (data: { name: string; abbreviation: string }) =>
+/* Party requests */
+export const getParties = (): Promise<Array<Party>> => apiRequest('parties/');
+
+export const deleteParty = (abbreviation: string): Promise<void> =>
+  apiRequest(`parties/${abbreviation}`, { method: 'DELETE' });
+
+export const createParty = (data: { name: string; abbreviation: string }): Promise<Party> =>
   apiRequest(`parties/`, { method: 'POST', body: JSON.stringify(data) });
 
-export const getSubjects = () => apiRequest('subjects/');
+/* Subject requests */
+export const getSubjects = (): Promise<Array<Subject>> => apiRequest('subjects/');
 
-export const createSubject = (data: { name: string; related_subject: Array<number> }) =>
-  apiRequest(`subjects/`, { method: 'POST', body: JSON.stringify(data) });
+export const createSubject = (data: {
+  name: string;
+  related_subject: Array<number>;
+}): Promise<Subject> => apiRequest(`subjects/`, { method: 'POST', body: JSON.stringify(data) });
 
-export const deleteSubject = (id: number) => apiRequest(`subjects/${id}`, { method: 'DELETE' });
+export const deleteSubject = (id: number): Promise<void> =>
+  apiRequest(`subjects/${id}`, { method: 'DELETE' });
+
+/* Standpoint requests */
+export const getStandpoints = (uncategroized: boolean): Promise<Array<Standpoint>> => {
+  const params = new URLSearchParams();
+  if (uncategroized) {
+    params.append('uncategroized', uncategroized.toString());
+  }
+  return apiRequest(`standpoints/?${params.toString()}`);
+};
+
+export const updatePartyStandpoints = (abbreviation: string): Promise<Array<Standpoint>> => {
+  const params = new URLSearchParams();
+  params.append('party', abbreviation);
+  return apiRequest(`standpoints/update_standpoints/?${params.toString()}`);
+};
+
+export const updateStandpointCategory = (id: string, subject: string | null): Promise<Standpoint> =>
+  apiRequest(`standpoints/${id}/`, { method: 'PATCH', body: JSON.stringify({ subject }) });

@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import makeStyles from '@material-ui/styles/makeStyles';
+
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -32,62 +35,67 @@ const useStyles = makeStyles({
 
 const SignInForm: React.FC<RouteComponentProps> = ({ history }) => {
   const classes = useStyles();
-  const [error, setError] = useState('');
-  const [values, setValues] = useState({
-    username: '',
-    password: '',
+
+  const form = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+      error: '',
+    },
+    validationSchema: Yup.object({
+      username: Yup.string().required('Username is required'),
+      password: Yup.string().required('Password is required'),
+    }),
+    validateOnMount: true,
+    onSubmit: (values) => {
+      return login(values.username, values.password)
+        .then(() => {
+          history.push(ROUTES.HOME);
+        })
+        .catch((err) => {
+          if (err.detail) {
+            form.setFieldValue('error', err.detail);
+          }
+        });
+    },
   });
-
-  const onSubmit = (event: any) => {
-    event.preventDefault();
-    login(values.username, values.password)
-      .then(() => {
-        history.push(ROUTES.HOME);
-      })
-      .catch((err: any) => {
-        console.log('ERROR');
-        setError(Object.values(err)[0] as string);
-      });
-  };
-
-  const handleChange = (name: string) => (event: any) => {
-    setValues({ ...values, [name]: event.target.value });
-  };
 
   return (
     <Container className={classes.container} maxWidth="sm">
       <img style={{ maxWidth: '100%' }} src="/static/images/partiguiden_logo.svg" alt="logo" />
 
-      <form onSubmit={onSubmit} className={classes.form}>
+      <form onSubmit={form.handleSubmit} className={classes.form}>
         <TextField
           variant="filled"
           id="username"
           label="Username"
-          value={values.username}
-          onChange={handleChange('username')}
+          value={form.values.username}
+          onChange={form.handleChange}
+          onBlur={form.handleBlur}
+          error={form.touched.username && !!form.errors.username}
+          helperText={form.touched.username && form.errors.username}
           margin="normal"
         />
         <TextField
           variant="filled"
           id="password"
-          label="Lösenord"
+          label="Password"
           type="password"
-          onChange={handleChange('password')}
+          onChange={form.handleChange}
+          onBlur={form.handleBlur}
+          error={form.touched.password && !!form.errors.password}
+          helperText={form.touched.password && form.errors.password}
           autoComplete="current-password"
           margin="normal"
           style={{ marginBottom: '2rem' }}
         />
-        <Button
-          variant="contained"
-          disabled={values.password === '' || values.username === ''}
-          type="submit"
-        >
+        <Button variant="contained" disabled={form.isSubmitting || !form.isValid} type="submit">
           Logga in
         </Button>
 
-        {error && (
+        {form.values.error && (
           <Typography variant="body1" color="error">
-            {error}
+            {form.values.error}
           </Typography>
         )}
       </form>

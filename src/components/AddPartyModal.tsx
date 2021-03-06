@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -8,7 +8,8 @@ import {
   DialogActions,
   Button,
 } from '@material-ui/core';
-import { Party } from '../types/parties.d';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { createParty } from '../lib/ApiStore';
 
 const useStyles = makeStyles({
@@ -24,28 +25,29 @@ const useStyles = makeStyles({
 interface Props {
   open: boolean;
   onClose: () => void;
-  appendParty: (newParty: Party) => void;
+  handleGetParties: () => void;
 }
 
-const AddPartyDialog: React.FC<Props> = ({ open, onClose, appendParty }) => {
-  const [form, setForm] = useState({ name: '', abbreviation: '' });
+const AddPartyDialog: React.FC<Props> = ({ open, onClose, handleGetParties }) => {
+  const form = useFormik({
+    initialValues: {
+      name: '',
+      abbreviation: '',
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required('A name is required'),
+      abbreviation: Yup.string().required('An abbreviation is required'),
+    }),
+    onSubmit: (values) => {
+      return createParty(values).then(() => {
+        handleGetParties();
+        onClose();
+      });
+    },
+    validateOnMount: true,
+  });
 
   const classes = useStyles();
-
-  const handleChange = (event: React.ChangeEvent<{ value: unknown; id: string }>) => {
-    event.persist();
-    setForm((prevState) => ({
-      ...prevState,
-      [event.target.id]: event.target.value as string,
-    }));
-  };
-
-  const handleSubmit = () => {
-    createParty(form).then((newSubject: Party) => {
-      appendParty(newSubject);
-      onClose();
-    });
-  };
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
@@ -58,8 +60,11 @@ const AddPartyDialog: React.FC<Props> = ({ open, onClose, appendParty }) => {
           margin="dense"
           id="name"
           label="Name"
-          value={form.name}
-          onChange={handleChange}
+          value={form.values.name}
+          onChange={form.handleChange}
+          onBlur={form.handleBlur}
+          error={form.touched.name && !!form.errors.name}
+          helperText={form.touched.name && form.errors.name}
           classes={{ root: classes.formField }}
         />
         <TextField
@@ -68,8 +73,11 @@ const AddPartyDialog: React.FC<Props> = ({ open, onClose, appendParty }) => {
           margin="dense"
           id="abbreviation"
           label="Abbreviation"
-          value={form.abbreviation}
-          onChange={handleChange}
+          value={form.values.abbreviation}
+          onChange={form.handleChange}
+          onBlur={form.handleBlur}
+          error={form.touched.abbreviation && !!form.errors.abbreviation}
+          helperText={form.touched.abbreviation && form.errors.abbreviation}
           classes={{ root: classes.formField }}
           InputProps={{ classes: { root: classes.squareCorners } }}
         />
@@ -78,7 +86,11 @@ const AddPartyDialog: React.FC<Props> = ({ open, onClose, appendParty }) => {
         <Button onClick={onClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} disabled={!form.name && !form.abbreviation} color="primary">
+        <Button
+          onClick={form.submitForm}
+          disabled={form.isSubmitting || !form.isValid}
+          color="primary"
+        >
           Create
         </Button>
       </DialogActions>

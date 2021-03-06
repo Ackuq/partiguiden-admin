@@ -11,6 +11,7 @@ import SignIn from './SignIn';
 import Subjects from './Subjects';
 import HomePage from './HomePage';
 import Parties from './Parties';
+import Standpoints from './Standpoints';
 
 const App: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const App: React.FC = () => {
             <Route exact path={ROUTES.HOME} component={HomePage} />
             <Route exact path={ROUTES.SUBJECTS} component={Subjects} />
             <Route exact path={ROUTES.PARTIES} component={Parties} />
+            <Route exact path={ROUTES.STANDPOINTS} component={Standpoints} />
           </Layout>
         </Switch>
       </Router>

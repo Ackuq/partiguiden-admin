@@ -1,4 +1,7 @@
 import jwt from 'jsonwebtoken';
+import { Party } from '../types/parties';
+import { Standpoint } from '../types/standpoints';
+import { Subject } from '../types/subjects';
 import { SIGN_IN } from './routes';
 
 const baseApiUrl = process.env.REACT_APP_API_URL as string;
@@ -94,16 +97,32 @@ export const logout = () => {
   window.location.replace(SIGN_IN);
 };
 
-export const getParties = () => apiRequest('parties/');
+/**** Api requests ****/
+
+/* Party requests */
+export const getParties = (): Promise<Array<Party>> => apiRequest('parties/');
 
 export const deleteParty = (abbreviation: string) =>
   apiRequest(`parties/${abbreviation}`, { method: 'DELETE' });
-export const createParty = (data: { name: string; abbreviation: string }) =>
+
+export const createParty = (data: { name: string; abbreviation: string }): Promise<Party> =>
   apiRequest(`parties/`, { method: 'POST', body: JSON.stringify(data) });
 
-export const getSubjects = () => apiRequest('subjects/');
+/* Subject requests */
+export const getSubjects = (): Promise<Array<Subject>> => apiRequest('subjects/');
 
-export const createSubject = (data: { name: string; related_subject: Array<number> }) =>
-  apiRequest(`subjects/`, { method: 'POST', body: JSON.stringify(data) });
+export const createSubject = (data: {
+  name: string;
+  related_subject: Array<number>;
+}): Promise<Subject> => apiRequest(`subjects/`, { method: 'POST', body: JSON.stringify(data) });
 
 export const deleteSubject = (id: number) => apiRequest(`subjects/${id}`, { method: 'DELETE' });
+
+/* Standpoint requests */
+export const getStandpoints = (uncategroized: boolean): Promise<Array<Standpoint>> => {
+  const params = new URLSearchParams();
+  if (uncategroized) {
+    params.append('uncategroized', uncategroized.toString());
+  }
+  return apiRequest(`standpoints/?${params.toString()}`);
+};

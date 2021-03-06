@@ -8,6 +8,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import SubjectIcon from '@material-ui/icons/Subject';
 import HomeIcon from '@material-ui/icons/Home';
 import PartiesIcon from '@material-ui/icons/People';
+import StandpointIcon from '@material-ui/icons/Note';
 
 import * as ROUTES from '../lib/routes';
 
@@ -33,6 +34,12 @@ const NavItems: React.FC = () => {
           <PartiesIcon />
         </ListItemIcon>
         <ListItemText>Parties</ListItemText>
+      </ListItem>
+      <ListItem button onClick={() => history.push(ROUTES.STANDPOINTS)}>
+        <ListItemIcon>
+          <StandpointIcon />
+        </ListItemIcon>
+        <ListItemText>Standpoints</ListItemText>
       </ListItem>
     </>
   );

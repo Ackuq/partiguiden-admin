@@ -15,6 +15,7 @@ import { ClassNameMap } from '@material-ui/styles';
 import { Standpoint } from '../types/standpoints';
 import { Subject } from '../types/subjects';
 import { updateStandpointCategory } from '../lib/ApiStore';
+import { snackbarRef } from '../lib/snackbarRef';
 
 interface Props {
   standpoint: Standpoint;
@@ -37,6 +38,7 @@ const StandpointItem: React.FC<Props> = ({ standpoint, lastItem, classes, subjec
   ) => {
     const newSubject: string | null = (event.target.value as string) ?? null;
     updateStandpointCategory(standpoint.id, newSubject).then((newStandpoint) => {
+      snackbarRef.current?.updateSnack({ severity: 'success', text: 'Category updated' });
       setCurrentSubject(getSubject(newStandpoint.subject));
     });
   };

@@ -23,7 +23,7 @@ const tokenIsValid = (currToken = token) => {
   return true;
 };
 
-export const refreshToken = async () => {
+export const refreshToken = async (): Promise<boolean> => {
   if (!tokenIsValid(refresh)) {
     logout();
     return false;
@@ -74,7 +74,7 @@ const apiRequest = async (endpoint: string, options?: RequestInit, useToken = tr
   });
 };
 
-export const login = (username: string, password: string) => {
+export const login = (username: string, password: string): Promise<string> => {
   return apiRequest(
     'token/',
     {
@@ -91,7 +91,7 @@ export const login = (username: string, password: string) => {
   });
 };
 
-export const logout = () => {
+export const logout = (): void => {
   token = '';
   localStorage.removeItem('token');
   window.location.replace(SIGN_IN);
@@ -102,7 +102,7 @@ export const logout = () => {
 /* Party requests */
 export const getParties = (): Promise<Array<Party>> => apiRequest('parties/');
 
-export const deleteParty = (abbreviation: string) =>
+export const deleteParty = (abbreviation: string): Promise<void> =>
   apiRequest(`parties/${abbreviation}`, { method: 'DELETE' });
 
 export const createParty = (data: { name: string; abbreviation: string }): Promise<Party> =>
@@ -116,7 +116,8 @@ export const createSubject = (data: {
   related_subject: Array<number>;
 }): Promise<Subject> => apiRequest(`subjects/`, { method: 'POST', body: JSON.stringify(data) });
 
-export const deleteSubject = (id: number) => apiRequest(`subjects/${id}`, { method: 'DELETE' });
+export const deleteSubject = (id: number): Promise<void> =>
+  apiRequest(`subjects/${id}`, { method: 'DELETE' });
 
 /* Standpoint requests */
 export const getStandpoints = (uncategroized: boolean): Promise<Array<Standpoint>> => {

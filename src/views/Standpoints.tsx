@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   makeStyles,
   List,
@@ -56,7 +56,7 @@ const Standpoints: React.FC = () => {
 
   const classes = useStyles();
 
-  const handleGetStandpoints = () => {
+  const handleGetStandpoints = useCallback(() => {
     getStandpoints(nullSubjects).then((standpoints) => {
       const data = standpoints.reduce((prev, curr) => {
         if (curr.party in prev) {
@@ -68,11 +68,11 @@ const Standpoints: React.FC = () => {
       setStandpoints(data);
       setLoading(false);
     });
-  };
+  }, [nullSubjects]);
 
   useEffect(() => {
     handleGetStandpoints();
-  }, [nullSubjects]);
+  }, [nullSubjects, handleGetStandpoints]);
 
   if (loading) {
     return <LoadingIndicator />;

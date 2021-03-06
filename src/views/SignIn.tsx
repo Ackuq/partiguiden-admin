@@ -50,7 +50,7 @@ const SignInForm: React.FC<RouteComponentProps> = ({ history }) => {
     onSubmit: (values) => {
       return login(values.username, values.password)
         .then(() => {
-          history.push(ROUTES.HOME);
+          history.push(ROUTES.SUBJECTS);
         })
         .catch((err) => {
           if (err.detail) {

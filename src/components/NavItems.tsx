@@ -6,7 +6,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import SubjectIcon from '@material-ui/icons/Subject';
-import HomeIcon from '@material-ui/icons/Home';
 import PartiesIcon from '@material-ui/icons/People';
 import StandpointIcon from '@material-ui/icons/Note';
 
@@ -17,12 +16,6 @@ const NavItems: React.FC = () => {
 
   return (
     <>
-      <ListItem button onClick={() => history.push(ROUTES.HOME)}>
-        <ListItemIcon>
-          <HomeIcon />
-        </ListItemIcon>
-        <ListItemText>Home</ListItemText>
-      </ListItem>
       <ListItem button onClick={() => history.push(ROUTES.SUBJECTS)}>
         <ListItemIcon>
           <SubjectIcon />

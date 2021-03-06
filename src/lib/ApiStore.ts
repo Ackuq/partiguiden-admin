@@ -97,8 +97,8 @@ export const login = (username: string, password: string): Promise<string> => {
 export const logout = (): void => {
   token = '';
   localStorage.removeItem('token');
+  localStorage.removeItem('refresh');
   window.location.replace(SIGN_IN);
-  snackbarRef.current?.updateSnack({ severity: 'success', text: 'Logged out successfully' });
 };
 
 /**** Api requests ****/

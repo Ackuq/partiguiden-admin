@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -10,6 +10,8 @@ import {
   Button,
   InputLabel,
 } from '@material-ui/core';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { Subject } from '../types/subjects.d';
 import { createSubject } from '../lib/ApiStore';
 
@@ -23,16 +25,27 @@ interface Props {
   open: boolean;
   onClose: () => void;
   subjects: Array<Subject>;
-  appendSubject: (newSubject: Subject) => void;
+  handleGetSubjects: () => void;
 }
 
-interface Form {
-  name: string;
-  related_subject: Array<number>;
-}
-
-const AddSubjectDialog: React.FC<Props> = ({ open, onClose, appendSubject, subjects }) => {
-  const [form, setForm] = useState<Form>({ name: '', related_subject: [] });
+const AddSubjectDialog: React.FC<Props> = ({ open, onClose, handleGetSubjects, subjects }) => {
+  const form = useFormik({
+    initialValues: {
+      name: '',
+      related_subject: [],
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required('Name is required'),
+      relatedSubjects: Yup.array(),
+    }),
+    onSubmit: (values) => {
+      return createSubject(values).then(() => {
+        handleGetSubjects();
+        onClose();
+      });
+    },
+    validateOnMount: true,
+  });
 
   const classes = useStyles();
 
@@ -44,19 +57,8 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, appendSubject, subje
         value.push(parseInt(options[i].value, 10));
       }
     }
-    setForm((prevState) => ({ ...prevState, related_subject: value }));
-  };
 
-  const handleNameChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    event.persist();
-    setForm((prevState) => ({ ...prevState, name: event.target.value as string }));
-  };
-
-  const handleSubmit = () => {
-    createSubject(form).then((newSubject: Subject) => {
-      appendSubject(newSubject);
-      onClose();
-    });
+    form.setFieldValue('related_subject', value);
   };
 
   return (
@@ -70,8 +72,11 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, appendSubject, subje
           margin="dense"
           id="name"
           label="Name"
-          value={form.name}
-          onChange={handleNameChange}
+          value={form.values.name}
+          onChange={form.handleChange}
+          onBlur={form.handleBlur}
+          error={form.touched.name && !!form.errors.name}
+          helperText={form.touched.name && form.errors.name}
           classes={{ root: classes.formField }}
         />
         <InputLabel shrink htmlFor="select-multiple-native">
@@ -81,33 +86,30 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, appendSubject, subje
           fullWidth
           multiple
           native
-          value={form.related_subject}
+          value={form.values.related_subject}
           placeholder="Related subjects"
           onChange={handleRelatedSubjectChange}
           inputProps={{
             id: 'select-multiple-native',
           }}
         >
-          {subjects.map((subject) => {
-            if (subject.id === 1) {
-              return <React.Fragment key={subject.id} />;
-            }
-            return (
-              <option key={subject.id} value={subject.id}>
-                {subject.name}
-              </option>
-            );
-          })}
+          {subjects.map((subject) => (
+            <option key={subject.id} value={subject.id}>
+              {subject.name}
+            </option>
+          ))}
         </Select>
-        <Button onClick={() => setForm((prevState) => ({ ...prevState, related_subject: [] }))}>
-          Deselect all
-        </Button>
+        <Button onClick={() => form.setFieldValue('related_subject', [])}>Deselect all</Button>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} disabled={!form.name} color="primary">
+        <Button
+          onClick={form.submitForm}
+          disabled={form.isSubmitting || !form.isValid}
+          color="primary"
+        >
           Create
         </Button>
       </DialogActions>

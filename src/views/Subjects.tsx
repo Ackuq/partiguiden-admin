@@ -31,11 +31,15 @@ const Subjects: React.FC = () => {
 
   const classes = useStyles();
 
-  useEffect(() => {
+  const handleGetSubjects = () => {
     getSubjects().then((data) => {
       setSubjects(data);
       setLoading(false);
     });
+  };
+
+  useEffect(() => {
+    handleGetSubjects();
   }, []);
 
   const deleteCallback = (id: number) => {
@@ -50,10 +54,6 @@ const Subjects: React.FC = () => {
 
   const toggleAddSubjectModal = () => {
     setAddSubject((prevState) => !prevState);
-  };
-
-  const appendSubject = (newSubject: Subject) => {
-    setSubjects((prevState) => prevState.concat(newSubject));
   };
 
   if (loading) {
@@ -91,7 +91,7 @@ const Subjects: React.FC = () => {
       </List>
       <AddSubjectDialog
         subjects={subjects}
-        appendSubject={appendSubject}
+        handleGetSubjects={handleGetSubjects}
         open={addSubject}
         onClose={toggleAddSubjectModal}
       />

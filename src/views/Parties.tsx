@@ -31,29 +31,29 @@ const Parties: React.FC = () => {
 
   const classes = useStyles();
 
-  useEffect(() => {
+  const handleGetParties = () => {
     getParties().then((data) => {
       setParties(data);
       setLoading(false);
     });
+  };
+
+  useEffect(() => {
+    handleGetParties();
   }, []);
 
-  const deleteCallback = (id: number) => {
+  const deleteCallback = (abbreviation: string) => {
     const confirm = window.confirm('Delete this party?');
 
     if (confirm) {
-      deleteParty(id).then(() => {
-        setParties((prevState) => prevState.filter((party) => party.id !== id));
+      deleteParty(abbreviation).then(() => {
+        handleGetParties();
       });
     }
   };
 
   const toggleAddPartyModal = () => {
     setAddParty((prevState) => !prevState);
-  };
-
-  const appendParty = (newParty: Party) => {
-    setParties((prevState) => prevState.concat(newParty));
   };
 
   if (loading) {
@@ -72,11 +72,15 @@ const Parties: React.FC = () => {
       </Button>
       <List classes={{ root: classes.list }}>
         {parties.map((party, index) => (
-          <React.Fragment key={party.id}>
+          <React.Fragment key={party.abbreviation}>
             <ListItem>
               <ListItemText primary={party.name} />
               <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="delete" onClick={() => deleteCallback(party.id)}>
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  onClick={() => deleteCallback(party.abbreviation)}
+                >
                   <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -85,7 +89,11 @@ const Parties: React.FC = () => {
           </React.Fragment>
         ))}
       </List>
-      <AddPartyDialog appendParty={appendParty} open={addParty} onClose={toggleAddPartyModal} />
+      <AddPartyDialog
+        handleGetParties={handleGetParties}
+        open={addParty}
+        onClose={toggleAddPartyModal}
+      />
     </div>
   );
 };

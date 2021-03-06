@@ -5,5 +5,5 @@ export interface Standpoint {
   date: string;
   link: string;
   party: string;
-  subject?: string;
+  subject?: number;
 }

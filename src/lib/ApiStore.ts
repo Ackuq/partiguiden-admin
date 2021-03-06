@@ -127,3 +127,12 @@ export const getStandpoints = (uncategroized: boolean): Promise<Array<Standpoint
   }
   return apiRequest(`standpoints/?${params.toString()}`);
 };
+
+export const updatePartyStandpoints = (abbreviation: string): Promise<Array<Standpoint>> => {
+  const params = new URLSearchParams();
+  params.append('party', abbreviation);
+  return apiRequest(`standpoints/update_standpoints/?${params.toString()}`);
+};
+
+export const updateStandpointCategory = (id: string, subject: string | null): Promise<Standpoint> =>
+  apiRequest(`standpoints/${id}/`, { method: 'PATCH', body: JSON.stringify({ subject }) });

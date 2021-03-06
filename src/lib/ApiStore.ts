@@ -3,6 +3,7 @@ import { Party } from '../types/parties';
 import { Standpoint } from '../types/standpoints';
 import { Subject } from '../types/subjects';
 import { SIGN_IN } from './routes';
+import { snackbarRef } from './snackbarRef';
 
 const baseApiUrl = process.env.REACT_APP_API_URL as string;
 
@@ -67,6 +68,7 @@ const apiRequest = async (endpoint: string, options?: RequestInit, useToken = tr
         : await response.text();
 
     if (!response.ok) {
+      snackbarRef.current?.updateSnack({ severity: 'error', text: response.statusText });
       throw data;
     } else {
       return data;
@@ -87,6 +89,7 @@ export const login = (username: string, password: string): Promise<string> => {
     refresh = data.refresh;
     localStorage.setItem('token', token);
     localStorage.setItem('refresh', refresh);
+    snackbarRef.current?.updateSnack({ severity: 'success', text: 'Logged in successfully' });
     return token;
   });
 };
@@ -95,6 +98,7 @@ export const logout = (): void => {
   token = '';
   localStorage.removeItem('token');
   window.location.replace(SIGN_IN);
+  snackbarRef.current?.updateSnack({ severity: 'success', text: 'Logged out successfully' });
 };
 
 /**** Api requests ****/

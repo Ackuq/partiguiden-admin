@@ -14,6 +14,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Subject } from '../types/subjects.d';
 import { createSubject } from '../lib/ApiStore';
+import { snackbarRef } from '../lib/snackbarRef';
 
 const useStyles = makeStyles({
   formField: {
@@ -41,6 +42,7 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, handleGetSubjects, s
     onSubmit: (values) => {
       return createSubject(values).then(() => {
         handleGetSubjects();
+        snackbarRef.current?.updateSnack({ severity: 'success', text: 'Subject created' });
         onClose();
       });
     },

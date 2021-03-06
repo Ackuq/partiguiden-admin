@@ -18,6 +18,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import { Party } from '../types/parties.d';
 import AddPartyDialog from '../components/AddPartyModal';
 import { Update } from '@material-ui/icons';
+import { snackbarRef } from '../lib/snackbarRef';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -58,7 +59,10 @@ const Parties: React.FC = () => {
 
     if (confirm) {
       updatePartyStandpoints(id).then(() => {
-        window.alert('Successfully updated party');
+        snackbarRef.current?.updateSnack({
+          severity: 'success',
+          text: 'Successfully updated standpoints',
+        });
       });
     }
   };

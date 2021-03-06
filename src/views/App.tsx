@@ -6,12 +6,15 @@ import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import * as ROUTES from '../lib/routes';
 import theme from '../lib/theme';
 
+import Snackbar from '../components/Snackbar';
+
 import Layout from './Layout';
 import SignIn from './SignIn';
 import Subjects from './Subjects';
 import HomePage from './HomePage';
 import Parties from './Parties';
 import Standpoints from './Standpoints';
+import { snackbarRef } from '../lib/snackbarRef';
 
 const App: React.FC = () => {
   return (
@@ -28,6 +31,7 @@ const App: React.FC = () => {
           </Layout>
         </Switch>
       </Router>
+      <Snackbar ref={snackbarRef} />
     </ThemeProvider>
   );
 };

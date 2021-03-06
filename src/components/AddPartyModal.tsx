@@ -11,6 +11,7 @@ import {
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { createParty } from '../lib/ApiStore';
+import { snackbarRef } from '../lib/snackbarRef';
 
 const useStyles = makeStyles({
   formField: {
@@ -41,6 +42,7 @@ const AddPartyDialog: React.FC<Props> = ({ open, onClose, handleGetParties }) =>
     onSubmit: (values) => {
       return createParty(values).then(() => {
         handleGetParties();
+        snackbarRef.current?.updateSnack({ severity: 'success', text: 'Party created' });
         onClose();
       });
     },

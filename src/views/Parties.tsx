@@ -43,21 +43,21 @@ const Parties: React.FC = () => {
     handleGetParties();
   }, []);
 
-  const deleteCallback = (abbreviation: string) => {
+  const deleteCallback = (id: string) => {
     const confirm = window.confirm('Delete this party?');
 
     if (confirm) {
-      deleteParty(abbreviation).then(() => {
+      deleteParty(id).then(() => {
         handleGetParties();
       });
     }
   };
 
-  const updateStandpoints = (abbreviation: string) => {
+  const updateStandpoints = (id: string) => {
     const confirm = window.confirm('Update standpoints for this party?');
 
     if (confirm) {
-      updatePartyStandpoints(abbreviation).then(() => {
+      updatePartyStandpoints(id).then(() => {
         window.alert('Successfully updated party');
       });
     }
@@ -83,22 +83,18 @@ const Parties: React.FC = () => {
       </Button>
       <List classes={{ root: classes.list }}>
         {parties.map((party, index) => (
-          <React.Fragment key={party.abbreviation}>
+          <React.Fragment key={party.id}>
             <ListItem>
               <ListItemText primary={party.name} />
               <ListItemSecondaryAction>
                 <IconButton
                   edge="end"
                   aria-label="delete"
-                  onClick={() => updateStandpoints(party.abbreviation)}
+                  onClick={() => updateStandpoints(party.id)}
                 >
                   <Update />
                 </IconButton>
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => deleteCallback(party.abbreviation)}
-                >
+                <IconButton edge="end" aria-label="delete" onClick={() => deleteCallback(party.id)}>
                   <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>

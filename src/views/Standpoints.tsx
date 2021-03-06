@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface StandpointDict {
-  [abbreviation: string]: Array<Standpoint>;
+  [id: string]: Array<Standpoint>;
 }
 
 const Standpoints: React.FC = () => {
@@ -124,9 +124,9 @@ const Standpoints: React.FC = () => {
               onChange={handleSelectParty}
             >
               <MenuItem>-</MenuItem>
-              {Object.keys(standpoints).map((abbreviation) => (
-                <MenuItem key={abbreviation} value={abbreviation}>
-                  {abbreviation}
+              {Object.keys(standpoints).map((id) => (
+                <MenuItem key={id} value={id}>
+                  {id}
                 </MenuItem>
               ))}
             </Select>
@@ -139,19 +139,19 @@ const Standpoints: React.FC = () => {
         </Toolbar>
       </AppBar>
       {Object.keys(standpoints)
-        .filter((abbreviation) => !selectedParty || abbreviation === selectedParty)
-        .map((abbreviation) => (
-          <Accordion key={abbreviation} square TransitionProps={{ timeout: 500 }}>
+        .filter((partyId) => !selectedParty || partyId === selectedParty)
+        .map((partyId) => (
+          <Accordion key={partyId} square TransitionProps={{ timeout: 500 }}>
             <AccordionSummary expandIcon={<ExpandMore />}>
-              <Typography variant="h5">{abbreviation}</Typography>
+              <Typography variant="h5">{partyId}</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <List classes={{ root: classes.list }}>
-                {standpoints[abbreviation].sort(sortStandpoints).map((standpoint, index) => (
+                {standpoints[partyId].sort(sortStandpoints).map((standpoint, index) => (
                   <StandpointItem
                     key={standpoint.id}
                     standpoint={standpoint}
-                    lastItem={index === standpoints[abbreviation].length - 1}
+                    lastItem={index === standpoints[partyId].length - 1}
                     subjects={subjects}
                     classes={classes}
                   />

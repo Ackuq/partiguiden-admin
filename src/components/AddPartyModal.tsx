@@ -32,11 +32,11 @@ const AddPartyDialog: React.FC<Props> = ({ open, onClose, handleGetParties }) =>
   const form = useFormik({
     initialValues: {
       name: '',
-      abbreviation: '',
+      id: '',
     },
     validationSchema: Yup.object({
       name: Yup.string().required('A name is required'),
-      abbreviation: Yup.string().required('An abbreviation is required'),
+      id: Yup.string().required('An abbreviation is required'),
     }),
     onSubmit: (values) => {
       return createParty(values).then(() => {
@@ -71,13 +71,13 @@ const AddPartyDialog: React.FC<Props> = ({ open, onClose, handleGetParties }) =>
           fullWidth
           variant="filled"
           margin="dense"
-          id="abbreviation"
+          id="id"
           label="Abbreviation"
-          value={form.values.abbreviation}
+          value={form.values.id}
           onChange={form.handleChange}
           onBlur={form.handleBlur}
-          error={form.touched.abbreviation && !!form.errors.abbreviation}
-          helperText={form.touched.abbreviation && form.errors.abbreviation}
+          error={form.touched.id && !!form.errors.id}
+          helperText={form.touched.id && form.errors.id}
           classes={{ root: classes.formField }}
           InputProps={{ classes: { root: classes.squareCorners } }}
         />

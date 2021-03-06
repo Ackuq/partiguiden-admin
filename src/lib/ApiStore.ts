@@ -102,10 +102,10 @@ export const logout = (): void => {
 /* Party requests */
 export const getParties = (): Promise<Array<Party>> => apiRequest('parties/');
 
-export const deleteParty = (abbreviation: string): Promise<void> =>
-  apiRequest(`parties/${abbreviation}`, { method: 'DELETE' });
+export const deleteParty = (id: string): Promise<void> =>
+  apiRequest(`parties/${id}`, { method: 'DELETE' });
 
-export const createParty = (data: { name: string; abbreviation: string }): Promise<Party> =>
+export const createParty = (data: { name: string; id: string }): Promise<Party> =>
   apiRequest(`parties/`, { method: 'POST', body: JSON.stringify(data) });
 
 /* Subject requests */
@@ -128,9 +128,9 @@ export const getStandpoints = (uncategroized: boolean): Promise<Array<Standpoint
   return apiRequest(`standpoints/?${params.toString()}`);
 };
 
-export const updatePartyStandpoints = (abbreviation: string): Promise<Array<Standpoint>> => {
+export const updatePartyStandpoints = (id: string): Promise<Array<Standpoint>> => {
   const params = new URLSearchParams();
-  params.append('party', abbreviation);
+  params.append('party', id);
   return apiRequest(`standpoints/update_standpoints/?${params.toString()}`);
 };
 

@@ -9,16 +9,20 @@ import {
   ListItemSecondaryAction,
   IconButton,
 } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
+import {
+  Add as AddIcon,
+  Delete as DeleteIcon,
+  Edit as EditIcon,
+  Update as UpdateIcon,
+} from '@material-ui/icons';
 
 import { getParties, deleteParty, updatePartyStandpoints } from '../lib/ApiStore';
 import LoadingIndicator from '../components/LoadingIndicator';
 
 import { Party } from '../types/parties.d';
-import AddPartyDialog from '../components/AddPartyModal';
-import { Update } from '@material-ui/icons';
+import AddPartyDialog from '../components/AddPartyDialog';
 import { snackbarRef } from '../lib/snackbarRef';
+import ChangePartyDialog from '../components/ChangePartyDialog';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -30,6 +34,7 @@ const Parties: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [parties, setParties] = useState<Array<Party>>([]);
   const [addParty, setAddParty] = useState(false);
+  const [changeParty, setChangeParty] = useState<Party>();
 
   const classes = useStyles();
 
@@ -71,6 +76,14 @@ const Parties: React.FC = () => {
     setAddParty((prevState) => !prevState);
   };
 
+  const changePartyOpen = (party: Party) => {
+    setChangeParty(party);
+  };
+
+  const changePartyClose = () => {
+    setChangeParty(undefined);
+  };
+
   if (loading) {
     return <LoadingIndicator />;
   }
@@ -93,12 +106,23 @@ const Parties: React.FC = () => {
               <ListItemSecondaryAction>
                 <IconButton
                   edge="end"
-                  aria-label="delete"
+                  aria-label={`change-${party.name}`}
+                  onClick={() => changePartyOpen(party)}
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  edge="end"
+                  aria-label={`update-${party.name}`}
                   onClick={() => updateStandpoints(party.id)}
                 >
-                  <Update />
+                  <UpdateIcon />
                 </IconButton>
-                <IconButton edge="end" aria-label="delete" onClick={() => deleteCallback(party.id)}>
+                <IconButton
+                  edge="end"
+                  aria-label={`delete-${party.name}`}
+                  onClick={() => deleteCallback(party.id)}
+                >
                   <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -111,6 +135,12 @@ const Parties: React.FC = () => {
         handleGetParties={handleGetParties}
         open={addParty}
         onClose={toggleAddPartyModal}
+      />
+      <ChangePartyDialog
+        handleGetParties={handleGetParties}
+        open={!!changeParty}
+        onClose={changePartyClose}
+        party={changeParty}
       />
     </div>
   );

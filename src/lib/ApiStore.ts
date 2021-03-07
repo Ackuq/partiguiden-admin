@@ -109,19 +109,28 @@ export const getParties = (): Promise<Array<Party>> => apiRequest('parties/');
 export const deleteParty = (id: string): Promise<void> =>
   apiRequest(`parties/${id}`, { method: 'DELETE' });
 
+export const updateParty = (id: string, data: { name: string }): Promise<Party> =>
+  apiRequest(`parties/${id}/`, { method: 'PUT', body: JSON.stringify(data) });
+
 export const createParty = (data: { name: string; id: string }): Promise<Party> =>
   apiRequest(`parties/`, { method: 'POST', body: JSON.stringify(data) });
 
 /* Subject requests */
 export const getSubjects = (): Promise<Array<Subject>> => apiRequest('subjects/');
 
-export const createSubject = (data: {
+interface SubjectData {
   name: string;
   related_subject: Array<number>;
-}): Promise<Subject> => apiRequest(`subjects/`, { method: 'POST', body: JSON.stringify(data) });
+}
+
+export const createSubject = (data: SubjectData): Promise<Subject> =>
+  apiRequest(`subjects/`, { method: 'POST', body: JSON.stringify(data) });
+
+export const updateSubject = (id: number, data: SubjectData): Promise<Subject> =>
+  apiRequest(`subjects/${id}/`, { method: 'PUT', body: JSON.stringify(data) });
 
 export const deleteSubject = (id: number): Promise<void> =>
-  apiRequest(`subjects/${id}`, { method: 'DELETE' });
+  apiRequest(`subjects/${id}/`, { method: 'DELETE' });
 
 /* Standpoint requests */
 export const getStandpoints = (uncategroized: boolean): Promise<Array<Standpoint>> => {

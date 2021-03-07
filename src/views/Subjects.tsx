@@ -9,14 +9,14 @@ import {
   ListItemSecondaryAction,
   IconButton,
 } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Add as AddIcon, Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
 
 import { getSubjects, deleteSubject } from '../lib/ApiStore';
 import LoadingIndicator from '../components/LoadingIndicator';
-import AddSubjectDialog from '../components/AddSubjectModal';
+import AddSubjectDialog from '../components/AddSubjectDialog';
 
 import { Subject } from '../types/subjects.d';
+import ChangeSubjectDialog from '../components/ChangeSubjectDialog';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -28,6 +28,7 @@ const Subjects: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [subjects, setSubjects] = useState<Array<Subject>>([]);
   const [addSubject, setAddSubject] = useState(false);
+  const [changeSubject, setChangeSubject] = useState<Subject>();
 
   const classes = useStyles();
 
@@ -56,6 +57,14 @@ const Subjects: React.FC = () => {
     setAddSubject((prevState) => !prevState);
   };
 
+  const changeSubjectOpen = (subject: Subject) => {
+    setChangeSubject(subject);
+  };
+
+  const changeSubjectClose = () => {
+    setChangeSubject(undefined);
+  };
+
   if (loading) {
     return <LoadingIndicator />;
   }
@@ -78,7 +87,14 @@ const Subjects: React.FC = () => {
               <ListItemSecondaryAction>
                 <IconButton
                   edge="end"
-                  aria-label="delete"
+                  aria-label={`change-${subject.name}`}
+                  onClick={() => changeSubjectOpen(subject)}
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  edge="end"
+                  aria-label={`delete-${subject.name}`}
                   onClick={() => deleteCallback(subject.id)}
                 >
                   <DeleteIcon />
@@ -94,6 +110,13 @@ const Subjects: React.FC = () => {
         handleGetSubjects={handleGetSubjects}
         open={addSubject}
         onClose={toggleAddSubjectModal}
+      />
+      <ChangeSubjectDialog
+        subjects={subjects}
+        handleGetSubjects={handleGetSubjects}
+        open={!!changeSubject}
+        onClose={changeSubjectClose}
+        subject={changeSubject}
       />
     </div>
   );

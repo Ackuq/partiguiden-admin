@@ -43,6 +43,7 @@ const AddPartyDialog: React.FC<Props> = ({ open, onClose, handleGetParties }) =>
       return createParty(values).then(() => {
         handleGetParties();
         snackbarRef.current?.updateSnack({ severity: 'success', text: 'Party created' });
+        form.resetForm();
         onClose();
       });
     },
@@ -53,7 +54,7 @@ const AddPartyDialog: React.FC<Props> = ({ open, onClose, handleGetParties }) =>
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
-      <DialogTitle>Add subject</DialogTitle>
+      <DialogTitle>Add party</DialogTitle>
       <DialogContent>
         <TextField
           fullWidth

@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Subject } from '../types/subjects.d';
+import { Subject } from '../types/subjects';
 import { createSubject } from '../lib/ApiStore';
 import { snackbarRef } from '../lib/snackbarRef';
 
@@ -43,6 +43,7 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, handleGetSubjects, s
       return createSubject(values).then(() => {
         handleGetSubjects();
         snackbarRef.current?.updateSnack({ severity: 'success', text: 'Subject created' });
+        form.resetForm();
         onClose();
       });
     },

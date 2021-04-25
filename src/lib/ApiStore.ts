@@ -3,14 +3,12 @@ import { Party } from '../types/parties';
 import { Standpoint } from '../types/standpoints';
 import { Subject } from '../types/subjects';
 import { SIGN_IN } from './routes';
-import { snackbarRef } from './snackbarRef';
+import snackbarRef from './snackbarRef';
 
 const baseApiUrl = process.env.REACT_APP_API_URL as string;
 
 let token = localStorage.getItem('token') || '';
 let refresh = localStorage.getItem('refresh') || '';
-
-export const isAuthenticated = !!token;
 
 const tokenIsValid = (currToken = token) => {
   try {
@@ -24,34 +22,14 @@ const tokenIsValid = (currToken = token) => {
   return true;
 };
 
-export const refreshToken = async (): Promise<boolean> => {
-  if (!tokenIsValid(refresh)) {
-    logout();
-    return false;
-  }
-  try {
-    const { access } = await apiRequest(
-      'refresh/',
-      { method: 'POST', body: JSON.stringify({ refresh }) },
-      false
-    );
-    token = access;
-    localStorage.setItem('token', access);
-    return true;
-  } catch (error) {
-    logout();
-    return false;
-  }
+export const logout = (): void => {
+  token = '';
+  localStorage.removeItem('token');
+  localStorage.removeItem('refresh');
+  window.location.replace(SIGN_IN);
 };
 
-const apiRequest = async (endpoint: string, options?: RequestInit, useToken = true) => {
-  if (useToken) {
-    if (!tokenIsValid()) {
-      if (!(await refreshToken())) {
-        return false;
-      }
-    }
-  }
+const makeRequest = (endpoint: string, options?: RequestInit, useToken?: boolean) => {
   return fetch(`${baseApiUrl}/${endpoint}`, {
     ...options,
     headers: {
@@ -76,6 +54,39 @@ const apiRequest = async (endpoint: string, options?: RequestInit, useToken = tr
   });
 };
 
+export const refreshToken = async (): Promise<boolean> => {
+  if (!tokenIsValid(refresh)) {
+    logout();
+    return false;
+  }
+  try {
+    const { access } = await makeRequest(
+      'refresh/',
+      { method: 'POST', body: JSON.stringify({ refresh }) },
+      false
+    );
+    token = access;
+    localStorage.setItem('token', access);
+    return true;
+  } catch (error) {
+    logout();
+    return false;
+  }
+};
+
+const apiRequest = async (endpoint: string, options?: RequestInit, useToken = true) => {
+  if (useToken) {
+    if (!tokenIsValid()) {
+      if (!(await refreshToken())) {
+        return false;
+      }
+    }
+  }
+  return makeRequest(endpoint, options, useToken);
+};
+
+export const isAuthenticated = !!token;
+
 export const login = (username: string, password: string): Promise<string> => {
   return apiRequest(
     'token/',
@@ -94,14 +105,7 @@ export const login = (username: string, password: string): Promise<string> => {
   });
 };
 
-export const logout = (): void => {
-  token = '';
-  localStorage.removeItem('token');
-  localStorage.removeItem('refresh');
-  window.location.replace(SIGN_IN);
-};
-
-/**** Api requests ****/
+/** ** Api requests *** */
 
 /* Party requests */
 export const getParties = (): Promise<Array<Party>> => apiRequest('parties/');

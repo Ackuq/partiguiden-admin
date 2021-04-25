@@ -1,4 +1,6 @@
 import React from 'react';
 import { SnackbarInterface } from '../components/Snackbar';
 
-export const snackbarRef = React.createRef<SnackbarInterface>();
+const snackbarRef = React.createRef<SnackbarInterface>();
+
+export default snackbarRef;

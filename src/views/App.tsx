@@ -13,7 +13,7 @@ import SignIn from './SignIn';
 import Subjects from './Subjects';
 import Parties from './Parties';
 import Standpoints from './Standpoints';
-import { snackbarRef } from '../lib/snackbarRef';
+import snackbarRef from '../lib/snackbarRef';
 
 const App: React.FC = () => {
   return (

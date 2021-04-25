@@ -15,7 +15,7 @@ import { ClassNameMap } from '@material-ui/styles';
 import { Standpoint } from '../types/standpoints';
 import { Subject } from '../types/subjects';
 import { updateStandpointCategory } from '../lib/ApiStore';
-import { snackbarRef } from '../lib/snackbarRef';
+import snackbarRef from '../lib/snackbarRef';
 
 interface Props {
   standpoint: Standpoint;
@@ -44,7 +44,7 @@ const StandpointItem: React.FC<Props> = ({ standpoint, lastItem, classes, subjec
   };
 
   return (
-    <React.Fragment>
+    <>
       <ListItem classes={{ container: classes.standpointMargin }}>
         <ListItemText
           primaryTypographyProps={{
@@ -76,7 +76,7 @@ const StandpointItem: React.FC<Props> = ({ standpoint, lastItem, classes, subjec
       </ListItem>
 
       {!lastItem && <Divider />}
-    </React.Fragment>
+    </>
   );
 };
 export default StandpointItem;

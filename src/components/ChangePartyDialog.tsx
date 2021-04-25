@@ -11,7 +11,7 @@ import {
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { updateParty } from '../lib/ApiStore';
-import { snackbarRef } from '../lib/snackbarRef';
+import snackbarRef from '../lib/snackbarRef';
 import { Party } from '../types/parties';
 
 const useStyles = makeStyles({
@@ -80,7 +80,7 @@ const ChangePartyDialog: React.FC<Props> = ({ open, onClose, party, handleGetPar
         />
         <TextField
           fullWidth
-          disabled={true}
+          disabled
           variant="filled"
           margin="dense"
           id="id"

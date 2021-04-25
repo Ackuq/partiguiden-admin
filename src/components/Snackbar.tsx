@@ -16,8 +16,8 @@ const Snackbar = React.forwardRef((_, ref) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState<Message>({ severity: 'success', text: '' });
 
-  const updateSnack = (message: Message) => {
-    setMessage(message);
+  const updateSnack = (newMessage: Message) => {
+    setMessage(newMessage);
     setOpen(true);
   };
 

@@ -11,7 +11,7 @@ import {
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { createParty } from '../lib/ApiStore';
-import { snackbarRef } from '../lib/snackbarRef';
+import snackbarRef from '../lib/snackbarRef';
 
 const useStyles = makeStyles({
   formField: {

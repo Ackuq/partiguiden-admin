@@ -16,11 +16,12 @@ import {
   FormControlLabel,
 } from '@material-ui/core';
 
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 import { getStandpoints, getSubjects } from '../lib/ApiStore';
 import LoadingIndicator from '../components/LoadingIndicator';
 
 import { Standpoint } from '../types/standpoints';
-import { ExpandMore } from '@material-ui/icons';
 import { Subject } from '../types/subjects';
 import StandpointItem from '../components/StandpointItem';
 
@@ -70,9 +71,8 @@ const Standpoints: React.FC = () => {
       const data = allStandpoints.reduce((prev, curr) => {
         if (curr.party in prev) {
           return { ...prev, [curr.party]: [...prev[curr.party], curr] };
-        } else {
-          return { ...prev, [curr.party]: [curr] };
         }
+        return { ...prev, [curr.party]: [curr] };
       }, {} as StandpointDict);
       setSubjects(allSubjects);
       setStandpoints(data);
@@ -142,7 +142,7 @@ const Standpoints: React.FC = () => {
         .filter((partyId) => !selectedParty || partyId === selectedParty)
         .map((partyId) => (
           <Accordion key={partyId} square TransitionProps={{ timeout: 500 }}>
-            <AccordionSummary expandIcon={<ExpandMore />}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Typography variant="h5">{partyId}</Typography>
             </AccordionSummary>
             <AccordionDetails>

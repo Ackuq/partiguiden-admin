@@ -21,7 +21,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 
 import { Party } from '../types/parties.d';
 import AddPartyDialog from '../components/AddPartyDialog';
-import { snackbarRef } from '../lib/snackbarRef';
+import snackbarRef from '../lib/snackbarRef';
 import ChangePartyDialog from '../components/ChangePartyDialog';
 
 const useStyles = makeStyles((theme) => ({

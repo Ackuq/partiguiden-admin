@@ -14,7 +14,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Subject } from '../types/subjects';
 import { updateSubject } from '../lib/ApiStore';
-import { snackbarRef } from '../lib/snackbarRef';
+import snackbarRef from '../lib/snackbarRef';
 
 const useStyles = makeStyles({
   formField: {
@@ -108,9 +108,9 @@ const ChangeSubjectDialog: React.FC<Props> = ({
             id: 'select-multiple-native',
           }}
         >
-          {subjects.map((subject) => (
-            <option key={subject.id} value={subject.id}>
-              {subject.name}
+          {subjects.map((subjectEntry) => (
+            <option key={subjectEntry.id} value={subjectEntry.id}>
+              {subjectEntry.name}
             </option>
           ))}
         </Select>

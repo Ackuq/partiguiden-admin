@@ -68,7 +68,7 @@ const Layout: React.FC = ({ children }) => {
   };
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated()) {
       refreshToken();
     }
   }, []);

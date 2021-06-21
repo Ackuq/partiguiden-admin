@@ -7,14 +7,21 @@ import snackbarRef from './snackbarRef';
 
 const baseApiUrl = process.env.REACT_APP_API_URL as string;
 
-let token = localStorage.getItem('token') || '';
-let refresh = localStorage.getItem('refresh') || '';
+enum TokenKey {
+  ACCESS = 'token',
+  REFRESH = 'refresh',
+}
 
-const tokenIsValid = (currToken = token) => {
+const getToken = (key: TokenKey) => {
+  return localStorage.getItem(key) || '';
+};
+
+const tokenIsValid = (currToken = getToken(TokenKey.ACCESS)) => {
   /* Local check that checks whether this token is expired or not */
   try {
     const decoded = jwt.decode(currToken, { complete: true });
-    if (decoded && Date.now() >= (decoded?.payload?.exp ?? 0 * 1000)) {
+
+    if (decoded && Date.now() >= (decoded?.payload?.exp ?? 0) * 1000) {
       return false;
     }
   } catch (_error) {
@@ -24,9 +31,8 @@ const tokenIsValid = (currToken = token) => {
 };
 
 export const logout = (): void => {
-  token = '';
-  localStorage.removeItem('token');
-  localStorage.removeItem('refresh');
+  localStorage.removeItem(TokenKey.ACCESS);
+  localStorage.removeItem(TokenKey.REFRESH);
   window.location.replace(SIGN_IN);
 };
 
@@ -36,7 +42,7 @@ const makeRequest = (endpoint: string, options?: RequestInit, useToken?: boolean
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: useToken ? `Bearer ${token}` : '',
+      Authorization: useToken ? `Bearer ${getToken(TokenKey.ACCESS)}` : '',
     },
   }).then(async (response) => {
     const contentType = response.headers.get('content-type');
@@ -56,18 +62,17 @@ const makeRequest = (endpoint: string, options?: RequestInit, useToken?: boolean
 };
 
 export const refreshToken = async (): Promise<boolean> => {
-  if (!tokenIsValid(refresh)) {
+  if (!tokenIsValid(getToken(TokenKey.REFRESH))) {
     logout();
     return false;
   }
   try {
     const { access } = await makeRequest(
       'refresh/',
-      { method: 'POST', body: JSON.stringify({ refresh }) },
+      { method: 'POST', body: JSON.stringify({ refresh: getToken(TokenKey.REFRESH) }) },
       false
     );
-    token = access;
-    localStorage.setItem('token', access);
+    localStorage.setItem(TokenKey.ACCESS, access);
     return true;
   } catch (error) {
     logout();
@@ -79,14 +84,14 @@ const apiRequest = async (endpoint: string, options?: RequestInit, useToken = tr
   if (useToken) {
     if (!tokenIsValid()) {
       if (!(await refreshToken())) {
-        return false;
+        throw new Error('Could not authenticate');
       }
     }
   }
   return makeRequest(endpoint, options, useToken);
 };
 
-export const isAuthenticated = !!token;
+export const isAuthenticated = (): boolean => !!getToken(TokenKey.ACCESS);
 
 export const login = (username: string, password: string): Promise<string> => {
   return apiRequest(
@@ -97,12 +102,12 @@ export const login = (username: string, password: string): Promise<string> => {
     },
     false
   ).then((data) => {
-    token = data.access;
-    refresh = data.refresh;
-    localStorage.setItem('token', token);
-    localStorage.setItem('refresh', refresh);
+    const { access } = data;
+    const { refresh } = data;
+    localStorage.setItem(TokenKey.ACCESS, access);
+    localStorage.setItem(TokenKey.REFRESH, refresh);
     snackbarRef.current?.updateSnack({ severity: 'success', text: 'Logged in successfully' });
-    return token;
+    return access;
   });
 };
 

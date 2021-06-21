@@ -11,9 +11,10 @@ let token = localStorage.getItem('token') || '';
 let refresh = localStorage.getItem('refresh') || '';
 
 const tokenIsValid = (currToken = token) => {
+  /* Local check that checks whether this token is expired or not */
   try {
-    const decoded = jwt.decode(currToken, { json: true });
-    if (decoded && Date.now() >= decoded.exp * 1000) {
+    const decoded = jwt.decode(currToken, { complete: true });
+    if (decoded && Date.now() >= (decoded?.payload?.exp ?? 0 * 1000)) {
       return false;
     }
   } catch (_error) {

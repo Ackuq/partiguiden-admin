@@ -143,10 +143,10 @@ export const deleteSubject = (id: number): Promise<void> =>
   apiRequest(`subjects/${id}/`, { method: 'DELETE' });
 
 /* Standpoint requests */
-export const getStandpoints = (uncategroized: boolean): Promise<Array<Standpoint>> => {
+export const getStandpoints = (uncategorized: boolean): Promise<Array<Standpoint>> => {
   const params = new URLSearchParams();
-  if (uncategroized) {
-    params.append('uncategroized', uncategroized.toString());
+  if (uncategorized) {
+    params.append('uncategroized', uncategorized.toString());
   }
   return apiRequest(`standpoints/?${params.toString()}`);
 };

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Party } from '../types/parties';
 import { Standpoint } from '../types/standpoints';
-import { Subject } from '../types/subjects';
+import { Subject, SubjectListEntry } from '../types/subjects';
 import { SIGN_IN } from './routes';
 import snackbarRef from './snackbarRef';
 
@@ -126,11 +126,11 @@ export const createParty = (data: { name: string; id: string }): Promise<Party> 
   apiRequest(`parties/`, { method: 'POST', body: JSON.stringify(data) });
 
 /* Subject requests */
-export const getSubjects = (): Promise<Array<Subject>> => apiRequest('subjects/');
+export const getSubjects = (): Promise<Array<SubjectListEntry>> => apiRequest('subjects/');
 
 interface SubjectData {
   name: string;
-  related_subject: Array<number>;
+  related_subjects_ids: Array<number>;
 }
 
 export const createSubject = (data: SubjectData): Promise<Subject> =>

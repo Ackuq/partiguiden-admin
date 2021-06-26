@@ -22,7 +22,7 @@ import { getStandpoints, getSubjects } from '../lib/ApiStore';
 import LoadingIndicator from '../components/LoadingIndicator';
 
 import { Standpoint } from '../types/standpoints';
-import { Subject } from '../types/subjects';
+import { SubjectListEntry } from '../types/subjects';
 import StandpointItem from '../components/StandpointItem';
 
 const useStyles = makeStyles((theme) => ({
@@ -57,12 +57,12 @@ const Standpoints: React.FC = () => {
   const [selectedParty, setSelectedParty] = useState<string>();
   const [nullSubjects, setNullSubjects] = useState<boolean>(false);
   const [standpoints, setStandpoints] = useState<StandpointDict>({});
-  const [subjects, setSubjects] = useState<Array<Subject>>();
+  const [subjects, setSubjects] = useState<Array<SubjectListEntry>>();
 
   const classes = useStyles();
 
   const handleGetStandpoints = useCallback(() => {
-    const promises: [Promise<Array<Standpoint>>, Promise<Array<Subject>>] = [
+    const promises: [Promise<Array<Standpoint>>, Promise<Array<SubjectListEntry>>] = [
       getStandpoints(nullSubjects),
       getSubjects(),
     ];

@@ -15,7 +15,7 @@ import { getSubjects, deleteSubject } from '../lib/ApiStore';
 import LoadingIndicator from '../components/LoadingIndicator';
 import AddSubjectDialog from '../components/AddSubjectDialog';
 
-import { Subject } from '../types/subjects.d';
+import { SubjectListEntry } from '../types/subjects.d';
 import ChangeSubjectDialog from '../components/ChangeSubjectDialog';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Subjects: React.FC = () => {
   const [loading, setLoading] = useState(true);
-  const [subjects, setSubjects] = useState<Array<Subject>>([]);
+  const [subjects, setSubjects] = useState<Array<SubjectListEntry>>([]);
   const [addSubject, setAddSubject] = useState(false);
-  const [changeSubject, setChangeSubject] = useState<Subject>();
+  const [changeSubject, setChangeSubject] = useState<SubjectListEntry>();
 
   const classes = useStyles();
 
@@ -57,7 +57,7 @@ const Subjects: React.FC = () => {
     setAddSubject((prevState) => !prevState);
   };
 
-  const changeSubjectOpen = (subject: Subject) => {
+  const changeSubjectOpen = (subject: SubjectListEntry) => {
     setChangeSubject(subject);
   };
 
@@ -111,13 +111,15 @@ const Subjects: React.FC = () => {
         open={addSubject}
         onClose={toggleAddSubjectModal}
       />
-      <ChangeSubjectDialog
-        subjects={subjects}
-        handleGetSubjects={handleGetSubjects}
-        open={!!changeSubject}
-        onClose={changeSubjectClose}
-        subject={changeSubject}
-      />
+      {changeSubject && (
+        <ChangeSubjectDialog
+          subjects={subjects}
+          handleGetSubjects={handleGetSubjects}
+          open={!!changeSubject}
+          onClose={changeSubjectClose}
+          subject={changeSubject}
+        />
+      )}
     </div>
   );
 };

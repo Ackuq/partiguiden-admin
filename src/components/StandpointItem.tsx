@@ -13,19 +13,19 @@ import {
 import { ClassNameMap } from '@material-ui/styles';
 
 import { Standpoint } from '../types/standpoints';
-import { Subject } from '../types/subjects';
+import { SubjectListEntry } from '../types/subjects';
 import { updateStandpointCategory } from '../lib/ApiStore';
 import snackbarRef from '../lib/snackbarRef';
 
 interface Props {
   standpoint: Standpoint;
   lastItem: boolean;
-  subjects?: Array<Subject>;
+  subjects?: Array<SubjectListEntry>;
   classes: ClassNameMap<'standpointMargin'>;
 }
 
 const StandpointItem: React.FC<Props> = ({ standpoint, lastItem, classes, subjects = [] }) => {
-  const getSubject = (currentSubject?: number): Subject | undefined =>
+  const getSubject = (currentSubject?: number): SubjectListEntry | undefined =>
     subjects.find((subject) => subject.id === currentSubject);
 
   const [currentSubject, setCurrentSubject] = useState(getSubject(standpoint.subject));

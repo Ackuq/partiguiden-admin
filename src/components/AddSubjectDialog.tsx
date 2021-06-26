@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Subject } from '../types/subjects';
+import { SubjectListEntry } from '../types/subjects';
 import { createSubject } from '../lib/ApiStore';
 import snackbarRef from '../lib/snackbarRef';
 
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 interface Props {
   open: boolean;
   onClose: () => void;
-  subjects: Array<Subject>;
+  subjects: Array<SubjectListEntry>;
   handleGetSubjects: () => void;
 }
 
@@ -33,11 +33,11 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, handleGetSubjects, s
   const form = useFormik({
     initialValues: {
       name: '',
-      related_subject: [],
+      related_subjects_ids: [],
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Name is required'),
-      relatedSubjects: Yup.array(),
+      related_subjects_ids: Yup.array(),
     }),
     onSubmit: (values) => {
       return createSubject(values).then(() => {
@@ -61,7 +61,7 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, handleGetSubjects, s
       }
     }
 
-    form.setFieldValue('related_subject', value);
+    form.setFieldValue('related_subjects_ids', value);
   };
 
   return (
@@ -89,7 +89,7 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, handleGetSubjects, s
           fullWidth
           multiple
           native
-          value={form.values.related_subject}
+          value={form.values.related_subjects_ids}
           placeholder="Related subjects"
           onChange={handleRelatedSubjectChange}
           inputProps={{
@@ -102,7 +102,7 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, handleGetSubjects, s
             </option>
           ))}
         </Select>
-        <Button onClick={() => form.setFieldValue('related_subject', [])}>Deselect all</Button>
+        <Button onClick={() => form.setFieldValue('related_subjects_ids', [])}>Deselect all</Button>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">

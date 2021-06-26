@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Subject } from '../types/subjects';
+import { SubjectListEntry } from '../types/subjects';
 import { updateSubject } from '../lib/ApiStore';
 import snackbarRef from '../lib/snackbarRef';
 
@@ -25,8 +25,8 @@ const useStyles = makeStyles({
 interface Props {
   open: boolean;
   onClose: () => void;
-  subject?: Subject;
-  subjects: Array<Subject>;
+  subject: SubjectListEntry;
+  subjects: Array<SubjectListEntry>;
   handleGetSubjects: () => void;
 }
 
@@ -40,11 +40,11 @@ const ChangeSubjectDialog: React.FC<Props> = ({
   const form = useFormik({
     initialValues: {
       name: '',
-      related_subject: [],
+      related_subjects_ids: [],
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Name is required'),
-      relatedSubjects: Yup.array(),
+      related_subjects_ids: Yup.array(),
     }),
     onSubmit: (values) => {
       return updateSubject(subject?.id as number, values).then(() => {
@@ -58,10 +58,9 @@ const ChangeSubjectDialog: React.FC<Props> = ({
 
   useEffect(() => {
     form.setFieldValue('name', subject?.name || '');
-    form.setFieldValue('related_subject', subject?.related_subject || []);
+    form.setFieldValue('related_subjects_ids', subject?.related_subjects || []);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subject]);
-
   const classes = useStyles();
 
   const handleRelatedSubjectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -73,8 +72,13 @@ const ChangeSubjectDialog: React.FC<Props> = ({
       }
     }
 
-    form.setFieldValue('related_subject', value);
+    form.setFieldValue('related_subjects_ids', value);
   };
+
+  const relatedAlternatives = useMemo(
+    () => subjects.filter((subjectEntry) => subjectEntry.id !== subject.id),
+    [subject, subjects]
+  );
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
@@ -101,20 +105,20 @@ const ChangeSubjectDialog: React.FC<Props> = ({
           fullWidth
           multiple
           native
-          value={form.values.related_subject}
+          value={form.values.related_subjects_ids}
           placeholder="Related subjects"
           onChange={handleRelatedSubjectChange}
           inputProps={{
             id: 'select-multiple-native',
           }}
         >
-          {subjects.map((subjectEntry) => (
+          {relatedAlternatives.map((subjectEntry) => (
             <option key={subjectEntry.id} value={subjectEntry.id}>
               {subjectEntry.name}
             </option>
           ))}
         </Select>
-        <Button onClick={() => form.setFieldValue('related_subject', [])}>Deselect all</Button>
+        <Button onClick={() => form.setFieldValue('related_subjects_ids', [])}>Deselect all</Button>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">

@@ -12,7 +12,7 @@
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@material-ui/styles": "^4.10.0",
     "@types/jsonwebtoken": "^8.5.4",
-    "@types/node": "^16.4.0",
+    "@types/node": "^16.4.1",
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.1.8",

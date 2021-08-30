@@ -79,4 +79,9 @@ const StandpointItem: React.FC<Props> = ({ standpoint, lastItem, classes, subjec
     </>
   );
 };
+
+StandpointItem.defaultProps = {
+  subjects: [],
+};
+
 export default StandpointItem;

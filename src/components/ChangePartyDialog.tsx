@@ -110,4 +110,8 @@ const ChangePartyDialog: React.FC<Props> = ({ open, onClose, party, handleGetPar
   );
 };
 
+ChangePartyDialog.defaultProps = {
+  party: undefined,
+};
+
 export default ChangePartyDialog;

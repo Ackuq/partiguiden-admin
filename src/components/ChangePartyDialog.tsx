@@ -4,25 +4,22 @@ import {
   DialogTitle,
   DialogContent,
   TextField,
-  makeStyles,
   DialogActions,
   Button,
-} from '@material-ui/core';
+} from '@mui/material';
+
+import { css } from '@emotion/react';
+
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { updateParty } from '../lib/ApiStore';
 import snackbarRef from '../lib/snackbarRef';
 import { Party } from '../types/parties';
 
-const useStyles = makeStyles({
-  formField: {
-    marginBottom: 0,
-    marginTop: 0,
-  },
-  squareCorners: {
-    borderRadius: 0,
-  },
-});
+const formFieldCSS = css`
+  margin-bottom: 0px;
+  margin-top: 0px;
+`;
 
 interface Props {
   open: boolean;
@@ -58,8 +55,6 @@ const ChangePartyDialog: React.FC<Props> = ({ open, onClose, party, handleGetPar
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [party]);
 
-  const classes = useStyles();
-
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle>Change party</DialogTitle>
@@ -76,7 +71,7 @@ const ChangePartyDialog: React.FC<Props> = ({ open, onClose, party, handleGetPar
           onBlur={form.handleBlur}
           error={form.touched.name && !!form.errors.name}
           helperText={form.touched.name && form.errors.name}
-          classes={{ root: classes.formField }}
+          css={formFieldCSS}
         />
         <TextField
           fullWidth
@@ -90,8 +85,8 @@ const ChangePartyDialog: React.FC<Props> = ({ open, onClose, party, handleGetPar
           onBlur={form.handleBlur}
           error={form.touched.id && !!form.errors.id}
           helperText={form.touched.id && form.errors.id}
-          classes={{ root: classes.formField }}
-          InputProps={{ classes: { root: classes.squareCorners } }}
+          css={formFieldCSS}
+          InputProps={{ sx: { borderRadius: 0 } }}
         />
       </DialogContent>
       <DialogActions>

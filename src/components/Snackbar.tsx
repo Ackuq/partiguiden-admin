@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useState } from 'react';
 
-import { Snackbar as SnackbarInner } from '@material-ui/core';
-import { Alert, AlertProps } from '@material-ui/lab';
+import SnackbarInner from '@mui/material/Snackbar';
+import Alert, { AlertProps } from '@mui/material/Alert';
 
 interface Message {
   severity: AlertProps['severity'];

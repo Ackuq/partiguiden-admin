@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import {
-  makeStyles,
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
-  Button,
-  ListItemSecondaryAction,
-  IconButton,
-} from '@material-ui/core';
-import { Add as AddIcon, Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
+
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import IconButton from '@mui/material/IconButton';
+
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
+import { styled } from '@mui/material/styles';
 
 import { getSubjects, deleteSubject } from '../lib/ApiStore';
 import LoadingIndicator from '../components/LoadingIndicator';
@@ -18,19 +21,17 @@ import AddSubjectDialog from '../components/AddSubjectDialog';
 import { SubjectListEntry } from '../types/subjects.d';
 import ChangeSubjectDialog from '../components/ChangeSubjectDialog';
 
-const useStyles = makeStyles((theme) => ({
-  list: {
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
+const SubjectList = styled(List)(
+  ({ theme }) => `
+  background-color: ${theme.palette.background.paper}
+`
+);
 
 const Subjects: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [subjects, setSubjects] = useState<Array<SubjectListEntry>>([]);
   const [addSubject, setAddSubject] = useState(false);
   const [changeSubject, setChangeSubject] = useState<SubjectListEntry>();
-
-  const classes = useStyles();
 
   const handleGetSubjects = () => {
     getSubjects().then((data) => {
@@ -79,7 +80,7 @@ const Subjects: React.FC = () => {
       >
         Add subject
       </Button>
-      <List classes={{ root: classes.list }}>
+      <SubjectList>
         {subjects.map((subject, index) => (
           <React.Fragment key={subject.id}>
             <ListItem>
@@ -104,7 +105,7 @@ const Subjects: React.FC = () => {
             {index !== subjects.length - 1 && <Divider />}
           </React.Fragment>
         ))}
-      </List>
+      </SubjectList>
       <AddSubjectDialog
         subjects={subjects}
         handleGetSubjects={handleGetSubjects}

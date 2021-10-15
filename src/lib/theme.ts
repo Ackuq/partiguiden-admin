@@ -1,6 +1,6 @@
-import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: '#00796b',
@@ -14,7 +14,7 @@ const theme = createMuiTheme({
       light: '#56c8d8',
       contrastText: '#a3cfca',
     },
-    type: 'dark',
+    mode: 'dark',
   },
 });
 

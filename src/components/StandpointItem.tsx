@@ -9,33 +9,35 @@ import {
   Select,
   Divider,
   MenuItem,
-} from '@material-ui/core';
-import { ClassNameMap } from '@material-ui/styles';
+  SelectChangeEvent,
+  styled,
+} from '@mui/material';
 
 import { Standpoint } from '../types/standpoints';
 import { SubjectListEntry } from '../types/subjects';
 import { updateStandpointCategory } from '../lib/ApiStore';
 import snackbarRef from '../lib/snackbarRef';
 
+const Root = styled(ListItem)(
+  ({ theme }) => `
+    margin-top: ${theme.spacing(1)};
+    margin-bottom: ${theme.spacing(1)};
+`
+);
+
 interface Props {
   standpoint: Standpoint;
   lastItem: boolean;
   subjects?: Array<SubjectListEntry>;
-  classes: ClassNameMap<'standpointMargin'>;
 }
 
-const StandpointItem: React.FC<Props> = ({ standpoint, lastItem, classes, subjects = [] }) => {
+const StandpointItem: React.FC<Props> = ({ standpoint, lastItem, subjects = [] }) => {
   const getSubject = (currentSubject?: number): SubjectListEntry | undefined =>
     subjects.find((subject) => subject.id === currentSubject);
 
   const [currentSubject, setCurrentSubject] = useState(getSubject(standpoint.subject));
 
-  const updateCategory = (
-    event: React.ChangeEvent<{
-      name?: string | undefined;
-      value: unknown;
-    }>
-  ) => {
+  const updateCategory = (event: SelectChangeEvent<string>) => {
     const newSubject: string | null = (event.target.value as string) ?? null;
     updateStandpointCategory(standpoint.id, newSubject).then((newStandpoint) => {
       snackbarRef.current?.updateSnack({ severity: 'success', text: 'Category updated' });
@@ -45,7 +47,7 @@ const StandpointItem: React.FC<Props> = ({ standpoint, lastItem, classes, subjec
 
   return (
     <>
-      <ListItem classes={{ container: classes.standpointMargin }}>
+      <Root>
         <ListItemText
           primaryTypographyProps={{
             color: 'primary',
@@ -61,7 +63,7 @@ const StandpointItem: React.FC<Props> = ({ standpoint, lastItem, classes, subjec
             <Select
               labelId={`category-${standpoint.id}-label`}
               style={{ minWidth: '10rem' }}
-              value={currentSubject?.id ?? ''}
+              value={currentSubject?.id.toString() ?? ''}
               onChange={updateCategory}
             >
               <MenuItem>-</MenuItem>
@@ -73,15 +75,11 @@ const StandpointItem: React.FC<Props> = ({ standpoint, lastItem, classes, subjec
             </Select>
           </FormControl>
         </ListItemSecondaryAction>
-      </ListItem>
+      </Root>
 
       {!lastItem && <Divider />}
     </>
   );
-};
-
-StandpointItem.defaultProps = {
-  subjects: [],
 };
 
 export default StandpointItem;

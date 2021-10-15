@@ -5,22 +5,24 @@ import {
   DialogContent,
   TextField,
   Select,
-  makeStyles,
   DialogActions,
   Button,
   InputLabel,
-} from '@material-ui/core';
+  SelectChangeEvent,
+} from '@mui/material';
+import { css } from '@emotion/react';
+
 import { useFormik } from 'formik';
+
 import * as Yup from 'yup';
+
 import { SubjectListEntry } from '../types/subjects';
 import { createSubject } from '../lib/ApiStore';
 import snackbarRef from '../lib/snackbarRef';
 
-const useStyles = makeStyles({
-  formField: {
-    marginBottom: 15,
-  },
-});
+const formFieldCSS = css`
+  margin-bottom: 15px;
+`;
 
 interface Props {
   open: boolean;
@@ -33,7 +35,7 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, handleGetSubjects, s
   const form = useFormik({
     initialValues: {
       name: '',
-      related_subjects_ids: [],
+      related_subjects_ids: [] as number[],
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Name is required'),
@@ -50,10 +52,8 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, handleGetSubjects, s
     validateOnMount: true,
   });
 
-  const classes = useStyles();
-
-  const handleRelatedSubjectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const { options } = event.target as HTMLSelectElement;
+  const handleRelatedSubjectChange = (event: SelectChangeEvent<number[]>) => {
+    const { options } = event.target as unknown as HTMLSelectElement;
     const value: Array<number> = [];
     for (let i = 0, l = options.length; i < l; i += 1) {
       if (options[i].selected) {
@@ -80,7 +80,7 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, handleGetSubjects, s
           onBlur={form.handleBlur}
           error={form.touched.name && !!form.errors.name}
           helperText={form.touched.name && form.errors.name}
-          classes={{ root: classes.formField }}
+          css={formFieldCSS}
         />
         <InputLabel shrink htmlFor="select-multiple-native">
           Related subjects

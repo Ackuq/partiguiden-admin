@@ -13,7 +13,14 @@
   ],
   "rules": {
     "react/prop-types": 0,
-    "no-alert": 0
+    "no-alert": 0,
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@mui/*/*/*", "!@mui/material/test-utils/*"]
+      }
+    ],
+    "react/require-default-props": 0
   },
   "settings": {
     "react": {

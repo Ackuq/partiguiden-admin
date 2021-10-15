@@ -1,13 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
 
-import SubjectIcon from '@material-ui/icons/Subject';
-import PartiesIcon from '@material-ui/icons/People';
-import StandpointIcon from '@material-ui/icons/Note';
+import SubjectIcon from '@mui/icons-material/Subject';
+import PartiesIcon from '@mui/icons-material/People';
+import StandpointIcon from '@mui/icons-material/Note';
 
 import * as ROUTES from '../lib/routes';
 

@@ -8,18 +8,11 @@ import {
   Button,
 } from '@mui/material';
 
-import { css } from '@emotion/react';
-
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { updateParty } from '../lib/ApiStore';
 import snackbarRef from '../lib/snackbarRef';
 import { Party } from '../types/parties';
-
-const formFieldCSS = css`
-  margin-bottom: 0px;
-  margin-top: 0px;
-`;
 
 interface Props {
   open: boolean;
@@ -71,7 +64,6 @@ const ChangePartyDialog: React.FC<Props> = ({ open, onClose, party, handleGetPar
           onBlur={form.handleBlur}
           error={form.touched.name && !!form.errors.name}
           helperText={form.touched.name && form.errors.name}
-          css={formFieldCSS}
         />
         <TextField
           fullWidth
@@ -85,8 +77,6 @@ const ChangePartyDialog: React.FC<Props> = ({ open, onClose, party, handleGetPar
           onBlur={form.handleBlur}
           error={form.touched.id && !!form.errors.id}
           helperText={form.touched.id && form.errors.id}
-          css={formFieldCSS}
-          InputProps={{ sx: { borderRadius: 0 } }}
         />
       </DialogContent>
       <DialogActions>

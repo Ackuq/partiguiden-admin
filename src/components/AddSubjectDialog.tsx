@@ -10,7 +10,6 @@ import {
   InputLabel,
   SelectChangeEvent,
 } from '@mui/material';
-import { css } from '@emotion/react';
 
 import { useFormik } from 'formik';
 
@@ -19,10 +18,6 @@ import * as Yup from 'yup';
 import { SubjectListEntry } from '../types/subjects';
 import { createSubject } from '../lib/ApiStore';
 import snackbarRef from '../lib/snackbarRef';
-
-const formFieldCSS = css`
-  margin-bottom: 15px;
-`;
 
 interface Props {
   open: boolean;
@@ -80,7 +75,6 @@ const AddSubjectDialog: React.FC<Props> = ({ open, onClose, handleGetSubjects, s
           onBlur={form.handleBlur}
           error={form.touched.name && !!form.errors.name}
           helperText={form.touched.name && form.errors.name}
-          css={formFieldCSS}
         />
         <InputLabel shrink htmlFor="select-multiple-native">
           Related subjects

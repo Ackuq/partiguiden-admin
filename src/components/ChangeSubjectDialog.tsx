@@ -90,7 +90,7 @@ const ChangeSubjectDialog: React.FC<Props> = ({
           error={form.touched.name && !!form.errors.name}
           helperText={form.touched.name && form.errors.name}
           sx={{
-            marginBottom: 15,
+            marginBottom: '15px',
           }}
         />
         <InputLabel shrink htmlFor="select-multiple-native">

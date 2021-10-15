@@ -61,8 +61,9 @@ const StandpointItem: React.FC<Props> = ({ standpoint, lastItem, subjects = [] }
           <FormControl>
             <InputLabel id={`category-${standpoint.id}-label`}>Category</InputLabel>
             <Select
+              variant="standard"
+              sx={{ m: 1, minWidth: '10rem' }}
               labelId={`category-${standpoint.id}-label`}
-              style={{ minWidth: '10rem' }}
               value={currentSubject?.id.toString() ?? ''}
               onChange={updateCategory}
             >

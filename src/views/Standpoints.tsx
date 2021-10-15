@@ -18,7 +18,6 @@ import {
 } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
-import { css } from '@emotion/react';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
@@ -40,9 +39,10 @@ const MenuToolbar = styled(Toolbar)(
     padding-bottom: ${theme.spacing(2)}
 `
 );
-const filterCSS = css`
-  margin-right: 2rem;
-`;
+
+const filterSX = {
+  marginRight: '2rem',
+};
 
 interface StandpointDict {
   [id: string]: Array<Standpoint>;
@@ -104,12 +104,14 @@ const Standpoints: React.FC = () => {
     <div>
       <MenuBar position="sticky">
         <MenuToolbar>
-          <FormControl css={filterCSS}>
+          <FormControl sx={filterSX}>
             <InputLabel id="party-selector-label">Party</InputLabel>
             <Select
-              css={css`
-                min-width: 5rem;
-              `}
+              sx={{
+                m: 1,
+                minWidth: '5rem',
+              }}
+              variant="standard"
               value={selectedParty}
               labelId="party-selector-label"
               onChange={handleSelectParty}
@@ -123,7 +125,7 @@ const Standpoints: React.FC = () => {
             </Select>
           </FormControl>
           <FormControlLabel
-            css={filterCSS}
+            sx={filterSX}
             control={<Checkbox checked={nullSubjects} onChange={handleNullSubjects} />}
             label="Only uncategorized"
           />
@@ -138,9 +140,9 @@ const Standpoints: React.FC = () => {
             </AccordionSummary>
             <AccordionDetails>
               <List
-                css={css`
-                  width: 100%;
-                `}
+                sx={{
+                  width: '100%',
+                }}
               >
                 {standpoints[partyId].sort(sortStandpoints).map((standpoint, index) => (
                   <StandpointItem

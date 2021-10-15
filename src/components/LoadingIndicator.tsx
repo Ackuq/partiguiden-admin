@@ -1,20 +1,16 @@
 import React from 'react';
-import { makeStyles, CircularProgress } from '@material-ui/core';
+import { CircularProgress, styled } from '@mui/material';
 
-const useStyles = makeStyles({
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-});
+const Container = styled('div')`
+  display: flex;
+  justify-content: center;
+`;
 
 const LoadingIndicator: React.FC = () => {
-  const classes = useStyles();
-
   return (
-    <div className={classes.container}>
+    <Container>
       <CircularProgress size={50} />
-    </div>
+    </Container>
   );
 };
 

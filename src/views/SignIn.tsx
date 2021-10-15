@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import makeStyles from '@material-ui/styles/makeStyles';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -14,28 +14,19 @@ import { RouteComponentProps } from 'react-router-dom';
 import * as ROUTES from '../lib/routes';
 import { login } from '../lib/ApiStore';
 
-const useStyles = makeStyles({
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
+const Form = styled('form')`
+  display: flex;
+  flex-direction: column;
+`;
 
-  container: {
-    minHeight: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-
-  passwordButton: {
-    alignSelf: 'flex-end',
-    marginTop: '1rem',
-  },
-});
+const LoginContainer = styled(Container)`
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
 const SignInForm: React.FC<RouteComponentProps> = ({ history }) => {
-  const classes = useStyles();
-
   const form = useFormik({
     initialValues: {
       username: '',
@@ -61,10 +52,10 @@ const SignInForm: React.FC<RouteComponentProps> = ({ history }) => {
   });
 
   return (
-    <Container className={classes.container} maxWidth="sm">
+    <LoginContainer maxWidth="sm">
       <img style={{ maxWidth: '100%' }} src="/static/images/partiguiden_logo.svg" alt="logo" />
 
-      <form onSubmit={form.handleSubmit} className={classes.form}>
+      <Form onSubmit={form.handleSubmit}>
         <TextField
           variant="filled"
           id="username"
@@ -98,8 +89,8 @@ const SignInForm: React.FC<RouteComponentProps> = ({ history }) => {
             {form.values.error}
           </Typography>
         )}
-      </form>
-    </Container>
+      </Form>
+    </LoginContainer>
   );
 };
 

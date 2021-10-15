@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  makeStyles,
   List,
   ListItem,
   ListItemText,
@@ -8,13 +7,13 @@ import {
   Button,
   ListItemSecondaryAction,
   IconButton,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
   Add as AddIcon,
   Delete as DeleteIcon,
   Edit as EditIcon,
   Update as UpdateIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 import { getParties, deleteParty, updatePartyStandpoints } from '../lib/ApiStore';
 import LoadingIndicator from '../components/LoadingIndicator';
@@ -24,19 +23,11 @@ import AddPartyDialog from '../components/AddPartyDialog';
 import snackbarRef from '../lib/snackbarRef';
 import ChangePartyDialog from '../components/ChangePartyDialog';
 
-const useStyles = makeStyles((theme) => ({
-  list: {
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
-
 const Parties: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [parties, setParties] = useState<Array<Party>>([]);
   const [addParty, setAddParty] = useState(false);
   const [changeParty, setChangeParty] = useState<Party>();
-
-  const classes = useStyles();
 
   const handleGetParties = () => {
     getParties().then((data) => {
@@ -98,7 +89,7 @@ const Parties: React.FC = () => {
       >
         Add party
       </Button>
-      <List classes={{ root: classes.list }}>
+      <List sx={{ backgroundColor: (theme) => theme.palette.background.paper }}>
         {parties.map((party, index) => (
           <React.Fragment key={party.id}>
             <ListItem>

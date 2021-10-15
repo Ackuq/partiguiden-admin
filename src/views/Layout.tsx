@@ -1,51 +1,60 @@
 import React, { useState, useEffect } from 'react';
-import makeStyles from '@material-ui/styles/makeStyles';
 
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
 
-import { Theme } from '@material-ui/core';
+import {
+  Theme,
+  styled,
+  AppBar,
+  Container,
+  Toolbar,
+  Drawer,
+  List,
+  Divider,
+  DrawerProps,
+  useMediaQuery,
+} from '@mui/material';
 
-import AppBar from '@material-ui/core/AppBar';
-import Container from '@material-ui/core/Container';
-import Toolbar from '@material-ui/core/Toolbar';
-import Hidden from '@material-ui/core/Hidden';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-
+import IconButton from '@mui/material/IconButton';
 import AccountItems from '../components/AccountItems';
 import NavItems from '../components/NavItems';
 import { isAuthenticated, refreshToken } from '../lib/ApiStore';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme: Theme) => ({
-  drawer: {
-    [theme.breakpoints.up('sm')]: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-  },
+const RootDrawer = styled('nav')(
+  ({ theme }) => `
+    ${theme.breakpoints.up('sm')} {
+      width: ${drawerWidth}px;
+      flex-shrink: 0;
+    }
+`
+);
 
-  drawerPaper: {
+const drawerPaperProps: DrawerProps['PaperProps'] = {
+  sx: {
     justifyContent: 'space-between',
     width: drawerWidth,
   },
+};
 
-  appBar: {
-    marginLeft: drawerWidth,
-    [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-    },
-  },
+const TopBar = styled(AppBar)(
+  ({ theme }) => `
+  margin-left: ${drawerWidth};
+  ${theme.breakpoints.up('sm')} {
+    width: calc(100% - ${drawerWidth}px);
+  }
+`
+);
 
-  toolbar: { [theme.breakpoints.down('xs')]: theme.mixins.toolbar },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-}));
+const ToolbarOffset = styled('div')(({ theme }) => theme.mixins.toolbar);
+
+const MainContainer = styled(Container)<{ component: string }>(
+  ({ theme }) => `
+    flex-grow: 1;
+    padding: ${theme.spacing(3)};
+`
+);
 
 const DrawerItems = () => (
   <>
@@ -60,7 +69,8 @@ const DrawerItems = () => (
 );
 
 const Layout: React.FC = ({ children }) => {
-  const classes = useStyles();
+  const smDown = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
+  const smUp = useMediaQuery<Theme>((theme) => theme.breakpoints.up('sm'));
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -75,8 +85,8 @@ const Layout: React.FC = ({ children }) => {
 
   return (
     <div style={{ display: 'flex' }}>
-      <Hidden smUp implementation="js">
-        <AppBar position="fixed" className={classes.appBar}>
+      {!smUp && (
+        <TopBar position="fixed">
           <Toolbar>
             <IconButton
               color="inherit"
@@ -87,10 +97,10 @@ const Layout: React.FC = ({ children }) => {
               <MenuIcon />
             </IconButton>
           </Toolbar>
-        </AppBar>
-      </Hidden>
-      <nav className={classes.drawer}>
-        <Hidden smUp implementation="js">
+        </TopBar>
+      )}
+      <RootDrawer>
+        {!smUp && (
           <Drawer
             variant="temporary"
             anchor="left"
@@ -99,29 +109,21 @@ const Layout: React.FC = ({ children }) => {
             ModalProps={{
               keepMounted: true, // Better open performance on mobile.
             }}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
+            PaperProps={drawerPaperProps}
           >
             <DrawerItems />
           </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="js">
-          <Drawer
-            variant="permanent"
-            open
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-          >
+        )}
+        {!smDown && (
+          <Drawer variant="permanent" open PaperProps={drawerPaperProps}>
             <DrawerItems />
           </Drawer>
-        </Hidden>
-      </nav>
-      <Container component="main" className={classes.content}>
-        <div className={classes.toolbar} />
+        )}
+      </RootDrawer>
+      <MainContainer component="main">
+        {!smUp && <ToolbarOffset />}
         {children}
-      </Container>
+      </MainContainer>
     </div>
   );
 };

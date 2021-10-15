@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
+
 import {
-  makeStyles,
   List,
   Accordion,
   AccordionSummary,
@@ -14,9 +14,12 @@ import {
   FormControl,
   Checkbox,
   FormControlLabel,
-} from '@material-ui/core';
+  SelectChangeEvent,
+} from '@mui/material';
 
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { styled } from '@mui/material/styles';
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { getStandpoints, getSubjects } from '../lib/ApiStore';
 import LoadingIndicator from '../components/LoadingIndicator';
@@ -25,28 +28,21 @@ import { Standpoint } from '../types/standpoints';
 import { SubjectListEntry } from '../types/subjects';
 import StandpointItem from '../components/StandpointItem';
 
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    marginBottom: theme.spacing(2),
-  },
-  list: {
-    width: '100%',
-  },
-  select: {
-    minWidth: '5rem',
-  },
-  toolbar: {
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
-  },
-  filter: {
-    marginRight: '2rem',
-  },
-  standpointMargin: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-}));
+const MenuBar = styled(AppBar)(
+  ({ theme }) => `
+    margin-bottom: ${theme.spacing(2)};
+`
+);
+const MenuToolbar = styled(Toolbar)(
+  ({ theme }) => `
+    padding-top: ${theme.spacing(2)};
+    padding-bottom: ${theme.spacing(2)}
+`
+);
+
+const filterSX = {
+  marginRight: '2rem',
+};
 
 interface StandpointDict {
   [id: string]: Array<Standpoint>;
@@ -58,8 +54,6 @@ const Standpoints: React.FC = () => {
   const [nullSubjects, setNullSubjects] = useState<boolean>(false);
   const [standpoints, setStandpoints] = useState<StandpointDict>({});
   const [subjects, setSubjects] = useState<Array<SubjectListEntry>>();
-
-  const classes = useStyles();
 
   const handleGetStandpoints = useCallback(() => {
     const promises: [Promise<Array<Standpoint>>, Promise<Array<SubjectListEntry>>] = [
@@ -88,12 +82,7 @@ const Standpoints: React.FC = () => {
     return <LoadingIndicator />;
   }
 
-  const handleSelectParty = (
-    event: React.ChangeEvent<{
-      name?: string | undefined;
-      value: unknown;
-    }>
-  ) => {
+  const handleSelectParty = (event: SelectChangeEvent<string>) => {
     setSelectedParty(event.target.value as string);
   };
 
@@ -113,12 +102,16 @@ const Standpoints: React.FC = () => {
 
   return (
     <div>
-      <AppBar position="sticky" classes={{ root: classes.appBar }}>
-        <Toolbar classes={{ root: classes.toolbar }}>
-          <FormControl classes={{ root: classes.filter }}>
+      <MenuBar position="sticky">
+        <MenuToolbar>
+          <FormControl sx={filterSX}>
             <InputLabel id="party-selector-label">Party</InputLabel>
             <Select
-              classes={{ root: classes.select }}
+              sx={{
+                m: 1,
+                minWidth: '5rem',
+              }}
+              variant="standard"
               value={selectedParty}
               labelId="party-selector-label"
               onChange={handleSelectParty}
@@ -132,12 +125,12 @@ const Standpoints: React.FC = () => {
             </Select>
           </FormControl>
           <FormControlLabel
-            classes={{ root: classes.filter }}
+            sx={filterSX}
             control={<Checkbox checked={nullSubjects} onChange={handleNullSubjects} />}
             label="Only uncategorized"
           />
-        </Toolbar>
-      </AppBar>
+        </MenuToolbar>
+      </MenuBar>
       {Object.keys(standpoints)
         .filter((partyId) => !selectedParty || partyId === selectedParty)
         .map((partyId) => (
@@ -146,14 +139,17 @@ const Standpoints: React.FC = () => {
               <Typography variant="h5">{partyId}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <List classes={{ root: classes.list }}>
+              <List
+                sx={{
+                  width: '100%',
+                }}
+              >
                 {standpoints[partyId].sort(sortStandpoints).map((standpoint, index) => (
                   <StandpointItem
                     key={standpoint.id}
                     standpoint={standpoint}
                     lastItem={index === standpoints[partyId].length - 1}
                     subjects={subjects}
-                    classes={classes}
                   />
                 ))}
               </List>

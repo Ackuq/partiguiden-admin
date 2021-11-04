@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -8,8 +10,6 @@ import { styled } from '@mui/material/styles';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
-import { RouteComponentProps } from 'react-router-dom';
 
 import * as ROUTES from '../lib/routes';
 import { login } from '../lib/ApiStore';
@@ -26,7 +26,9 @@ const LoginContainer = styled(Container)`
   justify-content: center;
 `;
 
-const SignInForm: React.FC<RouteComponentProps> = ({ history }) => {
+const SignInForm: React.FC = () => {
+  const navigate = useNavigate();
+
   const form = useFormik({
     initialValues: {
       username: '',
@@ -41,7 +43,7 @@ const SignInForm: React.FC<RouteComponentProps> = ({ history }) => {
     onSubmit: (values) => {
       return login(values.username, values.password)
         .then(() => {
-          history.push(ROUTES.SUBJECTS);
+          navigate(ROUTES.SUBJECTS);
         })
         .catch((err) => {
           if (err.detail) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
@@ -20,14 +20,14 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Switch>
-          <Route exact path={ROUTES.SIGN_IN} component={SignIn} />
+        <Routes>
+          <Route path={ROUTES.SIGN_IN} element={<SignIn />} />
           <Layout>
-            <Route exact path={ROUTES.SUBJECTS} component={Subjects} />
-            <Route exact path={ROUTES.PARTIES} component={Parties} />
-            <Route exact path={ROUTES.STANDPOINTS} component={Standpoints} />
+            <Route path={ROUTES.SUBJECTS} element={<Subjects />} />
+            <Route path={ROUTES.PARTIES} element={<Parties />} />
+            <Route path={ROUTES.STANDPOINTS} element={<Standpoints />} />
           </Layout>
-        </Switch>
+        </Routes>
       </Router>
       <Snackbar ref={snackbarRef} />
     </ThemeProvider>

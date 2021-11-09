@@ -9,7 +9,7 @@
   "dependencies": {
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
-    "@mui/icons-material": "^5.0.4",
+    "@mui/icons-material": "^5.1.0",
     "@mui/material": "^5.0.6",
     "@types/jsonwebtoken": "^8.5.5",
     "@types/node": "^16.11.6",

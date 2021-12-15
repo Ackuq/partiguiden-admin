@@ -14,8 +14,9 @@ import {
   DrawerProps,
   useMediaQuery,
 } from '@mui/material';
-
+import { Outlet } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
+
 import AccountItems from '../components/AccountItems';
 import NavItems from '../components/NavItems';
 import { isAuthenticated, refreshToken } from '../lib/ApiStore';
@@ -122,7 +123,7 @@ const Layout: React.FC = ({ children }) => {
       </RootDrawer>
       <MainContainer component="main">
         {!smUp && <ToolbarOffset />}
-        {children}
+        <Outlet />
       </MainContainer>
     </div>
   );

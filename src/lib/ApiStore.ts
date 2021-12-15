@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { Party } from '../types/parties';
 import { Standpoint } from '../types/standpoints';
 import { Subject, SubjectListEntry } from '../types/subjects';
@@ -19,9 +19,9 @@ const getToken = (key: TokenKey) => {
 const tokenIsValid = (currToken = getToken(TokenKey.ACCESS)) => {
   /* Local check that checks whether this token is expired or not */
   try {
-    const decoded = jwt.decode(currToken, { complete: true });
+    const decoded = jwtDecode<JwtPayload>(currToken);
 
-    if (decoded && Date.now() >= (decoded?.payload?.exp ?? 0) * 1000) {
+    if (decoded && Date.now() >= (decoded?.exp ?? 0) * 1000) {
       return false;
     }
   } catch (_error) {

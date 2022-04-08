@@ -69,7 +69,7 @@ const DrawerItems = () => (
   </>
 );
 
-const Layout: React.FC = ({ children }) => {
+const Layout: React.FC = () => {
   const smDown = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
   const smUp = useMediaQuery<Theme>((theme) => theme.breakpoints.up('sm'));
   const [mobileOpen, setMobileOpen] = useState(false);

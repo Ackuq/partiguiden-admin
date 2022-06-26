@@ -21,12 +21,13 @@ import { styled } from '@mui/material/styles';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import { getStandpoints, getSubjects } from '../lib/ApiStore';
+import { deleteStandpoint, getStandpoints, getSubjects } from '../lib/ApiStore';
 import LoadingIndicator from '../components/LoadingIndicator';
 
 import { Standpoint } from '../types/standpoints';
 import { SubjectListEntry } from '../types/subjects';
 import StandpointItem from '../components/StandpointItem';
+import snackbarRef from '../lib/snackbarRef';
 
 const MenuBar = styled(AppBar)(
   ({ theme }) => `
@@ -100,6 +101,21 @@ const Standpoints: React.FC = () => {
     return 0;
   };
 
+  const deleteStandpointCallback = (id: string, partyId: string): void => {
+    const confirm = window.confirm('Delete this standpoint?');
+
+    if (confirm) {
+      deleteStandpoint(id).then(() => {
+        snackbarRef.current?.updateSnack({ severity: 'success', text: 'Standpoint deleted' });
+        setStandpoints((prevState) => {
+          const partyStandpoints = prevState[partyId];
+          const newPartyStandpoints = partyStandpoints.filter((standpoint) => standpoint.id !== id);
+          return { ...prevState, [partyId]: newPartyStandpoints };
+        });
+      });
+    }
+  };
+
   return (
     <div>
       <MenuBar position="sticky">
@@ -150,6 +166,8 @@ const Standpoints: React.FC = () => {
                     standpoint={standpoint}
                     lastItem={index === standpoints[partyId].length - 1}
                     subjects={subjects}
+                    deleteStandpointCallback={deleteStandpointCallback}
+                    partyId={partyId}
                   />
                 ))}
               </List>

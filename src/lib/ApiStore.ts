@@ -159,3 +159,6 @@ export const updatePartyStandpoints = (id: string): Promise<Array<Standpoint>> =
 
 export const updateStandpointCategory = (id: string, subject: string | null): Promise<Standpoint> =>
   apiRequest(`standpoints/${id}/`, { method: 'PATCH', body: JSON.stringify({ subject }) });
+
+export const deleteStandpoint = (id: string): Promise<void> =>
+  apiRequest(`standpoints/${id}`, { method: 'DELETE' });

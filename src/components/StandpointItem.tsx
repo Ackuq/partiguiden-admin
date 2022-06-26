@@ -11,7 +11,10 @@ import {
   MenuItem,
   SelectChangeEvent,
   styled,
+  IconButton,
 } from '@mui/material';
+
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import { Standpoint } from '../types/standpoints';
 import { SubjectListEntry } from '../types/subjects';
@@ -29,9 +32,17 @@ interface Props {
   standpoint: Standpoint;
   lastItem: boolean;
   subjects?: Array<SubjectListEntry>;
+  deleteStandpointCallback: (id: string, partyId: string) => void;
+  partyId: string;
 }
 
-const StandpointItem: React.FC<Props> = ({ standpoint, lastItem, subjects = [] }) => {
+const StandpointItem: React.FC<Props> = ({
+  standpoint,
+  lastItem,
+  deleteStandpointCallback,
+  partyId,
+  subjects = [],
+}) => {
   const getSubject = (currentSubject?: number): SubjectListEntry | undefined =>
     subjects.find((subject) => subject.id === currentSubject);
 
@@ -57,7 +68,7 @@ const StandpointItem: React.FC<Props> = ({ standpoint, lastItem, subjects = [] }
           }}
           primary={standpoint.title}
         />
-        <ListItemSecondaryAction>
+        <ListItemSecondaryAction sx={{ display: 'flex', alignItems: 'center' }}>
           <FormControl>
             <InputLabel id={`category-${standpoint.id}-label`}>Category</InputLabel>
             <Select
@@ -75,6 +86,13 @@ const StandpointItem: React.FC<Props> = ({ standpoint, lastItem, subjects = [] }
               ))}
             </Select>
           </FormControl>
+          <IconButton
+            edge="end"
+            aria-label={`delete-${standpoint.id}`}
+            onClick={() => deleteStandpointCallback(standpoint.id, partyId)}
+          >
+            <DeleteIcon />
+          </IconButton>
         </ListItemSecondaryAction>
       </Root>
 

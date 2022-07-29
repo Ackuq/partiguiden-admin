@@ -125,6 +125,10 @@ export const updateParty = (id: string, data: { name: string }): Promise<Party> 
 export const createParty = (data: { name: string; id: string }): Promise<Party> =>
   apiRequest(`parties/`, { method: 'POST', body: JSON.stringify(data) });
 
+export const updatePartyStandpoints = (id: string): Promise<Array<Standpoint>> => {
+  return apiRequest(`parties/${id}/update_standpoints/`, { method: 'POST' });
+};
+
 /* Subject requests */
 export const getSubjects = (): Promise<Array<SubjectListEntry>> => apiRequest('subjects/');
 
@@ -149,12 +153,6 @@ export const getStandpoints = (uncategorized: boolean): Promise<Array<Standpoint
     params.append('uncategorized', uncategorized.toString());
   }
   return apiRequest(`standpoints/?${params.toString()}`);
-};
-
-export const updatePartyStandpoints = (id: string): Promise<Array<Standpoint>> => {
-  const params = new URLSearchParams();
-  params.append('party', id);
-  return apiRequest(`standpoints/update_standpoints/?${params.toString()}`);
 };
 
 export const updateStandpointCategory = (id: string, subject: string | null): Promise<Standpoint> =>

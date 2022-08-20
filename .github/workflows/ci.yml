@@ -1,9 +1,9 @@
-name: Lint
+name: CI
 
 on: [push]
 
 jobs:
-  build:
+  lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:

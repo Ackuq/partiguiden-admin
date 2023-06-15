@@ -4830,10 +4830,10 @@ form-data@^3.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-formik@2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/formik/-/formik-2.4.1.tgz#f2630b51a866c86144a5faf68d31200c9d8ceea9"
-  integrity sha512-ajOB9EmFhXb4PACTlaooVEn7PLtLtBJEZ8fPs+wFZjL5KSGwgAoU+n9DHN8JcqNKcXkloEYYtn1lxrLav18ecQ==
+formik@2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/formik/-/formik-2.4.2.tgz#a1115457cfb012a5c782cea3ad4b40b2fe36fa18"
+  integrity sha512-C6nx0hifW2uENP3M6HpPmnAE6HFWCcd8/sqBZEOHZY6lpHJ5qehsfAy43ktpFLEmkBmhiZDei726utcUB9leqg==
   dependencies:
     deepmerge "^2.1.1"
     hoist-non-react-statics "^3.3.0"
@@ -4841,7 +4841,7 @@ formik@2.4.1:
     lodash-es "^4.17.21"
     react-fast-compare "^2.0.1"
     tiny-warning "^1.0.2"
-    tslib "^1.10.0"
+    tslib "^2.0.0"
 
 forwarded@0.2.0:
   version "0.2.0"
@@ -8940,15 +8940,15 @@ tsconfig-paths@^3.14.1:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
-tslib@^1.10.0, tslib@^1.8.1:
+tslib@^1.8.1:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.3:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.5.2.tgz#1b6f07185c881557b0ffa84b111a0106989e8338"
-  integrity sha512-5svOrSA2w3iGFDs1HibEVBGbDrAY82bFQ3HZ3ixB+88nsbsWQoKqDRb5UBYAUPEzbBn6dAp5gRNXglySbx1MlA==
+tslib@^2.0.0, tslib@^2.0.3:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.5.3.tgz#24944ba2d990940e6e982c4bea147aba80209913"
+  integrity sha512-mSxlJJwl3BMEQCUNnxXBU9jP4JBktcEGhURcPR6VQVlnP0FdDEsIaz0C35dXNGLyRfrATNofF0F5p2KPxQgB+w==
 
 tsutils@^3.21.0:
   version "3.21.0"

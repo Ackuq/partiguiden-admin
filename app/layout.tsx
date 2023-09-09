@@ -19,7 +19,7 @@ export default function RootLayout({ children, ...rest }: PropsWithChildren) {
   return (
     <html lang="sv">
       <body
-        className={`${lato.className} bg-slate-50 dark:bg-slate-950 text-slate-950 dark:text-slate-50`}
+        className={`${lato.className} bg-slate-50 dark:bg-slate-950 text-slate-950 dark:text-slate-50 min-h-screen flex flex-col`}
       >
         <NextAuthProvider>
           <Header />

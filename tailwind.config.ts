@@ -10,6 +10,16 @@ const config: Config = {
       colors: {
         primary: "#00796b",
       },
+      minHeight: {
+        screen: [
+          "100vh", // For browsers not supporting new viewport units
+          "100dvh",
+        ] as unknown as string,
+      },
+      aria: {
+        "current-page": "current=page",
+        "current-false": "current=false",
+      },
     },
   },
 };

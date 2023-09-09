@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently --kill-others \"next dev\" \"yarn https-proxy\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "https-proxy": "tsc dev-https-proxy.ts && node dev-https-proxy.js"
   },
   "dependencies": {
     "@types/node": "20.6.0",
@@ -16,10 +17,16 @@
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
     "next": "13.4.19",
+    "next-auth": "^4.23.1",
     "postcss": "8.4.29",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "@types/http-proxy": "^1.17.11",
+    "concurrently": "^8.2.1",
+    "http-proxy": "^1.18.1"
   }
 }

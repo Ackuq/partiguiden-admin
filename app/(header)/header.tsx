@@ -1,5 +1,5 @@
 'use client';
-import { headerLinks } from '@app/lib/navigation';
+import { headerLinks } from '@lib/navigation';
 import { Session } from 'next-auth';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';

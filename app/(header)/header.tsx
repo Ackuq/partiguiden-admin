@@ -1,9 +1,9 @@
-"use client";
-import { headerLinks } from "@app/lib/navigation";
-import { Session } from "next-auth";
-import { useSession, signOut } from "next-auth/react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+'use client';
+import { headerLinks } from '@app/lib/navigation';
+import { Session } from 'next-auth';
+import { useSession, signOut } from 'next-auth/react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 function UserHeader({ session }: { session: Session }) {
   return (
@@ -33,7 +33,7 @@ function NavigationLinks() {
         <li key={href}>
           <Link
             href={href}
-            aria-current={href === pathname ? "page" : "false"}
+            aria-current={href === pathname ? 'page' : 'false'}
             className="inline-block p-2 bg-primary text-white rounded-lg aria-current-false:opacity-70 aria-current-false:hover:opacity-90"
           >
             {name}
@@ -47,7 +47,7 @@ function NavigationLinks() {
 export function Header() {
   const session = useSession();
 
-  if (session.status !== "authenticated") {
+  if (session.status !== 'authenticated') {
     return null;
   }
 

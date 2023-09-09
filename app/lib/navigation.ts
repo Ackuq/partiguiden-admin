@@ -1,19 +1,19 @@
 const pages = {
   home: {
-    href: "/",
-    name: "Home",
+    href: '/',
+    name: 'Home',
   },
   subjects: {
-    href: "/subjects",
-    name: "Subjects",
+    href: '/subjects',
+    name: 'Subjects',
   },
   parties: {
-    href: "/parties",
-    name: "Parties",
+    href: '/parties',
+    name: 'Parties',
   },
   standpoints: {
-    href: "/standpoints",
-    name: "Standpoints",
+    href: '/standpoints',
+    name: 'Standpoints',
   },
 } as const;
 

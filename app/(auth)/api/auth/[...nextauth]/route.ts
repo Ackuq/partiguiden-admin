@@ -1,13 +1,13 @@
-import NextAuth from "next-auth";
-import GithubProvider from "next-auth/providers/github";
+import NextAuth from 'next-auth';
+import GithubProvider from 'next-auth/providers/github';
 
-const ALLOW_LIST_USERS = process.env.ALLOW_LIST_USERS?.split(",") ?? [];
+const ALLOW_LIST_USERS = process.env.ALLOW_LIST_USERS?.split(',') ?? [];
 
 const handler = NextAuth({
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_ID ?? "",
-      clientSecret: process.env.GITHUB_SECRET ?? "",
+      clientId: process.env.GITHUB_ID ?? '',
+      clientSecret: process.env.GITHUB_SECRET ?? '',
     }),
   ],
   callbacks: {

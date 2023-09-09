@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { signIn, useSession } from "next-auth/react";
-import Image from "next/image";
+import { signIn, useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 function LoginButton() {
   return (
@@ -25,7 +25,7 @@ export default function Home() {
         width="890"
         height="140"
       />
-      {session.status === "unauthenticated" && <LoginButton />}
+      {session.status === 'unauthenticated' && <LoginButton />}
     </main>
   );
 }

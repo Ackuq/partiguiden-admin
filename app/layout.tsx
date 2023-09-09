@@ -1,18 +1,18 @@
-import { PropsWithChildren } from "react";
-import NextAuthProvider from "./(auth)/next-auth-provider";
-import { Header } from "./(header)/header";
-import "./globals.css";
-import type { Metadata } from "next";
-import { Lato } from "next/font/google";
+import { PropsWithChildren } from 'react';
+import NextAuthProvider from './(auth)/next-auth-provider';
+import { Header } from './(header)/header';
+import './globals.css';
+import type { Metadata } from 'next';
+import { Lato } from 'next/font/google';
 
 const lato = Lato({
-  subsets: ["latin"],
-  weight: ["100", "300", "400", "700"],
+  subsets: ['latin'],
+  weight: ['100', '300', '400', '700'],
 });
 
 export const metadata: Metadata = {
-  title: "Partiguiden Admin",
-  description: "Admin portal for Partiguiden",
+  title: 'Partiguiden Admin',
+  description: 'Admin portal for Partiguiden',
 };
 
 export default function RootLayout({ children, ...rest }: PropsWithChildren) {

@@ -8,9 +8,9 @@ import { zParty } from '../party-form';
 export default async function createParty(formData: FormData) {
   try {
     const json = Object.fromEntries(formData.entries());
-    const party = zParty.parse(json);
+    const data = zParty.parse(json);
     await prisma.party.create({
-      data: party,
+      data,
     });
     revalidatePath(PAGES.parties.href);
   } catch (error) {

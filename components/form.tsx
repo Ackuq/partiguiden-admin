@@ -21,6 +21,34 @@ export function Input({ error, ...props }: InputProps) {
   );
 }
 
+interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  options: { name: string; value: string; selected: boolean }[];
+  error?: ZodIssue;
+}
+
+export function Select({ error, options, ...props }: SelectProps) {
+  return (
+    <div className="mb-4">
+      <select
+        className="shadow appearance-none border rounded w-full text-gray-700 focus:outline-none data-[error=true]:outline-red-600 data-[error=true]:outline"
+        data-error={!!error ?? false}
+        {...props}
+      >
+        {options.map((option) => (
+          <option
+            key={option.value}
+            value={option.value}
+            selected={option.selected}
+          >
+            {option.name}
+          </option>
+        ))}
+      </select>
+      {error && <span>{error.message}</span>}
+    </div>
+  );
+}
+
 type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function SubmitButton({ className, ...rest }: SubmitButtonProps) {

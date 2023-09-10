@@ -3,14 +3,14 @@ import { PAGES } from '@lib/navigation';
 import prisma from '@lib/prisma';
 import { revalidatePath } from 'next/cache';
 
-export default async function deleteParty(abbreviation: string) {
+export default async function deleteSubject(name: string) {
   try {
-    await prisma.party.delete({
+    await prisma.subject.delete({
       where: {
-        abbreviation,
+        name,
       },
     });
-    revalidatePath(PAGES.parties.href);
+    revalidatePath(PAGES.subjects.href);
   } catch (error) {
     return { message: 'Något gick snett med denna förfrågan' };
   }

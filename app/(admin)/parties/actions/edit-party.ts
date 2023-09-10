@@ -9,12 +9,12 @@ import { Party } from '@prisma/client';
 export default async function editParty(party: Party, formData: FormData) {
   try {
     const json = Object.fromEntries(formData.entries());
-    const party = zParty.parse(json);
+    const data = zParty.parse(json);
     await prisma.party.update({
       where: {
         abbreviation: party.abbreviation,
       },
-      data: party,
+      data,
     });
     revalidatePath(PAGES.parties.href);
   } catch (error) {

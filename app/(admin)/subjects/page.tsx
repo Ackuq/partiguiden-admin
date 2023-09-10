@@ -1,5 +1,45 @@
 import MainContainer from '@components/main-container';
+import Table, { Column, Row } from '@components/table';
+import AddSubjectModal from './add-subject-modal';
+import SubjectActions from './subject-actions';
+import prisma from '@lib/prisma';
 
-export default function Subjects() {
-  return <MainContainer>Subjects</MainContainer>;
+export default async function Subjects() {
+  const subjects = await prisma.subject.findMany({
+    include: {
+      relatedSubjects: true,
+    },
+    orderBy: {
+      name: 'asc',
+    },
+  });
+
+  return (
+    <MainContainer>
+      <AddSubjectModal subjects={subjects} />
+      <Table
+        columns={['Namn', 'Relaterade ämnen', 'Funktioner']}
+        className="mt-4"
+      >
+        {subjects.map((subject) => (
+          <Row key={subject.name}>
+            <Column>{subject.name}</Column>
+            <Column>
+              {subject.relatedSubjects
+                .map((subject) => subject.name)
+                .join(', ')}
+            </Column>
+            <Column className="flex gap-4">
+              <SubjectActions
+                subjects={subjects.filter(
+                  (related) => related.name !== subject.name
+                )}
+                subject={subject}
+              />
+            </Column>
+          </Row>
+        ))}
+      </Table>
+    </MainContainer>
+  );
 }

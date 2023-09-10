@@ -3,10 +3,15 @@ import Button from '@components/button';
 import Modal from '@components/modal';
 import { useState } from 'react';
 import { z } from 'zod';
-import createParty from './actions/create-party';
-import PartyForm from './party-form';
+import createSubject from './actions/create-subject';
+import SubjectForm from './subject-form';
+import { SubjectWithRelated } from './prisma';
 
-export default function AddPartyModal() {
+interface AddSubjectModalProps {
+  subjects: SubjectWithRelated[];
+}
+
+export default function AddSubjectModal({ subjects }: AddSubjectModalProps) {
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [zodIssues, setZodIssues] = useState<z.ZodIssue[]>();
 
@@ -16,7 +21,7 @@ export default function AddPartyModal() {
 
   async function onCreate(formData: FormData) {
     setZodIssues(undefined);
-    const error = await createParty(formData);
+    const error = await createSubject(formData);
     if (!error) {
       toggleModal();
       return;
@@ -27,9 +32,13 @@ export default function AddPartyModal() {
 
   return (
     <>
-      <Button onClick={toggleModal}>+ Lägg till parti</Button>
+      <Button onClick={toggleModal}>+ Lägg till ämne</Button>
       <Modal onClose={toggleModal} isOpen={isModalOpened}>
-        <PartyForm onCreate={onCreate} zodIssues={zodIssues} />
+        <SubjectForm
+          onCreate={onCreate}
+          subjects={subjects}
+          zodIssues={zodIssues}
+        />
       </Modal>
     </>
   );

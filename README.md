@@ -1,11 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Partiguiden Admin Panel
 
 ## Getting Started
 
-First, run the development server:
+#### Configure package manager and install dependencies
 
 ```bash
-yarn dev
+corepack prepare
+pnpm i
+```
+
+#### Pull .env file from Vercel
+
+```bash
+vercel env pull
+```
+
+### Run development server
+
+```bash
+pnpm dev
 ```
 
 ### SSL Proxy

@@ -2,6 +2,7 @@
 import { ZodIssue } from 'zod';
 import Button from './button';
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
+import LoadingSpinner from './icons/loading-spinner';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: ZodIssue;
@@ -28,7 +29,14 @@ export function SubmitButton({ className, ...rest }: SubmitButtonProps) {
   return (
     <div className="text-right mt-6">
       <Button className={className} type="submit" disabled={pending} {...rest}>
-        {pending ? 'Skickar...' : 'Skicka'}
+        {pending ? (
+          <>
+            <LoadingSpinner className="inline-block w-5 h-5 mr-1" />
+            <span className="align-middle">Skickar...</span>
+          </>
+        ) : (
+          <span className="align-middle">Skicka</span>
+        )}
       </Button>
     </div>
   );

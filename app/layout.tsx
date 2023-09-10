@@ -1,9 +1,10 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, Suspense } from 'react';
 import NextAuthProvider from './(auth)/next-auth-provider';
 import { Header } from './(header)/header';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
+import Loading from './loading';
 
 const lato = Lato({
   subsets: ['latin'],
@@ -23,7 +24,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       >
         <NextAuthProvider>
           <Header />
-          {children}
+          <Suspense fallback={<Loading />}>{children}</Suspense>
         </NextAuthProvider>
       </body>
     </html>

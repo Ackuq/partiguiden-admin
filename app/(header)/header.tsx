@@ -47,15 +47,13 @@ function NavigationLinks() {
 export function Header() {
   const session = useSession();
 
-  if (session.status !== 'authenticated') {
-    return null;
-  }
-
   return (
     <nav className=" bg-elevated-light dark:bg-elevated-dark shadow-xl">
       <div className="max-w-7xl justify-between px-2 flex items-center mx-auto">
         <NavigationLinks />
-        <UserHeader session={session.data} />
+        {session.status === 'authenticated' && (
+          <UserHeader session={session.data} />
+        )}
       </div>
     </nav>
   );

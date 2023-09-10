@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "pnpm prisma:generate",
     "format:write": "prettier --write '**/*.{js,ts,tsx,md,json}'",
     "format:check": "prettier -c '**/*.{js,ts,tsx,md,json}'",
     "https-proxy": "tsc dev-https-proxy.ts && node dev-https-proxy.js",

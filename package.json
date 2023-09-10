@@ -12,7 +12,8 @@
     "format:write": "prettier --write '**/*.{js,ts,tsx,md,json}'",
     "format:check": "prettier -c '**/*.{js,ts,tsx,md,json}'",
     "https-proxy": "tsc dev-https-proxy.ts && node dev-https-proxy.js",
-    "prisma:migrate": "dotenv -e .env.local prisma migrate dev",
+    "prisma:migrate": "dotenv -e .env.local prisma migrate dev --create-only",
+    "prisma:deploy": "dotenv -e .env.local prisma migrate deploy",
     "prisma:generate": "prisma generate"
   },
   "dependencies": {

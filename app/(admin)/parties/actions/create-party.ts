@@ -3,12 +3,7 @@ import { PAGES } from '@lib/navigation';
 import prisma from '@lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-import { FormField } from './types';
-
-const zParty = z.object({
-  [FormField.Abbreviation]: z.string().nonempty(),
-  [FormField.Name]: z.string().nonempty(),
-});
+import { zParty } from '../party-form';
 
 export default async function createParty(formData: FormData) {
   try {

@@ -1,14 +1,23 @@
-export function Column({ children }: React.PropsWithChildren) {
+type ColumnProps = React.TdHTMLAttributes<HTMLTableCellElement>;
+
+export function Column({ children, className, ...rest }: ColumnProps) {
   return (
-    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+    <td
+      className={`px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white ${className}`}
+      {...rest}
+    >
       {children}
     </td>
   );
 }
 
-export function Row({ children }: React.PropsWithChildren) {
+type RowProps = React.HTMLAttributes<HTMLTableRowElement>;
+export function Row({ children, className, ...rest }: RowProps) {
   return (
-    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 last:border-0">
+    <tr
+      className={`bg-white border-b dark:bg-gray-800 dark:border-gray-700 last:border-0 ${className}`}
+      {...rest}
+    >
       {children}
     </tr>
   );

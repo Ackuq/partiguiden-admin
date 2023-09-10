@@ -1,13 +1,22 @@
 'use client';
-import Button from '@components/button';
 import Modal from '@components/modal';
 import { useState } from 'react';
 import { z } from 'zod';
-import createParty from './actions/create-party';
+import editParty from './actions/edit-party';
 import PartyForm from './party-form';
+import { Party } from '@prisma/client';
 
-export default function AddPartyModal() {
-  const [isModalOpened, setIsModalOpened] = useState(false);
+interface EditPartyModalProps {
+  party: Party;
+  isModalOpened: boolean;
+  setIsModalOpened: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function EditPartyModal({
+  party,
+  isModalOpened,
+  setIsModalOpened,
+}: EditPartyModalProps) {
   const [zodIssues, setZodIssues] = useState<z.ZodIssue[]>();
 
   function toggleModal() {
@@ -16,7 +25,7 @@ export default function AddPartyModal() {
 
   async function onCreate(formData: FormData) {
     setZodIssues(undefined);
-    const error = await createParty(formData);
+    const error = await editParty(party, formData);
     if (!error) {
       toggleModal();
       return;
@@ -26,11 +35,8 @@ export default function AddPartyModal() {
   }
 
   return (
-    <>
-      <Button onClick={toggleModal}>+ Add party</Button>
-      <Modal onClose={toggleModal} isOpen={isModalOpened}>
-        <PartyForm onCreate={onCreate} zodIssues={zodIssues} />
-      </Modal>
-    </>
+    <Modal onClose={toggleModal} isOpen={isModalOpened}>
+      <PartyForm onCreate={onCreate} zodIssues={zodIssues} party={party} />
+    </Modal>
   );
 }

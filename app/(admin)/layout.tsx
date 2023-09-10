@@ -7,12 +7,12 @@ import { PropsWithChildren } from 'react';
 export default function AdminLayout({ children }: PropsWithChildren) {
   const session = useSession();
 
-  if (session.status === 'loading') {
-    return <Loading />;
-  }
-
   if (session.status === 'unauthenticated') {
     signIn();
+  }
+
+  if (session.status !== 'authenticated') {
+    return <Loading />;
   }
 
   return children;

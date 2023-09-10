@@ -1,10 +1,10 @@
 'use client';
 import Modal from '@components/modal';
 import { useState } from 'react';
-import { z } from 'zod';
+import type { z } from 'zod';
 import editParty from './actions/edit-party';
 import PartyForm from './party-form';
-import { Party } from '@prisma/client';
+import type { Party } from '@prisma/client';
 
 interface EditPartyModalProps {
   party: Party;

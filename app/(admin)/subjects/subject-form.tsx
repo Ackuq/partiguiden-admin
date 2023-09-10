@@ -40,13 +40,13 @@ export default function SubjectForm({
         )}
         multiple
         name={FormField.RelatedSubject}
-        placeholder="Relaterade ämnen"
+        placeholder="Relaterade sakområden"
+        defaultValue={subject?.relatedSubjects.map(
+          (relatedSubject) => relatedSubject.name
+        )}
         options={subjects.map((relatedSubject) => ({
           name: relatedSubject.name,
           value: relatedSubject.name,
-          selected: !!subject?.relatedSubjects.find(
-            (related) => related.name === relatedSubject.name
-          ),
         }))}
       />
 

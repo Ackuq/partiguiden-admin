@@ -5,7 +5,7 @@ export const PAGES = {
   },
   subjects: {
     href: '/subjects',
-    name: 'Ämnen',
+    name: 'Sakområden',
   },
   parties: {
     href: '/parties',

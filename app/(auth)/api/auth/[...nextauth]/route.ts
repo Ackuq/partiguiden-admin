@@ -1,8 +1,7 @@
-import NextAuth, { DefaultUser } from 'next-auth';
-import GithubProvider, {
-  GithubEmail,
-  GithubProfile,
-} from 'next-auth/providers/github';
+import type { DefaultUser } from 'next-auth';
+import NextAuth from 'next-auth';
+import type { GithubEmail, GithubProfile } from 'next-auth/providers/github';
+import GithubProvider from 'next-auth/providers/github';
 
 const GITHUB_ORG = process.env.GITHUB_ORG;
 

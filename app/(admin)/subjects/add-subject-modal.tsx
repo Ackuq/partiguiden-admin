@@ -2,10 +2,10 @@
 import Button from '@components/button';
 import Modal from '@components/modal';
 import { useState } from 'react';
-import { z } from 'zod';
+import type { z } from 'zod';
 import createSubject from './actions/create-subject';
 import SubjectForm from './subject-form';
-import { SubjectWithRelated } from './prisma';
+import type { SubjectWithRelated } from './prisma';
 
 interface AddSubjectModalProps {
   subjects: SubjectWithRelated[];
@@ -32,7 +32,7 @@ export default function AddSubjectModal({ subjects }: AddSubjectModalProps) {
 
   return (
     <>
-      <Button onClick={toggleModal}>+ Lägg till ämne</Button>
+      <Button onClick={toggleModal}>+ Lägg till sakområde</Button>
       <Modal onClose={toggleModal} isOpen={isModalOpened}>
         <SubjectForm
           onCreate={onCreate}

@@ -1,6 +1,6 @@
 'use client';
 import { HEADER_LINKS } from '@lib/navigation';
-import { Session } from 'next-auth';
+import type { Session } from 'next-auth';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

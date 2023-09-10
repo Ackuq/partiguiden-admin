@@ -4,7 +4,7 @@ import prisma from '@lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { zSubject } from '../subject-form';
-import { SubjectWithRelated } from '../prisma';
+import type { SubjectWithRelated } from '../prisma';
 
 export default async function editSubject(
   subjectPrisma: SubjectWithRelated,

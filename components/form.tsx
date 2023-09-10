@@ -1,5 +1,5 @@
 'use client';
-import { ZodIssue } from 'zod';
+import type { ZodIssue } from 'zod';
 import Button from './button';
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
 import LoadingSpinner from './icons/loading-spinner';
@@ -22,7 +22,7 @@ export function Input({ error, ...props }: InputProps) {
 }
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  options: { name: string; value: string; selected: boolean }[];
+  options: { name: string; value: string }[];
   error?: ZodIssue;
 }
 
@@ -35,11 +35,7 @@ export function Select({ error, options, ...props }: SelectProps) {
         {...props}
       >
         {options.map((option) => (
-          <option
-            key={option.value}
-            value={option.value}
-            selected={option.selected}
-          >
+          <option key={option.value} value={option.value}>
             {option.name}
           </option>
         ))}

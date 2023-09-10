@@ -1,15 +1,17 @@
 'use server';
 
 import prisma from '@lib/prisma';
-import { Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 
 export async function getSubjectsWithRelated() {
-  const subjectsWithRelated = await prisma.subject.findMany({
+  return prisma.subject.findMany({
     include: {
       relatedSubjects: true,
     },
+    orderBy: {
+      name: 'asc',
+    },
   });
-  return subjectsWithRelated;
 }
 
 export type SubjectWithRelated = Prisma.PromiseReturnType<

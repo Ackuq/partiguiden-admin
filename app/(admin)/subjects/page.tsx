@@ -2,23 +2,16 @@ import MainContainer from '@components/main-container';
 import Table, { Column, Row } from '@components/table';
 import AddSubjectModal from './add-subject-modal';
 import SubjectActions from './subject-actions';
-import prisma from '@lib/prisma';
+import { getSubjectsWithRelated } from './prisma';
 
 export default async function Subjects() {
-  const subjects = await prisma.subject.findMany({
-    include: {
-      relatedSubjects: true,
-    },
-    orderBy: {
-      name: 'asc',
-    },
-  });
+  const subjects = await getSubjectsWithRelated();
 
   return (
     <MainContainer>
       <AddSubjectModal subjects={subjects} />
       <Table
-        columns={['Namn', 'Relaterade ämnen', 'Funktioner']}
+        columns={['Namn', 'Relaterade sakområden', 'Funktioner']}
         className="mt-4"
       >
         {subjects.map((subject) => (

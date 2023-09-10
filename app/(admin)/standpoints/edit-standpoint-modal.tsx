@@ -2,23 +2,26 @@
 import Modal from '@components/modal';
 import { useState } from 'react';
 import type { z } from 'zod';
-import editSubject from './actions/edit-subject';
-import SubjectForm from './subject-form';
-import type { SubjectWithRelated } from './prisma';
+import editStandpoint from './actions/edit-standpoint';
+import StandpointForm from './standpoint-form';
+import type { PartyWithAbbreviationAndName, SubjectWithName } from './prisma';
+import type { Standpoint } from '@prisma/client';
 
-interface EditSubjectModalProps {
-  subject: SubjectWithRelated;
-  subjects: SubjectWithRelated[];
+interface EditStandpointModalProps {
+  standpoint: Standpoint;
+  parties: PartyWithAbbreviationAndName[];
+  subjects: SubjectWithName[];
   isModalOpened: boolean;
   setIsModalOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function EditSubjectModal({
-  subject,
+export default function EditStandpointModal({
+  standpoint,
   subjects,
+  parties,
   isModalOpened,
   setIsModalOpened,
-}: EditSubjectModalProps) {
+}: EditStandpointModalProps) {
   const [zodIssues, setZodIssues] = useState<z.ZodIssue[]>();
 
   function toggleModal() {
@@ -27,7 +30,7 @@ export default function EditSubjectModal({
 
   async function onCreate(formData: FormData) {
     setZodIssues(undefined);
-    const error = await editSubject(subject, formData);
+    const error = await editStandpoint(standpoint, formData);
     if (!error) {
       toggleModal();
       return;
@@ -38,11 +41,12 @@ export default function EditSubjectModal({
 
   return (
     <Modal onClose={toggleModal} isOpen={isModalOpened}>
-      <SubjectForm
+      <StandpointForm
         onCreate={onCreate}
         zodIssues={zodIssues}
-        subject={subject}
+        standpoint={standpoint}
         subjects={subjects}
+        parties={parties}
       />
     </Modal>
   );

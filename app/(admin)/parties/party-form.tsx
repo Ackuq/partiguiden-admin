@@ -1,5 +1,5 @@
 import Form, { Input, SubmitButton } from '@components/form';
-import { Party } from '@prisma/client';
+import type { Party } from '@prisma/client';
 import { z } from 'zod';
 
 enum FormField {

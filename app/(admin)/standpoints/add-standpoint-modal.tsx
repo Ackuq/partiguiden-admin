@@ -3,10 +3,19 @@ import Button from '@components/button';
 import Modal from '@components/modal';
 import { useState } from 'react';
 import type { z } from 'zod';
-import createParty from './actions/create-party';
-import PartyForm from './party-form';
+import createStandpoint from './actions/create-standpoint';
+import StandpointForm from './standpoint-form';
+import type { PartyWithAbbreviationAndName, SubjectWithName } from './prisma';
 
-export default function AddPartyModal() {
+interface AddStandpointModalProps {
+  parties: PartyWithAbbreviationAndName[];
+  subjects: SubjectWithName[];
+}
+
+export default function AddStandpointModal({
+  parties,
+  subjects,
+}: AddStandpointModalProps) {
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [zodIssues, setZodIssues] = useState<z.ZodIssue[]>();
 
@@ -16,7 +25,7 @@ export default function AddPartyModal() {
 
   async function onCreate(formData: FormData) {
     setZodIssues(undefined);
-    const error = await createParty(formData);
+    const error = await createStandpoint(formData);
     if (!error) {
       toggleModal();
       return;
@@ -27,9 +36,14 @@ export default function AddPartyModal() {
 
   return (
     <>
-      <Button onClick={toggleModal}>+ Lägg till parti</Button>
+      <Button onClick={toggleModal}>+ Lägg till ståndpunkt</Button>
       <Modal onClose={toggleModal} isOpen={isModalOpened}>
-        <PartyForm onCreate={onCreate} zodIssues={zodIssues} />
+        <StandpointForm
+          parties={parties}
+          subjects={subjects}
+          onCreate={onCreate}
+          zodIssues={zodIssues}
+        />
       </Modal>
     </>
   );

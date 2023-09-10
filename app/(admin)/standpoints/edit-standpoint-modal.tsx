@@ -44,6 +44,7 @@ export default function EditStandpointModal({
       <StandpointForm
         onCreate={onCreate}
         zodIssues={zodIssues}
+        setZodIssues={setZodIssues}
         standpoint={standpoint}
         subjects={subjects}
         parties={parties}

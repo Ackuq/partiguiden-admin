@@ -3,7 +3,7 @@ import { PAGES } from '@lib/navigation';
 import prisma from '@lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-import { zStandpoint } from '../standpoint-form';
+import { zStandpoint } from '../types';
 import type { Standpoint } from '@prisma/client';
 
 export default async function editStandpoint(
@@ -12,8 +12,10 @@ export default async function editStandpoint(
 ) {
   try {
     const json = Object.fromEntries(formData.entries());
-    const data = zStandpoint.parse(json);
-
+    const data = zStandpoint.parse({
+      ...json,
+      content: formData.getAll('content'),
+    });
     await prisma.standpoint.update({
       where: {
         link: standpointsPrisma.link,

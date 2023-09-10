@@ -43,6 +43,7 @@ export default function AddStandpointModal({
           subjects={subjects}
           onCreate={onCreate}
           zodIssues={zodIssues}
+          setZodIssues={setZodIssues}
         />
       </Modal>
     </>

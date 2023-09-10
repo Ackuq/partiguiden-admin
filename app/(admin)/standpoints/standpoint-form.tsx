@@ -1,29 +1,17 @@
-import Form, { Input, Select, SubmitButton } from '@components/form';
-import { z } from 'zod';
+'use client';
+import Form, { Input, Select, SubmitButton, TextArea } from '@components/form';
 import type { Standpoint } from '@prisma/client';
 import type { PartyWithAbbreviationAndName, SubjectWithName } from './prisma';
-
-enum FormField {
-  Link = 'link',
-  Title = 'title',
-  Content = 'content',
-  UpdateDate = 'updateDate',
-  PartyAbbreviation = 'partyAbbreviation',
-  SubjectName = 'subjectName',
-}
-
-export const zStandpoint = z.object({
-  [FormField.Link]: z.string().nonempty(),
-  [FormField.Title]: z.string().nonempty(),
-  [FormField.Content]: z.array(z.string().nonempty()).default([]),
-  [FormField.UpdateDate]: z.string().optional(),
-  [FormField.PartyAbbreviation]: z.string().nonempty(),
-  [FormField.SubjectName]: z.string().nonempty(),
-});
+import { useState } from 'react';
+import Button, { BaseButton } from '@components/button';
+import { FormField } from './types';
 
 interface StandpointFormProps {
   onCreate: (formData: FormData) => void;
   zodIssues?: Zod.ZodIssue[];
+  setZodIssues: React.Dispatch<
+    React.SetStateAction<Zod.ZodIssue[] | undefined>
+  >;
   standpoint?: Standpoint;
   parties: PartyWithAbbreviationAndName[];
   subjects: SubjectWithName[];
@@ -31,11 +19,25 @@ interface StandpointFormProps {
 
 export default function StandpointForm({
   onCreate,
+  setZodIssues,
   zodIssues,
   standpoint,
   parties,
   subjects,
 }: StandpointFormProps) {
+  const [contentFields, setContentFields] = useState(
+    standpoint?.content.map((content) => ({
+      content,
+      uuid: window.crypto.randomUUID(),
+    })) ?? []
+  );
+
+  function removeContentField(uuid: string) {
+    setContentFields((prevState) =>
+      prevState.filter((field) => field.uuid !== uuid)
+    );
+  }
+
   return (
     <Form action={onCreate}>
       <Input
@@ -52,6 +54,45 @@ export default function StandpointForm({
         type="text"
         placeholder="Titel"
       />
+      {contentFields?.map((field, index) => (
+        <TextArea
+          key={field.uuid}
+          defaultValue={field.content}
+          error={zodIssues?.find(
+            (issue) =>
+              issue.path.includes(FormField.Content) &&
+              issue.path.includes(index)
+          )}
+          rows={7}
+          name={FormField.Content}
+          placeholder="Innehåll"
+          rightContent={
+            <BaseButton
+              type="button"
+              onClick={() => {
+                setZodIssues(undefined);
+                removeContentField(field.uuid);
+              }}
+              className="ml-3 bg-red-600 text-white whitespace-nowrap self-start"
+            >
+              − Ta bort
+            </BaseButton>
+          }
+        />
+      ))}
+      <Button
+        className="mb-6"
+        type="button"
+        onClick={() => {
+          setZodIssues(undefined);
+          setContentFields((prevState) => [
+            ...prevState,
+            { content: '', uuid: window.crypto.randomUUID() },
+          ]);
+        }}
+      >
+        + Lägg till mer innehåll
+      </Button>
       {/* TODO: Add content input */}
       <Select
         error={zodIssues?.find((issue) =>

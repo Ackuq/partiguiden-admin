@@ -4,18 +4,44 @@ import Button from './button';
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
 import LoadingSpinner from './icons/loading-spinner';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface TextAreaProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   error?: ZodIssue;
+  rightContent?: React.ReactNode;
 }
 
-export function Input({ error, ...props }: InputProps) {
+export function TextArea({ error, rightContent, ...rest }: TextAreaProps) {
   return (
     <div className="mb-4">
-      <input
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none data-[error=true]:outline-red-600 data-[error=true]:outline"
-        data-error={!!error ?? false}
-        {...props}
-      />
+      <div className="flex">
+        <textarea
+          className="shadow appearance-none w-full border rounded py-2 px-3 text-gray-700 focus:outline-none data-[error=true]:outline-red-600 data-[error=true]:outline"
+          data-error={!!error ?? false}
+          {...rest}
+        />
+        {rightContent}
+      </div>
+      {error && <span>{error.message}</span>}
+    </div>
+  );
+}
+
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  error?: ZodIssue;
+  rightContent?: React.ReactNode;
+}
+
+export function Input({ error, rightContent, ...rest }: InputProps) {
+  return (
+    <div className="mb-4">
+      <div className="flex">
+        <input
+          className="shadow appearance-none w-full border rounded py-2 px-3 text-gray-700 focus:outline-none data-[error=true]:outline-red-600 data-[error=true]:outline"
+          data-error={!!error ?? false}
+          {...rest}
+        />
+        {rightContent}
+      </div>
       {error && <span>{error.message}</span>}
     </div>
   );
@@ -26,13 +52,13 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   error?: ZodIssue;
 }
 
-export function Select({ error, options, ...props }: SelectProps) {
+export function Select({ error, options, ...rest }: SelectProps) {
   return (
     <div className="mb-4">
       <select
         className="shadow appearance-none border rounded w-full text-gray-700 focus:outline-none data-[error=true]:outline-red-600 data-[error=true]:outline"
         data-error={!!error ?? false}
-        {...props}
+        {...rest}
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>

@@ -1,6 +1,7 @@
 'use client';
 
 import Loading from '@app/loading';
+import Home from '@app/page';
 import { signIn, useSession } from 'next-auth/react';
 import { PropsWithChildren } from 'react';
 
@@ -9,9 +10,10 @@ export default function AdminLayout({ children }: PropsWithChildren) {
 
   if (session.status === 'unauthenticated') {
     signIn();
+    return <Home />;
   }
 
-  if (session.status !== 'authenticated') {
+  if (session.status === 'loading') {
     return <Loading />;
   }
 

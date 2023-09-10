@@ -1,3 +1,5 @@
+import MainContainer from '@components/main-container';
+
 export default function Standpoints() {
-  return <div>Standpoints</div>;
+  return <MainContainer>Standpoints</MainContainer>;
 }

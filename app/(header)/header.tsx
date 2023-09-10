@@ -1,5 +1,5 @@
 'use client';
-import { headerLinks } from '@lib/navigation';
+import { HEADER_LINKS } from '@lib/navigation';
 import { Session } from 'next-auth';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
@@ -29,7 +29,7 @@ function NavigationLinks() {
 
   return (
     <ol className="flex gap-2 my-2">
-      {headerLinks.map(({ href, name }) => (
+      {HEADER_LINKS.map(({ href, name }) => (
         <li key={href}>
           <Link
             href={href}
@@ -52,7 +52,7 @@ export function Header() {
   }
 
   return (
-    <nav className=" bg-slate-100 dark:bg-slate-900 shadow-xl">
+    <nav className=" bg-elevated-light dark:bg-elevated-dark shadow-xl">
       <div className="max-w-7xl justify-between px-2 flex items-center mx-auto">
         <NavigationLinks />
         <UserHeader session={session.data} />

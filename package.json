@@ -4,14 +4,15 @@
   "private": true,
   "packageManager": "pnpm@8.7.4",
   "scripts": {
-    "dev": "concurrently --kill-others \"next dev\" \"yarn https-proxy\"",
+    "dev": "concurrently --kill-others \"next dev\" \"pnpm https-proxy\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "format:write": "prettier --write '**/*.{js,ts,tsx,md,json}'",
     "format:check": "prettier -c '**/*.{js,ts,tsx,md,json}'",
     "https-proxy": "tsc dev-https-proxy.ts && node dev-https-proxy.js",
-    "prisma:migrate": "dotenv -e .env.local prisma migrate dev"
+    "prisma:migrate": "dotenv -e .env.local prisma migrate dev",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.2.0",
@@ -29,7 +30,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.3",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@types/http-proxy": "^1.17.11",

@@ -1,3 +1,5 @@
+import MainContainer from '@components/main-container';
+
 export default function Subjects() {
-  return <div>Subjects</div>;
+  return <MainContainer>Subjects</MainContainer>;
 }

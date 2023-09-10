@@ -1,24 +1,24 @@
-const pages = {
+export const PAGES = {
   home: {
     href: '/',
-    name: 'Home',
+    name: 'Hem',
   },
   subjects: {
     href: '/subjects',
-    name: 'Subjects',
+    name: 'Ämnen',
   },
   parties: {
     href: '/parties',
-    name: 'Parties',
+    name: 'Partier',
   },
   standpoints: {
     href: '/standpoints',
-    name: 'Standpoints',
+    name: 'Ståndpunkter',
   },
 } as const;
 
-export const headerLinks = [
-  pages.subjects,
-  pages.parties,
-  pages.standpoints,
+export const HEADER_LINKS = [
+  PAGES.subjects,
+  PAGES.parties,
+  PAGES.standpoints,
 ] as const;

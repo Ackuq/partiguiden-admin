@@ -18,7 +18,13 @@ export default async function Standpoints() {
           <Row key={standpoint.link}>
             <Column>{standpoint.title}</Column>
             <Column>
-              <a rel="noopener noreferrer">{standpoint.link}</a>
+              <a
+                rel="noopener noreferrer"
+                target="_blank"
+                href={standpoint.link}
+              >
+                {standpoint.link}
+              </a>
             </Column>
             <Column>{standpoint.partyAbbreviation}</Column>
             <Column>{standpoint.subjectName}</Column>

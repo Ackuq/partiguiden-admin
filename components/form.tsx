@@ -4,7 +4,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: ZodIssue;
 }
 
-export default function Input({ error, ...props }: InputProps) {
+export function Input({ error, ...props }: InputProps) {
   return (
     <>
       <input

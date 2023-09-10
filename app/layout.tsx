@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: 'Admin portal for Partiguiden',
 };
 
-export default function RootLayout({ children, ...rest }: PropsWithChildren) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="sv">
       <body

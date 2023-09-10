@@ -1,8 +1,7 @@
 'use client';
 import Button from '@components/button';
-import Input from '@components/form/input';
+import { Input } from '@components/form';
 import Modal from '@components/modal';
-import { PAGES } from '@lib/navigation';
 import { useState } from 'react';
 import { z } from 'zod';
 import createParty from './create-party';
@@ -14,7 +13,6 @@ interface AddPartyFormProps {
 
 function AddPartyForm({ onSuccess }: AddPartyFormProps) {
   const [zodIssues, setZodIssues] = useState<z.ZodIssue[]>();
-
   async function onCreate(formData: FormData) {
     setZodIssues(undefined);
     const error = await createParty(formData);

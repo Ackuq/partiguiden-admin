@@ -3,7 +3,7 @@
 import { signIn, useSession } from 'next-auth/react';
 import { PropsWithChildren } from 'react';
 
-export default function AdminLayout({ children, ...rest }: PropsWithChildren) {
+export default function AdminLayout({ children }: PropsWithChildren) {
   const session = useSession();
 
   if (session.status === 'unauthenticated') {

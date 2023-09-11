@@ -11,7 +11,11 @@ export default async function Subjects() {
     <MainContainer>
       <AddSubjectModal subjects={subjects} />
       <Table
-        columns={['Namn', 'Relaterade sakområden', 'Funktioner']}
+        columns={[
+          { name: 'Namn', width: '25%' },
+          { name: 'Relaterade sakområden', width: '45%' },
+          { name: 'Funktioner', width: '30%' },
+        ]}
         className="mt-4"
       >
         {subjects.map((subject) => (

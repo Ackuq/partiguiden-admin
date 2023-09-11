@@ -16,7 +16,11 @@ export default async function Parties() {
     <MainContainer>
       <AddPartyModal />
       <Table
-        columns={['Partinamn', 'Partiförkortning', 'Funktioner']}
+        columns={[
+          { name: 'Partinamn', width: '50%' },
+          { name: 'Partiförkortning', width: '20%' },
+          { name: 'Funktioner', width: '30%' },
+        ]}
         className="mt-4"
       >
         {parties.map((party) => (

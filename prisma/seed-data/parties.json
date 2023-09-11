@@ -1,0 +1,10 @@
+[
+  { "abbreviation": "S", "name": "Socialdemokraterna" },
+  { "abbreviation": "M", "name": "Moderaterna" },
+  { "abbreviation": "SD", "name": "Sverigedemokraterna" },
+  { "abbreviation": "C", "name": "Centerpartiet" },
+  { "abbreviation": "V", "name": "Vänsterpartiet" },
+  { "abbreviation": "KD", "name": "Kristdemokraterna" },
+  { "abbreviation": "L", "name": "Liberalerna" },
+  { "abbreviation": "MP", "name": "Miljöpartiet" }
+]

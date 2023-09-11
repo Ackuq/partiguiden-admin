@@ -26,7 +26,8 @@ model Standpoint {
     link              String   @id
     title             String
     content           String[]
-    updateDate        DateTime @default(now())
+    fetchDate         DateTime @default(now())
+    updateDate        DateTime @updatedAt
     // Party relation
     party             Party    @relation(fields: [partyAbbreviation], references: [abbreviation])
     partyAbbreviation String

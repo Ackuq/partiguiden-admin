@@ -11,19 +11,23 @@ export default async function Standpoints() {
     <MainContainer>
       <AddStandpointModal parties={parties} subjects={subjects} />
       <Table
-        columns={['Titel', 'Länk', 'Parti', 'Sakområde', 'Funktioner']}
+        columns={[
+          { name: 'Titel', width: '20%' },
+          { name: 'Parti', width: '10%' },
+          { name: 'Sakområde', width: '20%' },
+          { name: 'Funktioner', width: '20%' },
+        ]}
         className="mt-4"
       >
         {standpoints.map((standpoint) => (
           <Row key={standpoint.link}>
-            <Column>{standpoint.title}</Column>
             <Column>
               <a
                 rel="noopener noreferrer"
                 target="_blank"
                 href={standpoint.link}
               >
-                {standpoint.link}
+                {standpoint.title}
               </a>
             </Column>
             <Column>{standpoint.partyAbbreviation}</Column>

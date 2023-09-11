@@ -8,6 +8,7 @@
     "dev:web": "next dev",
     "dev:db": "docker-compose up -d",
     "dev:proxy": "tsc dev-https-proxy.ts && node dev-https-proxy.js",
+    "dev:seed": "tsc prisma/seed.ts && dotenv -e .env.local node prisma/seed.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

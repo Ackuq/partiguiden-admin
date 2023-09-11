@@ -7,23 +7,11 @@ Prerequisites:
 - Node version >= 18
 - Docker
 
-#### Configure package manager and install dependencies
+### Configure package manager and install dependencies
 
 ```bash
 corepack prepare
 pnpm i
-```
-
-#### Pull .env file from Vercel
-
-```bash
-vercel env pull
-```
-
-### Run development server and set up development database
-
-```bash
-pnpm dev
 ```
 
 ### SSL Proxy
@@ -37,4 +25,30 @@ openssl req -x509 -out .cert/localhost.crt -keyout .cert/localhost.key \
   -newkey rsa:2048 -nodes -sha256 \
   -subj '/CN=localhost' -extensions EXT -config <( \
    printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+```
+
+### Commands
+
+#### Pull .env file from Vercel
+
+```bash
+vercel env pull
+```
+
+#### Run development server and set up development database
+
+```bash
+pnpm dev
+```
+
+#### Applying and creating migrations (dev)
+
+```bash
+pnpm prisma:migrate
+```
+
+#### Populating data with initial data
+
+```bash
+pnpm dev:seed
 ```

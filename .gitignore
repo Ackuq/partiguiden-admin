@@ -35,8 +35,9 @@ next-env.d.ts
 # SSL certificates
 .cert
 
-# Transpiled dev-https-proxy
+# Transpiled dev files
 dev-https-proxy.js
+prisma/seed.js
 
 # Local Postgres data
 .postgres_data

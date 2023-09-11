@@ -37,3 +37,6 @@ next-env.d.ts
 
 # Transpiled dev-https-proxy
 dev-https-proxy.js
+
+# Local Postgres data
+.postgres_data

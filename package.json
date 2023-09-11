@@ -4,16 +4,18 @@
   "private": true,
   "packageManager": "pnpm@8.7.4",
   "scripts": {
-    "dev": "concurrently --kill-others \"next dev\" \"pnpm https-proxy\"",
+    "dev": "concurrently \"pnpm dev:web\" \"pnpm dev:proxy\" \"pnpm dev:db\"",
+    "dev:web": "next dev",
+    "dev:db": "docker-compose up -d",
+    "dev:proxy": "tsc dev-https-proxy.ts && node dev-https-proxy.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "pnpm prisma:generate",
     "format:write": "prettier --write '**/*.{js,ts,tsx,md,json}'",
     "format:check": "prettier -c '**/*.{js,ts,tsx,md,json}'",
-    "https-proxy": "tsc dev-https-proxy.ts && node dev-https-proxy.js",
-    "prisma:migrate": "dotenv -e .env.local prisma migrate dev --create-only",
-    "prisma:deploy": "dotenv -e .env.local prisma migrate deploy",
+    "prisma:migrate": "dotenv -e .env.local prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
     "prisma:generate": "prisma generate"
   },
   "dependencies": {

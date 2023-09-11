@@ -2,6 +2,11 @@
 
 ## Getting Started
 
+Prerequisites:
+
+- Node version >= 18
+- Docker
+
 #### Configure package manager and install dependencies
 
 ```bash
@@ -15,7 +20,7 @@ pnpm i
 vercel env pull
 ```
 
-### Run development server
+### Run development server and set up development database
 
 ```bash
 pnpm dev

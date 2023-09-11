@@ -18,6 +18,12 @@ const config: Config = {
         'foreground-dark': colors.slate[50],
         'foreground-light': colors.slate[950],
       },
+      maxHeight: {
+        modal: [
+          'calc(100vh - 7rem)',
+          'calc(100dvh - 7rem)',
+        ] as unknown as string,
+      },
       minWidth: {
         screen: '100vw',
         modal: '35rem',

@@ -1,64 +1,50 @@
 {
-  "name": "admin-app",
-  "version": "0.2.0",
+  "name": "partiguiden-admin",
+  "version": "0.1.0",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Ackuq/partiguiden-admin.git"
-  },
-  "engines": {
-    "node": "18"
+  "packageManager": "pnpm@8.7.4",
+  "scripts": {
+    "dev": "concurrently \"pnpm dev:web\" \"pnpm dev:proxy\" \"pnpm dev:db\"",
+    "dev:web": "next dev",
+    "dev:db": "docker-compose up -d",
+    "dev:proxy": "tsc dev-https-proxy.ts && node dev-https-proxy.js",
+    "dev:seed": "tsc --resolveJsonModule --esModuleInterop prisma/seed.ts && dotenv -e .env.local node prisma/seed.js",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "pnpm prisma:generate",
+    "typecheck": "pnpm tsc",
+    "format:write": "prettier --write '**/*.{js,ts,tsx,md,json}'",
+    "format:check": "prettier -c '**/*.{js,ts,tsx,md,json}'",
+    "prisma:migrate": "dotenv -e .env.local prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
-    "@emotion/react": "11.11.1",
-    "@emotion/styled": "11.11.0",
-    "@mui/icons-material": "5.14.8",
-    "@mui/material": "5.14.8",
-    "@types/node": "20.5.9",
-    "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.7",
-    "@types/react-router-dom": "5.3.3",
-    "formik": "2.4.4",
-    "jwt-decode": "3.1.2",
+    "@prisma/client": "5.2.0",
+    "next": "13.4.19",
+    "next-auth": "4.23.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-router-dom": "6.15.0",
-    "react-scripts": "5.0.1",
-    "typescript": "5.2.2",
-    "yup": "1.2.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "vercel-dev": "vercel dev",
-    "vercel-build": "react-scripts build",
-    "lint": "yarn tsc --noemit && eslint src/ --ext js,ts,tsx"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "zod": "3.22.2"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.59.11",
-    "@typescript-eslint/parser": "5.59.11",
-    "eslint-config-airbnb": "19.0.4",
-    "eslint-config-airbnb-typescript": "17.1.0",
+    "@types/http-proxy": "1.17.11",
+    "@types/node": "20.6.0",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "@typescript-eslint/eslint-plugin": "6.6.0",
+    "autoprefixer": "10.4.15",
+    "concurrently": "8.2.1",
+    "dotenv-cli": "7.3.0",
+    "eslint": "8.49.0",
+    "eslint-config-next": "13.4.19",
     "eslint-config-prettier": "9.0.0",
-    "eslint-plugin-import": "2.28.1",
-    "eslint-plugin-jsx-a11y": "6.7.1",
-    "eslint-plugin-prettier": "5.0.0",
-    "eslint-plugin-react": "7.33.2",
-    "eslint-plugin-react-hooks": "4.6.0",
-    "prettier": "3.0.3"
+    "http-proxy": "1.18.1",
+    "postcss": "8.4.29",
+    "prettier": "3.0.3",
+    "prisma": "5.2.0",
+    "tailwindcss": "3.3.3",
+    "typescript": "5.2.2"
   }
 }

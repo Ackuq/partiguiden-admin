@@ -1,0 +1,67 @@
+{
+  "Bostad": ["Energi", "Trygghetssystem och Välfärd"],
+  "Demokrati": [
+    "Lag och rätt",
+    "Trygghetssystem och Välfärd",
+    "Utrikes- och biståndsfrågor"
+  ],
+  "Ekonomi och Skatter": [
+    "Energi",
+    "Jobb",
+    "Konsumentpolitik",
+    "Lag och rätt",
+    "Näringsliv",
+    "Trygghetssystem och Välfärd"
+  ],
+  "Energi": ["Bostad", "Ekonomi och Skatter", "Landsbygd"],
+  "Europa": ["Utrikes- och biståndsfrågor"],
+  "Familjen": ["Trygghetssystem och Välfärd", "Utbildning"],
+  "Försvar": ["Lag och rätt", "Utrikes- och biståndsfrågor"],
+  "Infrastruktur och Trafik": [],
+  "IT och Mobiltelefoni": [],
+  "Jobb": ["Ekonomi och Skatter", "Näringsliv", "Trygghetssystem och Välfärd"],
+  "Jordbruk, Jakt och Fiske": ["Landsbygd", "Miljö och klimat"],
+  "Jämställdhet och diskriminering": ["Lag och rätt", "Vård och Omsorg"],
+  "Konsumentpolitik": ["Ekonomi och Skatter", "Kultur, media, och idrott"],
+  "Kultur, media, och idrott": [
+    "Konsumentpolitik",
+    "Näringsliv",
+    "Trygghetssystem och Välfärd"
+  ],
+  "Lag och rätt": [
+    "Demokrati",
+    "Ekonomi och Skatter",
+    "Försvar",
+    "Jämställdhet och diskriminering",
+    "Trygghetssystem och Välfärd",
+    "Utrikes- och biståndsfrågor"
+  ],
+  "Landsbygd": ["Energi", "Jordbruk, Jakt och Fiske", "Miljö och klimat"],
+  "Migration och Integration": ["Utbildning"],
+  "Miljö och klimat": ["Jordbruk, Jakt och Fiske", "Landsbygd"],
+  "Näringsliv": ["Ekonomi och Skatter", "Jobb", "Kultur, media, och idrott"],
+  "Trygghetssystem och Välfärd": [
+    "Bostad",
+    "Demokrati",
+    "Ekonomi och Skatter",
+    "Familjen",
+    "Jobb",
+    "Kultur, media, och idrott",
+    "Lag och rätt",
+    "Vård och Omsorg",
+    "Äldrepolitik"
+  ],
+  "Utbildning": ["Familjen", "Migration och Integration"],
+  "Utrikes- och biståndsfrågor": [
+    "Demokrati",
+    "Europa",
+    "Försvar",
+    "Lag och rätt"
+  ],
+  "Vård och Omsorg": [
+    "Jämställdhet och diskriminering",
+    "Trygghetssystem och Välfärd",
+    "Äldrepolitik"
+  ],
+  "Äldrepolitik": ["Trygghetssystem och Välfärd", "Vård och Omsorg"]
+}

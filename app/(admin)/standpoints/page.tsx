@@ -4,9 +4,17 @@ import AddStandpointModal from './add-standpoint-modal';
 import StandpointActions from './standpoint-actions';
 import { getPageData } from './prisma';
 import SubjectDropdown from './subject-dropdown';
+import CategorizedFilterCheck from './categorized-filter-check';
+import { Fragment } from 'react';
 
-export default async function Standpoints() {
-  const [standpoints, parties, subjects] = await getPageData();
+interface StandpointsProps {
+  searchParams: Record<string, string>;
+}
+
+export default async function Standpoints({ searchParams }: StandpointsProps) {
+  const [standpoints, parties, subjects] = await getPageData(
+    searchParams['hide-categorized'] === 'true'
+  );
 
   const standpointsGroupedByParty = standpoints.reduce(
     (prev, current) => ({
@@ -22,6 +30,7 @@ export default async function Standpoints() {
   return (
     <MainContainer>
       <AddStandpointModal parties={parties} subjects={subjects} />
+      <CategorizedFilterCheck />
       <Table
         columns={[
           { name: 'Titel', width: '20%' },
@@ -33,7 +42,7 @@ export default async function Standpoints() {
       >
         {Object.entries(standpointsGroupedByParty).map(
           ([partyAbbreviation, standpoints]) => (
-            <>
+            <Fragment key={partyAbbreviation}>
               <Row>
                 <Column colSpan={4} className="text-center text-lg font-bold">
                   {
@@ -70,7 +79,7 @@ export default async function Standpoints() {
                   </Column>
                 </Row>
               ))}
-            </>
+            </Fragment>
           )
         )}
       </Table>

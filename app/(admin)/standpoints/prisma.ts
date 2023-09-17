@@ -3,12 +3,19 @@
 import prisma from '@lib/prisma';
 import type { Prisma } from '@prisma/client';
 
-export async function getPageData() {
+export async function getPageData(hideCategorized: boolean) {
   return prisma.$transaction([
     prisma.standpoint.findMany({
       orderBy: {
         title: 'asc',
       },
+      ...(hideCategorized
+        ? {
+            where: {
+              subject: null,
+            },
+          }
+        : {}),
     }),
     prisma.party.findMany({
       select: { abbreviation: true, name: true },

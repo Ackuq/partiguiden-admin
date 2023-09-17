@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { fetchPartyStandpoints } from './actions/fetch-party-standpoints';
 import { StatusLevel, useStatus } from '@app/(status)/status-context';
 
-const ENTIRES_PER_BATCH = 50;
+const ENTIRES_PER_BATCH = 25;
 
 interface PartyActionsProps {
   party: Party;

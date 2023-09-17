@@ -12,16 +12,27 @@ export async function fetchPartyStandpoints(abbreviation: string) {
   const now = new Date();
 
   try {
-    await prisma.standpoint.createMany({
-      data: data.map((entry) => ({
-        title: entry.title,
-        fetchDate: now,
-        content: entry.opinions,
-        link: entry.url,
-        partyAbbreviation: abbreviation,
-      })),
-      skipDuplicates: true,
-    });
+    await prisma.$transaction(
+      data.map((entry) =>
+        prisma.standpoint.upsert({
+          where: {
+            link: entry.url,
+          },
+          update: {
+            title: entry.title,
+            content: entry.opinions,
+            fetchDate: now,
+          },
+          create: {
+            title: entry.title,
+            fetchDate: now,
+            content: entry.opinions,
+            link: entry.url,
+            partyAbbreviation: abbreviation,
+          },
+        })
+      )
+    );
     revalidatePath(PAGES.standpoints.href);
   } catch (error) {
     return handleServerError(error);

@@ -16,6 +16,12 @@ export default function PartyActions({ party }: PartyActionsProps) {
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   async function handleUpdatePartyStandpoints() {
+    const response = window.confirm(
+      `Säker på att du vill uppdatera ståndpunkter för ${party.abbreviation}?`
+    );
+    if (!response) {
+      return;
+    }
     const error = await fetchPartyStandpoints(party.abbreviation);
     if (error) {
       setStatus({

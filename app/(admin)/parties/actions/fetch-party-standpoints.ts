@@ -7,11 +7,9 @@ import getPartyData from '@lib/scrapers/get-party-data';
 import { revalidatePath } from 'next/cache';
 
 export async function fetchPartyStandpoints(abbreviation: string) {
-  const data = await getPartyData(abbreviation);
-
-  const now = new Date();
-
   try {
+    const data = await getPartyData(abbreviation);
+    const now = new Date();
     await prisma.$transaction(
       data.map((entry) =>
         prisma.standpoint.upsert({

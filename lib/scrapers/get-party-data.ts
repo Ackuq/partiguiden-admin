@@ -2,7 +2,7 @@ import { parseArgs } from 'node:util';
 import * as fs from 'node:fs';
 import scrapers from './scrapers';
 
-async function getPartyData(
+export default async function getPartyData(
   abbreviation: string,
   limit?: number,
   preview?: boolean

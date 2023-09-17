@@ -5,8 +5,10 @@ import { useState } from 'react';
 import type { z } from 'zod';
 import createParty from './actions/create-party';
 import PartyForm from './party-form';
+import { StatusLevel, useStatus } from '@app/(status)/status-context';
 
 export default function AddPartyModal() {
+  const { setStatus } = useStatus();
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [zodIssues, setZodIssues] = useState<z.ZodIssue[]>();
 
@@ -19,10 +21,14 @@ export default function AddPartyModal() {
     const error = await createParty(formData);
     if (!error) {
       toggleModal();
+      setStatus({
+        message: 'Lyckades lägga till parti!',
+        level: StatusLevel.Success,
+      });
       return;
     }
-    // TODO: Proper error handling for errors other than zod
     setZodIssues(error?.zodIssues);
+    setStatus({ message: error.message, level: StatusLevel.Error });
   }
 
   return (

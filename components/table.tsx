@@ -15,7 +15,7 @@ type RowProps = React.HTMLAttributes<HTMLTableRowElement>;
 export function Row({ children, className, ...rest }: RowProps) {
   return (
     <tr
-      className={`bg-white border-b dark:bg-gray-800 dark:border-gray-700 last:border-0 ${className}`}
+      className={`border-b bg-white last:border-0 dark:border-gray-700 dark:bg-gray-800 ${className}`}
       {...rest}
     >
       {children}
@@ -36,10 +36,10 @@ export default function Table({
 }: TableProps) {
   return (
     <table
-      className={`table-fixed w-full text-sm text-left text-gray-500 dark:text-gray-400 ${className}`}
+      className={`w-full table-fixed text-left text-sm text-gray-500 dark:text-gray-400 ${className}`}
       {...rest}
     >
-      <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           {columns.map((column) => (
             <th

@@ -73,7 +73,7 @@ export default function StandpointForm({
                 setZodIssues(undefined);
                 removeContentField(field.uuid);
               }}
-              className="ml-3 bg-red-600 text-white whitespace-nowrap self-start"
+              className="ml-3 self-start whitespace-nowrap bg-red-600 text-white"
             >
               − Ta bort
             </BaseButton>

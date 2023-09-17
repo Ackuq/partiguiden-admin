@@ -5,6 +5,7 @@ import EditStandpointModal from './edit-standpoint-modal';
 import { useState } from 'react';
 import type { PartyWithAbbreviationAndName, SubjectWithName } from './prisma';
 import type { Standpoint } from '@prisma/client';
+import { StatusLevel, useStatus } from '@app/(status)/status-context';
 
 interface StandpointActionsProps {
   standpoint: Standpoint;
@@ -17,7 +18,29 @@ export default function StandpointActions({
   parties,
   subjects,
 }: StandpointActionsProps) {
+  const { setStatus } = useStatus();
   const [isModalOpened, setIsModalOpened] = useState(false);
+
+  async function handleDeleteStandpoint() {
+    const response = window.confirm(
+      `Säker på att du vill ta bort ${standpoint.title} (${standpoint.link})`
+    );
+    if (!response) {
+      return;
+    }
+    const error = await deleteStandpoint(standpoint.link);
+    if (error) {
+      setStatus({
+        message: error.message,
+        level: StatusLevel.Error,
+      });
+    } else {
+      setStatus({
+        message: 'Lyckades ta bort ståndpunkt',
+        level: StatusLevel.Success,
+      });
+    }
+  }
 
   return (
     <>
@@ -35,16 +58,7 @@ export default function StandpointActions({
       >
         ✏️
       </button>
-      <button
-        onClick={() => {
-          window.confirm(
-            `Säker på att du vill ta bort ${standpoint.title} (${standpoint.link})`
-          );
-          deleteStandpoint(standpoint.link);
-        }}
-      >
-        ❌
-      </button>
+      <button onClick={handleDeleteStandpoint}>❌</button>
     </>
   );
 }

@@ -96,7 +96,10 @@ export default abstract class Scraper implements ScraperArgs {
     };
   }
 
-  async getPages(limit?: number): Promise<ScraperResult[]> {
+  async getPages(
+    start = 0,
+    limit?: number
+  ): Promise<{ result: ScraperResult[]; hasMore: boolean }> {
     const response = await fetch(this.baseUrl + this.listPath, {
       headers: { 'Content-Type': 'text/plain; charset=UTF-8' },
     });
@@ -106,8 +109,10 @@ export default abstract class Scraper implements ScraperArgs {
 
     console.debug(`Found ${$elements.length} list elements`);
 
+    let hasMore = false;
     if (limit !== undefined) {
-      $elements = $elements.slice(0, limit);
+      hasMore = start + limit <= $elements.length - 1;
+      $elements = $elements.slice(start, start + limit);
     }
 
     const promises = $elements
@@ -128,6 +133,6 @@ export default abstract class Scraper implements ScraperArgs {
         }
       )
       .map((fulfilled) => fulfilled.value);
-    return resolved;
+    return { result: resolved, hasMore };
   }
 }

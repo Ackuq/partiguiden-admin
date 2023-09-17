@@ -20,7 +20,7 @@ export default class SDScraper extends Scraper {
   opinionTags = [];
   titleTag = '';
 
-  async getPages(limit?: number | undefined): Promise<ScraperResult[]> {
+  async getPages(): Promise<{ result: ScraperResult[]; hasMore: boolean }> {
     const pdf = await pdfjs.getDocument({
       url: this.baseUrl,
       useSystemFonts: true,
@@ -37,9 +37,9 @@ export default class SDScraper extends Scraper {
       return { url: `${this.baseUrl}#page=${pageIndex + 1}`, title, pageIndex };
     });
     const dataWithPageIndex = await Promise.all(dataWithPageIndexPromises);
-    const filteredDataWithPageIndex = dataWithPageIndex
-      .filter((data) => !IGNORED_SECTIONS.includes(data.title))
-      .slice(0, limit);
+    const filteredDataWithPageIndex = dataWithPageIndex.filter(
+      (data) => !IGNORED_SECTIONS.includes(data.title)
+    );
 
     filteredDataWithPageIndex.sort((a, b) => {
       if (a.pageIndex > b.pageIndex) {
@@ -90,6 +90,6 @@ export default class SDScraper extends Scraper {
       }
     );
     const dataWithStandpoints = await Promise.all(dataWithStandpointsPromises);
-    return dataWithStandpoints;
+    return { result: dataWithStandpoints, hasMore: false };
   }
 }

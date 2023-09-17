@@ -7,6 +7,8 @@ import { useState } from 'react';
 import { fetchPartyStandpoints } from './actions/fetch-party-standpoints';
 import { StatusLevel, useStatus } from '@app/(status)/status-context';
 
+const ENTIRES_PER_BATCH = 50;
+
 interface PartyActionsProps {
   party: Party;
 }
@@ -22,17 +24,30 @@ export default function PartyActions({ party }: PartyActionsProps) {
     if (!response) {
       return;
     }
-    const error = await fetchPartyStandpoints(party.abbreviation);
-    if (error) {
+    let start = 0;
+    while (true) {
+      const response = await fetchPartyStandpoints({
+        abbreviation: party.abbreviation,
+        start,
+        limit: ENTIRES_PER_BATCH,
+      });
+      if ('hasMore' in response) {
+        if (response.hasMore) {
+          console.log(response.hasMore);
+          start += ENTIRES_PER_BATCH;
+          continue;
+        }
+        setStatus({
+          message: 'Lyckades uppdatera ståndpunkter',
+          level: StatusLevel.Success,
+        });
+        return;
+      }
       setStatus({
-        message: error.message,
+        message: response.message,
         level: StatusLevel.Error,
       });
-    } else {
-      setStatus({
-        message: 'Lyckades uppdatera ståndpunkter',
-        level: StatusLevel.Success,
-      });
+      return;
     }
   }
 

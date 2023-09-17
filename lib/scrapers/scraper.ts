@@ -107,7 +107,7 @@ export default abstract class Scraper implements ScraperArgs {
     const $ = await cheerio.load(html);
     let $elements = $(this.listSelector);
 
-    console.debug(`Found ${$elements.length} list elements`);
+    console.info(`Found ${$elements.length} list elements`);
 
     let hasMore = false;
     if (limit !== undefined) {

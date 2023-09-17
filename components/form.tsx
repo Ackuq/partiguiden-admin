@@ -15,7 +15,7 @@ export function TextArea({ error, rightContent, ...rest }: TextAreaProps) {
     <div className="mb-4">
       <div className="flex">
         <textarea
-          className="shadow appearance-none w-full border rounded py-2 px-3 text-gray-700 focus:outline-none data-[error=true]:outline-red-600 data-[error=true]:outline"
+          className="w-full appearance-none rounded border px-3 py-2 text-gray-700 shadow focus:outline-none data-[error=true]:outline data-[error=true]:outline-red-600"
           data-error={!!error ?? false}
           {...rest}
         />
@@ -36,7 +36,7 @@ export function Input({ error, rightContent, ...rest }: InputProps) {
     <div className="mb-4">
       <div className="flex">
         <input
-          className="shadow appearance-none w-full border rounded py-2 px-3 text-gray-700 focus:outline-none data-[error=true]:outline-red-600 data-[error=true]:outline"
+          className="w-full appearance-none rounded border px-3 py-2 text-gray-700 shadow focus:outline-none data-[error=true]:outline data-[error=true]:outline-red-600"
           data-error={!!error ?? false}
           {...rest}
         />
@@ -56,7 +56,7 @@ export function Select({ error, options, ...rest }: SelectProps) {
   return (
     <div className="mb-4">
       <select
-        className="shadow appearance-none border rounded w-full text-gray-700 focus:outline-none data-[error=true]:outline-red-600 data-[error=true]:outline"
+        className="w-full appearance-none rounded border text-gray-700 shadow focus:outline-none data-[error=true]:outline data-[error=true]:outline-red-600"
         data-error={!!error ?? false}
         {...rest}
       >
@@ -77,11 +77,11 @@ export function SubmitButton({ className, ...rest }: SubmitButtonProps) {
   const { pending } = useFormStatus();
 
   return (
-    <div className="text-right mt-6">
+    <div className="mt-6 text-right">
       <Button className={className} type="submit" disabled={pending} {...rest}>
         {pending ? (
           <>
-            <LoadingSpinner className="inline-block w-5 h-5 mr-1" />
+            <LoadingSpinner className="mr-1 inline-block h-5 w-5" />
             <span className="align-middle">Skickar...</span>
           </>
         ) : (

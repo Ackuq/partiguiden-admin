@@ -6,6 +6,7 @@ import editStandpoint from './actions/edit-standpoint';
 import StandpointForm from './standpoint-form';
 import type { PartyWithAbbreviationAndName, SubjectWithName } from './prisma';
 import type { Standpoint } from '@prisma/client';
+import { StatusLevel, useStatus } from '@app/(status)/status-context';
 
 interface EditStandpointModalProps {
   standpoint: Standpoint;
@@ -22,6 +23,7 @@ export default function EditStandpointModal({
   isModalOpened,
   setIsModalOpened,
 }: EditStandpointModalProps) {
+  const { setStatus } = useStatus();
   const [zodIssues, setZodIssues] = useState<z.ZodIssue[]>();
 
   function toggleModal() {
@@ -33,10 +35,14 @@ export default function EditStandpointModal({
     const error = await editStandpoint(standpoint, formData);
     if (!error) {
       toggleModal();
+      setStatus({
+        message: 'Lyckades redigera till ståndpunkt!',
+        level: StatusLevel.Success,
+      });
       return;
     }
-    // TODO: Proper error handling for errors other than zod
     setZodIssues(error?.zodIssues);
+    setStatus({ message: error.message, level: StatusLevel.Error });
   }
 
   return (

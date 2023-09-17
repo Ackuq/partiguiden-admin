@@ -6,12 +6,14 @@ import type { z } from 'zod';
 import createSubject from './actions/create-subject';
 import SubjectForm from './subject-form';
 import type { SubjectWithRelated } from './prisma';
+import { StatusLevel, useStatus } from '@app/(status)/status-context';
 
 interface AddSubjectModalProps {
   subjects: SubjectWithRelated[];
 }
 
 export default function AddSubjectModal({ subjects }: AddSubjectModalProps) {
+  const { setStatus } = useStatus();
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [zodIssues, setZodIssues] = useState<z.ZodIssue[]>();
 
@@ -24,10 +26,14 @@ export default function AddSubjectModal({ subjects }: AddSubjectModalProps) {
     const error = await createSubject(formData);
     if (!error) {
       toggleModal();
+      setStatus({
+        message: 'Lyckades lägga till sakområde!',
+        level: StatusLevel.Success,
+      });
       return;
     }
-    // TODO: Proper error handling for errors other than zod
     setZodIssues(error?.zodIssues);
+    setStatus({ message: error.message, level: StatusLevel.Error });
   }
 
   return (

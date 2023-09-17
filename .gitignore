@@ -36,8 +36,10 @@ next-env.d.ts
 .cert
 
 # Transpiled dev files
-dev-https-proxy.js
-prisma/seed.js
+.js_out
 
 # Local Postgres data
 .postgres_data
+
+# Local scraper output
+.scraper_out

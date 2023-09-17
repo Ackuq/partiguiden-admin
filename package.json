@@ -2,13 +2,14 @@
   "name": "partiguiden-admin",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@8.7.4",
+  "packageManager": "pnpm@8.7.5",
   "scripts": {
     "dev": "concurrently \"pnpm dev:web\" \"pnpm dev:proxy\" \"pnpm dev:db\"",
     "dev:web": "next dev",
     "dev:db": "docker-compose up -d",
-    "dev:proxy": "tsc dev-https-proxy.ts && node dev-https-proxy.js",
-    "dev:seed": "tsc --resolveJsonModule --esModuleInterop prisma/seed.ts && dotenv -e .env.local node prisma/seed.js",
+    "dev:proxy": "tsc dev-https-proxy.ts -outDir .js_out && node .js_out/dev-https-proxy.js",
+    "dev:seed": "tsc --resolveJsonModule --esModuleInterop -outDir .js_out prisma/seed.ts && dotenv -e .env.local node .js_out/seed.js",
+    "dev:scraper": "tsc --skipLibCheck --outDir .js_out lib/scrapers/get-party-data.ts && node .js_out/get-party-data.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -22,8 +23,10 @@
   },
   "dependencies": {
     "@prisma/client": "5.3.0",
+    "cheerio": "1.0.0-rc.12",
     "next": "13.4.19",
     "next-auth": "4.23.1",
+    "pdfjs-dist": "^3.10.111",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "zod": "3.22.2"
@@ -43,6 +46,7 @@
     "http-proxy": "1.18.1",
     "postcss": "8.4.29",
     "prettier": "3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.4",
     "prisma": "5.3.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2"

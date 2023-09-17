@@ -29,4 +29,7 @@ createProxyServer({
   })
   .listen(parseInt(PROXY_PORT));
 
-console.log('Proxy server ready on', `https://localhost:${PROXY_PORT}`);
+console.log(
+  '- \x1b[32mready\x1b[0m started proxy server on',
+  `https://localhost:${PROXY_PORT}`
+);

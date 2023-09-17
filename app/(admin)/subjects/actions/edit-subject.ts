@@ -2,9 +2,9 @@
 import { PAGES } from '@lib/navigation';
 import prisma from '@lib/prisma';
 import { revalidatePath } from 'next/cache';
-import { z } from 'zod';
 import { zSubject } from '../subject-form';
 import type { SubjectWithRelated } from '../prisma';
+import handleServerError from '@lib/handleServerError';
 
 export default async function editSubject(
   subjectPrisma: SubjectWithRelated,
@@ -66,9 +66,6 @@ export default async function editSubject(
     ]);
     revalidatePath(PAGES.subjects.href);
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return { zodIssues: error.errors };
-    }
-    return { message: 'Något gick snett med denna förfrågan' };
+    return handleServerError(error);
   }
 }

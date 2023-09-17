@@ -6,6 +6,7 @@ import type { z } from 'zod';
 import createStandpoint from './actions/create-standpoint';
 import StandpointForm from './standpoint-form';
 import type { PartyWithAbbreviationAndName, SubjectWithName } from './prisma';
+import { StatusLevel, useStatus } from '@app/(status)/status-context';
 
 interface AddStandpointModalProps {
   parties: PartyWithAbbreviationAndName[];
@@ -16,6 +17,7 @@ export default function AddStandpointModal({
   parties,
   subjects,
 }: AddStandpointModalProps) {
+  const { setStatus } = useStatus();
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [zodIssues, setZodIssues] = useState<z.ZodIssue[]>();
 
@@ -28,10 +30,14 @@ export default function AddStandpointModal({
     const error = await createStandpoint(formData);
     if (!error) {
       toggleModal();
+      setStatus({
+        message: 'Lyckades lägga till ståndpunkt!',
+        level: StatusLevel.Success,
+      });
       return;
     }
-    // TODO: Proper error handling for errors other than zod
     setZodIssues(error?.zodIssues);
+    setStatus({ message: error.message, level: StatusLevel.Error });
   }
 
   return (

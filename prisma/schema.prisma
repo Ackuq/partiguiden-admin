@@ -29,9 +29,9 @@ model Standpoint {
     fetchDate         DateTime @default(now())
     updateDate        DateTime @updatedAt
     // Party relation
-    party             Party    @relation(fields: [partyAbbreviation], references: [abbreviation])
+    party             Party    @relation(fields: [partyAbbreviation], references: [abbreviation], onDelete: Cascade)
     partyAbbreviation String
     // Subject relation
-    subject           Subject? @relation(fields: [subjectName], references: [name])
+    subject           Subject? @relation(fields: [subjectName], references: [name], onDelete: NoAction)
     subjectName       String?
 }

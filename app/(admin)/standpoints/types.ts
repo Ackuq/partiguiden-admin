@@ -4,7 +4,7 @@ export enum FormField {
   Link = 'link',
   Title = 'title',
   Content = 'content',
-  FetchDate = 'FetchDate',
+  FetchDate = 'fetchDate',
   PartyAbbreviation = 'partyAbbreviation',
   SubjectName = 'subjectName',
 }

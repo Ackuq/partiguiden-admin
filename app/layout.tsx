@@ -6,6 +6,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
 import Loading from './loading';
+import StatusContextProvider from './(status)/status-context';
 
 const lato = Lato({
   subsets: ['latin'],
@@ -21,12 +22,14 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="sv">
       <body
-        className={`${lato.className} bg-background-light dark:bg-background-dark text-foreground-light dark:text-foreground-dark min-h-screen flex flex-col`}
+        className={`${lato.className} flex min-h-screen flex-col bg-background-light text-foreground-light dark:bg-background-dark dark:text-foreground-dark`}
       >
-        <NextAuthProvider>
-          <Header />
-          <Suspense fallback={<Loading />}>{children}</Suspense>
-        </NextAuthProvider>
+        <StatusContextProvider>
+          <NextAuthProvider>
+            <Header />
+            <Suspense fallback={<Loading />}>{children}</Suspense>
+          </NextAuthProvider>
+        </StatusContextProvider>
       </body>
     </html>
   );

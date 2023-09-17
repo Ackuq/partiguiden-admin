@@ -6,7 +6,7 @@ import Image from 'next/image';
 function LoginButton() {
   return (
     <button
-      className="bg-primary p-2 rounded w-full max-w-lg"
+      className="w-full max-w-lg rounded bg-primary p-2"
       onClick={() => signIn()}
     >
       Logga in
@@ -18,7 +18,7 @@ export default function Home() {
   const session = useSession();
 
   return (
-    <main className="flex flex-1 flex-col gap-3 mx-3 items-center justify-center">
+    <main className="mx-3 flex flex-1 flex-col items-center justify-center gap-3">
       <Image
         src="/partiguiden_logo_primary.png"
         alt="Partiguiden logo"

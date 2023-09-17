@@ -8,13 +8,13 @@ import { usePathname } from 'next/navigation';
 function UserHeader({ session }: { session: Session }) {
   return (
     <>
-      <div className="gap-3 flex">
-        <div className="justify-between py-2 flex-col hidden sm:flex">
+      <div className="flex gap-3">
+        <div className="hidden flex-col justify-between py-2 sm:flex">
           <span>{session.user?.name}</span>
           <span>{session.user?.email}</span>
         </div>
         <button
-          className="bg-primary p-3 my-2 rounded text-white"
+          className="my-2 rounded bg-primary p-3 text-white"
           onClick={() => signOut()}
         >
           Logga ut
@@ -28,13 +28,13 @@ function NavigationLinks() {
   const pathname = usePathname();
 
   return (
-    <ol className="flex gap-2 my-2">
+    <ol className="my-2 flex gap-2">
       {HEADER_LINKS.map(({ href, name }) => (
         <li key={href}>
           <Link
             href={href}
             aria-current={href === pathname ? 'page' : 'false'}
-            className="inline-block p-2 bg-primary text-white rounded-lg aria-current-false:opacity-70 aria-current-false:hover:opacity-90"
+            className="inline-block rounded-lg bg-primary p-2 text-white aria-current-false:opacity-70 aria-current-false:hover:opacity-90"
           >
             {name}
           </Link>
@@ -48,8 +48,8 @@ export function Header() {
   const session = useSession();
 
   return (
-    <nav className=" bg-elevated-light dark:bg-elevated-dark shadow-xl">
-      <div className="max-w-7xl justify-between px-2 flex items-center mx-auto">
+    <nav className=" bg-elevated-light shadow-xl dark:bg-elevated-dark">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-2">
         <NavigationLinks />
         {session.status === 'authenticated' && (
           <UserHeader session={session.data} />

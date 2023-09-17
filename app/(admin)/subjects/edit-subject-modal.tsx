@@ -5,6 +5,7 @@ import type { z } from 'zod';
 import editSubject from './actions/edit-subject';
 import SubjectForm from './subject-form';
 import type { SubjectWithRelated } from './prisma';
+import { StatusLevel, useStatus } from '@app/(status)/status-context';
 
 interface EditSubjectModalProps {
   subject: SubjectWithRelated;
@@ -19,6 +20,7 @@ export default function EditSubjectModal({
   isModalOpened,
   setIsModalOpened,
 }: EditSubjectModalProps) {
+  const { setStatus } = useStatus();
   const [zodIssues, setZodIssues] = useState<z.ZodIssue[]>();
 
   function toggleModal() {
@@ -30,10 +32,14 @@ export default function EditSubjectModal({
     const error = await editSubject(subject, formData);
     if (!error) {
       toggleModal();
+      setStatus({
+        message: 'Lyckades ändra sakområde!',
+        level: StatusLevel.Success,
+      });
       return;
     }
-    // TODO: Proper error handling for errors other than zod
     setZodIssues(error?.zodIssues);
+    setStatus({ message: error.message, level: StatusLevel.Error });
   }
 
   return (

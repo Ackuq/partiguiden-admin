@@ -5,6 +5,7 @@ import type { z } from 'zod';
 import editParty from './actions/edit-party';
 import PartyForm from './party-form';
 import type { Party } from '@prisma/client';
+import { StatusLevel, useStatus } from '@app/(status)/status-context';
 
 interface EditPartyModalProps {
   party: Party;
@@ -17,6 +18,7 @@ export default function EditPartyModal({
   isModalOpened,
   setIsModalOpened,
 }: EditPartyModalProps) {
+  const { setStatus } = useStatus();
   const [zodIssues, setZodIssues] = useState<z.ZodIssue[]>();
 
   function toggleModal() {
@@ -28,10 +30,14 @@ export default function EditPartyModal({
     const error = await editParty(party, formData);
     if (!error) {
       toggleModal();
+      setStatus({
+        message: 'Lyckades uppdatera parti!',
+        level: StatusLevel.Success,
+      });
       return;
     }
-    // TODO: Proper error handling for errors other than zod
     setZodIssues(error?.zodIssues);
+    setStatus({ message: error.message, level: StatusLevel.Error });
   }
 
   return (

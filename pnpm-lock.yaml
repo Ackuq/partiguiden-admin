@@ -32,8 +32,8 @@ dependencies:
 
 devDependencies:
   '@types/http-proxy':
-    specifier: 1.17.11
-    version: 1.17.11
+    specifier: 1.17.12
+    version: 1.17.12
   '@types/node':
     specifier: 20.6.0
     version: 20.6.0
@@ -359,8 +359,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@types/http-proxy@1.17.11:
-    resolution: {integrity: sha512-HC8G7c1WmaF2ekqpnFq626xd3Zz0uvaqFmBJNRZCGEZCXkvSdJoNFn/8Ygbd9fKNQj8UzLdCETaI0UWPAjK7IA==}
+  /@types/http-proxy@1.17.12:
+    resolution: {integrity: sha512-kQtujO08dVtQ2wXAuSFfk9ASy3sug4+ogFR8Kd8UgP8PEuc1/G/8yjYRmp//PcDNJEUKOza/MrQu15bouEUCiw==}
     dependencies:
       '@types/node': 20.6.0
     dev: true
@@ -1785,6 +1785,7 @@ packages:
 
   /glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
+    requiresBuild: true
     dependencies:
       fs.realpath: 1.0.0
       inflight: 1.0.6

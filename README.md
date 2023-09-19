@@ -1,5 +1,7 @@
 # Partiguiden Admin Panel
 
+__THIS PROJECT IS DEPRECATED, ITS FUNCTIONALITY HAS MOVED TO [partiguiden](https://github.com/Ackuq/partiguiden)__
+
 ## Getting Started
 
 Prerequisites:
